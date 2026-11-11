@@ -1502,3 +1502,39 @@ body[data-dn-mode="punk57"] {
     --dn-particles-size: 430px 430px;
     --dn-particles-anim: dnmRiseUp 40s linear infinite;
 }
+
+/* =====================================================================
+   МОБИЛКА: чат занимает всю ширину, поэтому фото просвечивает сквозь него
+   ===================================================================== */
+@media (max-width: 1000px) {
+    html::before {
+        opacity: 1 !important;
+        background-attachment: scroll;
+    }
+    /* силуэты сцены тише — на узком экране они мешают */
+    #bg_custom::before {
+        opacity: 0.45 !important;
+    }
+    /* чат становится полупрозрачным, чтобы был виден фон книги */
+    #chat {
+        background-color: rgba(8, 8, 12, 0.34) !important;
+        -webkit-backdrop-filter: blur(2px) !important;
+        backdrop-filter: blur(2px) !important;
+    }
+    #sheld {
+        background-color: transparent !important;
+    }
+    /* карточки чуть плотнее, чтобы текст читался поверх фото */
+    #chat .mes_block {
+        background:
+            radial-gradient(120% 80% at 50% -10%, color-mix(in srgb, var(--dn-a) 14%, transparent), transparent 58%),
+            linear-gradient(180deg, color-mix(in srgb, var(--dn-p1) 92%, #000), color-mix(in srgb, var(--dn-p2) 96%, #000)) !important;
+    }
+    /* иконки и подсказка не липнут к краям */
+    .mes_block .ch_name { padding: 6px !important; }
+    #nonQRFormItems:has(#send_textarea:placeholder-shown)::before {
+        width: 88% !important;
+        font-size: 12px !important;
+    }
+    #dnm-panel { bottom: 96px; right: 8px; }
+}
