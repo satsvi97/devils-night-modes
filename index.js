@@ -4,11 +4,11 @@
  * Команды: /dn corrupt | hideaway | killswitch | punk57 | conclave | nightfall | off
  */
 
-const VERSION = '1.2.9';
+const VERSION = '1.2.10';
 
 const MODES = [
     { id: 'corrupt',    label: 'Corrupt',     hint: "Devil's Night · кровь, маска, витраж" },
-    { id: 'hideaway',   label: 'Hideaway',    hint: 'отель «The Pope», лифт 12, ключ' },
+    { id: 'hideaway',   label: 'Hideaway',    hint: 'отель «Понтифик», лифт 12, ключ' },
     { id: 'killswitch', label: 'Kill Switch', hint: 'лабиринт, фонтан, маска' },
     { id: 'punk57',     label: 'Punk 57',     hint: 'коридор, шкафчики, пятна краски' },
     { id: 'conclave',   label: 'Conclave',    hint: 'яхта, луна, шампанское' },
