@@ -2013,3 +2013,50 @@ body[data-generating="true"] #mes_impersonate {
     #chat { background-color: transparent !important; }
     #sheld { background-color: transparent !important; }
 }
+
+/* =====================================================================
+   1.2.9 — мобилка: кнопка отправки не вылезает за панель
+   ST на узких экранах ставит #rightSendForm width: 1.15em,
+   из-за чего кнопка 45px не влезает и съезжает.
+   ===================================================================== */
+@media (max-width: 1000px) {
+    #leftSendForm,
+    #rightSendForm {
+        width: auto !important;
+        max-width: none !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 4px !important;
+    }
+    #send_form {
+        padding: 6px 10px !important;
+    }
+    #nonQRFormItems {
+        padding-right: 2px !important;
+        gap: 4px !important;
+    }
+    #send_but,
+    #mes_stop {
+        flex: 0 0 38px !important;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        margin: 0 !important;
+    }
+    #send_but::after {
+        font-size: 17px !important;
+    }
+    #mes_stop::before { inset: 4px !important; }
+    #mes_stop::after { width: 10px !important; height: 10px !important; }
+    #extensionsMenuButton,
+    #options_button {
+        flex: 0 0 auto !important;
+    }
+}
+@media (max-width: 1000px) {
+    #nonQRFormItems:has(#send_textarea:placeholder-shown)::before {
+        width: 64% !important;
+        left: 44% !important;
+    }
+}
