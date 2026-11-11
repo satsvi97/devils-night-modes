@@ -1026,7 +1026,7 @@ body[data-dn-mode] #persona-management-button .drawer-icon::before {
 /* Сумрак: зеркало-«глазок» вместо пустой рамки */
 body[data-dn-mode="nightfall"] {
     --dn-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5' y='3' width='14' height='16' rx='3' fill='%23dde8f4' opacity='0.18'/%3E%3Crect x='5' y='3' width='14' height='16' rx='3' fill='none' stroke='%23dde8f4' stroke-width='2.4'/%3E%3Cpath d='M8 15 L16 7' stroke='%23dde8f4' stroke-width='2.2' stroke-linecap='round'/%3E%3Cpath d='M12 19 L12 22 M9 22 L15 22' stroke='%23dde8f4' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
-    --dn-hint: "Скажи это зеркалу...  ▤";
+    --dn-hint: "Скажи это карусели...  ✧";
     --dn-flourish: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cg stroke='%23b9c7d6' stroke-width='1.4' fill='none' opacity='0.9'%3E%3Cpath d='M6 42 L6 12 L42 12'/%3E%3Ccircle cx='24' cy='30' r='10'/%3E%3Cpath d='M24 20 L24 40 M14 30 L34 30' opacity='0.5'/%3E%3C/g%3E%3C/svg%3E");
 }
 
@@ -1043,4 +1043,77 @@ body[data-dn-mode="hideaway"] {
 /* Conclave: якорь крупнее */
 body[data-dn-mode="conclave"] {
     --dn-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg stroke='%23d6e6f7' stroke-width='2.2' stroke-linecap='round' fill='none'%3E%3Ccircle cx='12' cy='4.5' r='2.4'/%3E%3Cpath d='M12 7 L12 20'/%3E%3Cpath d='M4 13 Q12 19 20 13'/%3E%3Cpath d='M7 19 L17 19'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* =====================================================================
+   КОЛЛАЖИ: цвет и сцены по визуальным референсам
+   Плюс слой пользовательских фонов backgrounds/<mode>.jpg
+   ===================================================================== */
+
+/* ---------- пользовательский фон: файл есть — покажется, нет — пропустится ---------- */
+#bg_custom::before {
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E"),
+        var(--dn-scene, none),
+        var(--dn-wash, none),
+        var(--dn-photo, none) !important;
+    background-size: 180px 180px, 100% 100%, 100% 100%, cover !important;
+    background-repeat: repeat, no-repeat, no-repeat, no-repeat !important;
+    background-position: 0 0, 50% 100%, 0 0, 50% 50% !important;
+}
+
+/* ------------------------------------------------- CORRUPT · огонь и пентхаус */
+body[data-dn-mode="corrupt"] {
+    --dn-a: #c2563c; --dn-a-hot: #f0916a; --dn-a2: #6b1512;
+    --dn-photo: url("backgrounds/corrupt.jpg");
+    --dn-vignette: radial-gradient(620px 420px at 8% 96%, rgba(240, 130, 60, 0.22), transparent 70%), radial-gradient(700px 460px at 50% 108%, rgba(146, 30, 24, 0.2), transparent 72%), radial-gradient(ellipse at center, transparent 38%, rgba(0, 0, 0, 0.84) 100%);
+}
+
+/* ------------------------------------- HIDEAWAY · отель, лифт 12, церковь */
+body[data-dn-mode="hideaway"] {
+    --dn-a: #94a9b4; --dn-a-hot: #d7e4ea; --dn-a2: #2b4148;
+    --dn-photo: url("backgrounds/hideaway.jpg");
+    --dn-vignette: radial-gradient(560px 400px at 88% 42%, rgba(232, 201, 143, 0.16), transparent 70%), radial-gradient(ellipse at center, transparent 36%, rgba(0, 4, 6, 0.86) 100%);
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Crect width='1200' height='800' fill='%230b1013'/%3E%3Cg fill='%2317252b'%3E%3Crect x='20' y='200' width='240' height='400'/%3E%3Cpath d='M20 200 L140 140 L260 200 Z'/%3E%3C/g%3E%3Cg fill='%23223138'%3E%3Crect x='48' y='248' width='30' height='40'/%3E%3Crect x='108' y='248' width='30' height='40'/%3E%3Crect x='168' y='248' width='30' height='40'/%3E%3Crect x='48' y='320' width='30' height='40'/%3E%3Crect x='168' y='320' width='30' height='40'/%3E%3Crect x='48' y='392' width='30' height='40'/%3E%3Crect x='108' y='392' width='30' height='40'/%3E%3C/g%3E%3Crect x='108' y='320' width='30' height='40' fill='%23e8c98f' opacity='0.8'/%3E%3Cg fill='%230d171b'%3E%3Cpath d='M300 600 L300 470 L340 420 L380 600 Z'/%3E%3Cpath d='M360 600 L360 500 L400 450 L440 600 Z'/%3E%3Cpath d='M880 600 L880 480 L920 430 L960 600 Z'/%3E%3Cpath d='M940 600 L940 510 L980 465 L1020 600 Z'/%3E%3C/g%3E%3Cg%3E%3Crect x='1000' y='250' width='150' height='330' rx='6' fill='%2310191d' stroke='%23313f46' stroke-width='3'/%3E%3Cg fill='%23dfe9ee' opacity='0.5'%3E%3Ccircle cx='1030' cy='300' r='12'/%3E%3Ccircle cx='1060' cy='300' r='12'/%3E%3Ccircle cx='1090' cy='300' r='12'/%3E%3Ccircle cx='1030' cy='350' r='12'/%3E%3Ccircle cx='1090' cy='350' r='12'/%3E%3C/g%3E%3Ccircle cx='1060' cy='350' r='13' fill='%23e8c98f'/%3E%3Ctext x='1060' y='355' font-family='Arial, sans-serif' font-size='13' fill='%2310191d' text-anchor='middle'%3E12%3C/text%3E%3C/g%3E%3Cg stroke='%23313f46' stroke-width='4' fill='none' opacity='0.8'%3E%3Cpath d='M700 600 L700 470 M680 500 L720 500'/%3E%3C/g%3E%3Crect x='0' y='600' width='1200' height='200' fill='%230a1215'/%3E%3Cg stroke='%23a9bcc4' stroke-width='2' opacity='0.1'%3E%3Cpath d='M0 660 L1200 652 M0 720 L1200 710'/%3E%3C/g%3E%3Cg fill='%23e8c98f' opacity='0.1'%3E%3Crect x='108' y='600' width='30' height='150'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ---------------------------------- KILL SWITCH · витраж, сталь, пуанты */
+body[data-dn-mode="killswitch"] {
+    --dn-a: #c3ccd6; --dn-a-hot: #eef4fa; --dn-a2: #6d1d24;
+    --dn-photo: url("backgrounds/killswitch.jpg");
+    --dn-vignette: radial-gradient(560px 420px at 84% 78%, rgba(150, 40, 46, 0.16), transparent 70%), radial-gradient(ellipse at center, transparent 36%, rgba(0, 0, 0, 0.86) 100%);
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 40'%3E%3Cg stroke='%23e6eef6' stroke-width='2.2' fill='none'%3E%3Cpath d='M8 4 L24 36 M24 4 L8 36'/%3E%3Cpath d='M5 33 L11 33 M21 33 L27 33'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ----------------------------- PUNK 57 · электрик-синий и неоновая краска */
+body[data-dn-mode="punk57"] {
+    --dn-a: #4ea8ff; --dn-a-hot: #a8d8ff; --dn-a2: #ff2f8e;
+    --dn-photo: url("backgrounds/punk57.jpg");
+    --dn-wash: linear-gradient(180deg, rgba(4, 8, 18, 0.96) 0%, rgba(8, 16, 34, 0.6) 34%, rgba(6, 10, 22, 0.7) 66%, rgba(3, 5, 12, 0.96) 100%);
+    --dn-vignette: radial-gradient(700px 500px at 78% 18%, rgba(78, 168, 255, 0.18), transparent 70%), radial-gradient(620px 460px at 12% 84%, rgba(255, 47, 142, 0.14), transparent 72%), radial-gradient(ellipse at center, transparent 36%, rgba(0, 0, 0, 0.88) 100%);
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Crect width='1200' height='800' fill='%23070c18'/%3E%3Cg fill='%230d1526'%3E%3Cpath d='M0 800 L0 300 L120 420 L120 800 Z'/%3E%3Cpath d='M1200 800 L1200 300 L1080 420 L1080 800 Z'/%3E%3C/g%3E%3Cg stroke='%231b2b47' stroke-width='3' fill='none' opacity='0.9'%3E%3Cpath d='M180 800 L420 560 L780 560 L1020 800'/%3E%3Cpath d='M300 800 L470 600 L730 600 L900 800'/%3E%3C/g%3E%3Cg fill='%23091020'%3E%3Crect x='420' y='470' width='360' height='90'/%3E%3C/g%3E%3Cg stroke='%234ea8ff' stroke-width='4' stroke-linecap='round' fill='none' opacity='0.5'%3E%3Cpath d='M60 500 L130 452 L96 420 L176 386'/%3E%3Cpath d='M1050 330 L1112 300 L1082 268 L1150 242'/%3E%3C/g%3E%3Cg fill='%234ea8ff' opacity='0.8'%3E%3Ctext x='60' y='584' font-family='Impact, Haettenschweiler, sans-serif' font-size='60' letter-spacing='4' transform='rotate(-4 60 584)'%3EALONE%3C/text%3E%3C/g%3E%3Cg fill='%23ff2f8e' opacity='0.75'%3E%3Ctext x='900' y='620' font-family='Impact, Haettenschweiler, sans-serif' font-size='48' letter-spacing='3' transform='rotate(3 900 620)'%3EFRAUD%3C/text%3E%3C/g%3E%3Cg fill='%234ea8ff' opacity='0.22'%3E%3Ctext x='880' y='440' font-family='Impact, Haettenschweiler, sans-serif' font-size='210' transform='rotate(-2 880 440)'%3E57%3C/text%3E%3C/g%3E%3Cg stroke='%23222f4a' stroke-width='6' fill='none' opacity='0.9'%3E%3Ccircle cx='120' cy='250' r='86'/%3E%3Cpath d='M120 164 L120 336 M34 250 L206 250 M60 190 L180 310 M180 190 L60 310'/%3E%3C/g%3E%3Cg fill='%230d1526'%3E%3Cpath d='M700 250 C740 250 760 280 760 320 C760 356 736 376 700 376 C664 376 640 356 640 320 C640 280 660 250 700 250 Z'/%3E%3Crect x='694' y='210' width='12' height='48'/%3E%3C/g%3E%3Cg fill='%23ff2f8e' opacity='0.2'%3E%3Cpath d='M60 720 C40 660 60 620 100 610 C150 598 190 640 180 690 C172 732 120 750 88 736 Z'/%3E%3C/g%3E%3Cg fill='%234ea8ff' opacity='0.18'%3E%3Ccircle cx='1150' cy='700' r='30'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-flourish: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cg fill='%234ea8ff'%3E%3Cellipse cx='18' cy='18' rx='9' ry='7' opacity='0.85'/%3E%3Ccircle cx='30' cy='12' r='4' opacity='0.7'/%3E%3Ccircle cx='33' cy='24' r='2.6' opacity='0.6'/%3E%3Ccircle cx='12' cy='28' r='2' opacity='0.5'/%3E%3C/g%3E%3Ccircle cx='26' cy='32' r='3.4' fill='%23ff2f8e' opacity='0.6'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------- CONCLAVE · яхта, шампанское, кольцо */
+body[data-dn-mode="conclave"] {
+    --dn-a: #d8b877; --dn-a-hot: #ffe6b3; --dn-a2: #1f3550;
+    --dn-photo: url("backgrounds/conclave.jpg");
+    --dn-vignette: radial-gradient(620px 420px at 80% 22%, rgba(216, 184, 119, 0.18), transparent 70%), radial-gradient(620px 460px at 50% 104%, rgba(31, 53, 80, 0.2), transparent 72%), radial-gradient(ellipse at center, transparent 36%, rgba(0, 2, 6, 0.86) 100%);
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Cg stroke='%23d8b877' stroke-width='2' fill='none'%3E%3Ccircle cx='17' cy='21' r='9'/%3E%3Cpath d='M11 13 L17 4 L23 13 Z'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Crect width='1200' height='800' fill='%23070b12'/%3E%3Cg fill='%23101a28'%3E%3Crect x='0' y='380' width='1200' height='240'/%3E%3C/g%3E%3Cg stroke='%23c3d4e6' stroke-width='3' fill='none' opacity='0.28'%3E%3Cpath d='M0 430 Q150 414 300 430 T600 430 T900 430 T1200 430'/%3E%3Cpath d='M0 486 Q180 468 360 486 T720 486 T1200 486' opacity='0.7'/%3E%3C/g%3E%3Cg fill='%23131f2d'%3E%3Crect x='0' y='600' width='1200' height='200'/%3E%3C/g%3E%3Cg stroke='%23243446' stroke-width='3' fill='none'%3E%3Cpath d='M0 646 L1200 622 M0 708 L1200 680 M0 768 L1200 736'/%3E%3Cpath d='M300 600 L180 800 M600 600 L600 800 M900 600 L1020 800'/%3E%3C/g%3E%3Cg stroke='%23a98d55' stroke-width='6' fill='none' opacity='0.75'%3E%3Cpath d='M40 800 L40 604 M40 604 L300 594'/%3E%3Cpath d='M1160 800 L1160 604 M1160 604 L900 594'/%3E%3C/g%3E%3Cg stroke='%23a98d55' stroke-width='4' fill='none' opacity='0.6'%3E%3Cpath d='M150 800 L150 602 M250 800 L250 596'/%3E%3Cpath d='M1050 800 L1050 602 M950 800 L950 596'/%3E%3C/g%3E%3Cg fill='%23ffe6b3' opacity='0.85'%3E%3Ccircle cx='300' cy='600' r='5'/%3E%3Ccircle cx='480' cy='596' r='5'/%3E%3Ccircle cx='720' cy='596' r='5'/%3E%3Ccircle cx='900' cy='600' r='5'/%3E%3C/g%3E%3Cg fill='%23ffe6b3' opacity='0.08'%3E%3Crect x='292' y='596' width='16' height='204'/%3E%3Crect x='472' y='592' width='16' height='208'/%3E%3Crect x='712' y='592' width='16' height='208'/%3E%3Crect x='892' y='596' width='16' height='204'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* --------------------------- NIGHTFALL · заброшенный парк: карусель и колесо */
+body[data-dn-mode="nightfall"] {
+    --dn-a: #b6c4d2; --dn-a-hot: #f0f6ff; --dn-a2: #7a2530;
+    --dn-photo: url("backgrounds/nightfall.jpg");
+    --dn-wash: linear-gradient(180deg, rgba(5, 8, 12, 0.97) 0%, rgba(10, 14, 20, 0.6) 34%, rgba(8, 11, 16, 0.7) 66%, rgba(3, 4, 7, 0.96) 100%);
+    --dn-vignette: radial-gradient(680px 460px at 50% 106%, rgba(180, 70, 60, 0.12), transparent 72%), radial-gradient(ellipse at center, transparent 36%, rgba(0, 0, 0, 0.86) 100%);
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 36'%3E%3Cg stroke='%23b6c4d2' stroke-width='1.9' fill='none'%3E%3Cpath d='M4 10 Q17 2 30 10'/%3E%3Cpath d='M6 10 L28 10'/%3E%3Cpath d='M10 10 L10 30 M24 10 L24 30'/%3E%3Cellipse cx='17' cy='22' rx='7' ry='5'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg stroke='%23dde8f4' stroke-width='1.7' fill='none'%3E%3Cpath d='M3 8 Q12 1 21 8'/%3E%3Cpath d='M4 8 L20 8'/%3E%3Cpath d='M8 8 L8 20 M16 8 L16 20'/%3E%3Cellipse cx='12' cy='15' rx='4.6' ry='3.2'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-particles: radial-gradient(2px 2px at 22% 64%, rgba(255, 255, 255, 0.55) 50%, transparent 100%), radial-gradient(1.6px 1.6px at 58% 82%, rgba(232, 242, 252, 0.45) 50%, transparent 100%), radial-gradient(2px 2px at 84% 56%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
+    --dn-particles-size: 400px 400px;
+    --dn-particles-anim: dnmFall 20s linear infinite;
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Crect width='1200' height='800' fill='%230a0d12'/%3E%3Cg fill='%23131a22'%3E%3Cpath d='M0 640 L1200 620 L1200 800 L0 800 Z'/%3E%3C/g%3E%3Cg%3E%3Crect x='60' y='330' width='300' height='20' rx='4' fill='%23222b36'/%3E%3Cpath d='M50 330 Q135 268 220 330 Q305 268 390 330 L390 330 L50 330 Z' fill='%23222b36'/%3E%3Cpath d='M50 330 Q135 274 220 330 Q305 274 390 330 L390 336 Q305 288 220 340 Q135 288 50 336 Z' fill='%23334050'/%3E%3Crect x='76' y='350' width='12' height='250' fill='%23222b36'/%3E%3Crect x='332' y='350' width='12' height='250' fill='%23222b36'/%3E%3Crect x='150' y='350' width='9' height='250' fill='%23222b36'/%3E%3Crect x='272' y='350' width='9' height='250' fill='%23222b36'/%3E%3Cg fill='%232c3744'%3E%3Cellipse cx='130' cy='470' rx='34' ry='19'/%3E%3Crect x='112' y='486' width='8' height='34'/%3E%3Crect x='144' y='486' width='8' height='34'/%3E%3Cpath d='M96 464 L104 436 L116 462 Z'/%3E%3C/g%3E%3Cg fill='%232c3744'%3E%3Cellipse cx='300' cy='484' rx='30' ry='17'/%3E%3Crect x='284' y='498' width='7' height='30'/%3E%3Crect x='312' y='498' width='7' height='30'/%3E%3C/g%3E%3C/g%3E%3Cg stroke='%23242d38' stroke-width='6' fill='none'%3E%3Ccircle cx='980' cy='420' r='180'/%3E%3Ccircle cx='980' cy='420' r='24'/%3E%3Cpath d='M980 240 L980 600 M800 420 L1160 420 M858 298 L1102 542 M1102 298 L858 542'/%3E%3C/g%3E%3Cg fill='%23242d38'%3E%3Crect x='800' y='500' width='26' height='18' rx='3'/%3E%3Crect x='1040' y='356' width='26' height='18' rx='3'/%3E%3Crect x='872' y='284' width='20' height='16' rx='3'/%3E%3Crect x='1064' y='520' width='20' height='16' rx='3'/%3E%3C/g%3E%3Cg stroke='%232a333f' stroke-width='5' fill='none'%3E%3Cpath d='M600 560 L600 640 M540 640 L660 640'/%3E%3C/g%3E%3Cg fill='%23e8c98f'%3E%3Ccircle cx='470' cy='300' r='4' opacity='0.7'/%3E%3Ccircle cx='520' cy='292' r='4' opacity='0.6'/%3E%3Ccircle cx='570' cy='286' r='4' opacity='0.5'/%3E%3C/g%3E%3Cg stroke='%231b222b' stroke-width='3' fill='none' opacity='0.8'%3E%3Cpath d='M440 312 Q520 268 600 300'/%3E%3C/g%3E%3Cg fill='%23090c10'%3E%3Crect x='120' y='600' width='300' height='120' rx='10'/%3E%3Crect x='150' y='620' width='90' height='60' rx='4' fill='%23171f28'/%3E%3Crect x='260' y='620' width='120' height='60' rx='4' fill='%23171f28'/%3E%3C/g%3E%3Cg fill='%23c8d4e0' opacity='0.28'%3E%3Cpath d='M0 626 Q300 604 600 620 T1200 608 L1200 646 Q900 626 600 642 T0 666 Z'/%3E%3C/g%3E%3C/svg%3E");
 }
