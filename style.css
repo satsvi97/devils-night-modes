@@ -1647,7 +1647,7 @@ body::after {
         var(--dn-vignette, radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.75) 100%)) !important;
     background-size: 430px 430px, 100% 100% !important;
     background-repeat: repeat, no-repeat !important;
-    background-position: 0 0, 0 0 !important;
+    background-position: 0 0, 0 0;
     animation: dnmDustPos 44s linear infinite !important;
 }
 @keyframes dnmDustPos {
@@ -1704,7 +1704,7 @@ body::after {
         var(--dn-vignette, radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.75) 100%)) !important;
     background-size: 340px 340px, 100% 100% !important;
     background-repeat: repeat, no-repeat !important;
-    background-position: 0 0, 0 0 !important;
+    background-position: 0 0, 0 0;
     animation: dnmDustPos 16s linear infinite !important;
 }
 @keyframes dnmDustPos {
@@ -1736,7 +1736,7 @@ body::after {
         var(--dn-vignette, radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.75) 100%)) !important;
     background-size: 340px 340px, 100% 100% !important;
     background-repeat: repeat, no-repeat !important;
-    background-position: 0 0, 0 0 !important;
+    background-position: 0 0, 0 0;
     animation: dnmDustPos 16s linear infinite !important;
 }
 /* виньетка одним слоем */
