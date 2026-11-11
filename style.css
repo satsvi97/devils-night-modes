@@ -1880,3 +1880,80 @@ body:has(#character_popup:not(.closed)) #send_but {
     opacity: 1 !important;
 }
 #mes_stop.displayNone { display: none !important; }
+
+/* =====================================================================
+   1.2.6 — отправка и стоп в одном месте, кольцо вокруг квадрата
+   ===================================================================== */
+
+/* общий слот: обе кнопки одинакового размера и на одном месте */
+#send_but,
+#mes_stop {
+    width: 45px !important;
+    height: 45px !important;
+    min-width: 45px !important;
+    flex: 0 0 45px !important;
+    border-radius: 50% !important;
+    position: relative !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
+}
+
+/* нативное содержимое стопа скрываем — рисуем своё */
+#mes_stop i,
+#mes_stop svg { display: none !important; }
+
+/* квадрат «стоп» */
+#mes_stop::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 2.5px !important;
+    background: var(--dn-a-hot) !important;
+    box-shadow: 0 0 12px color-mix(in srgb, var(--dn-a) 80%, transparent) !important;
+    transform: translate(-50%, -50%) !important;
+    display: block !important;
+    opacity: 1 !important;
+    transition: transform 0.15s ease !important;
+}
+
+/* вращающееся кольцо внутри кнопки, вокруг квадрата */
+#mes_stop::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 5px !important;
+    border-radius: 50% !important;
+    border: 2px solid color-mix(in srgb, var(--dn-a) 26%, transparent) !important;
+    border-top-color: var(--dn-a-hot) !important;
+    border-right-color: color-mix(in srgb, var(--dn-a-hot) 55%, transparent) !important;
+    animation: dnmSpin 0.9s linear infinite !important;
+    display: block !important;
+    opacity: 1 !important;
+    pointer-events: none !important;
+}
+@keyframes dnmSpin { to { transform: rotate(360deg); } }
+
+#mes_stop:hover::after { transform: translate(-50%, -50%) scale(1.12) !important; }
+#mes_stop:hover::before { border-top-color: #fff !important; }
+
+/* рамка-ободок, как у кнопки отправки */
+#mes_stop {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dn-a) 30%, transparent) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* уважаем любые способы, которыми ST прячет кнопки */
+#send_but.displayNone,
+#mes_stop.displayNone { display: none !important; }
+#send_but[style*="display: none"],
+#mes_stop[style*="display: none"] { display: none !important; }
+
+/* самолётик не показывается, когда идёт генерация */
+body[data-generating="true"] #send_but { display: none !important; }
