@@ -1,0 +1,11 @@
+{
+    "display_name": "Devil's Night Modes",
+    "loading_order": 20,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "style.css",
+    "author": "Selena's Tavern",
+    "version": "1.0.0",
+    "homePage": "https://github.com/satsvi97/scene-panel"
+}

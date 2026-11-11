@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Devil's Night Modes — превью</title>
+<link rel="stylesheet" href="../devils-night-modes/style.css">
+<style>
+  /* минимальная оболочка «как в SillyTavern», чтобы видеть тему без установки */
+  :root {
+    --SmartThemeChatTintColor: rgba(18, 14, 26, 0.45);
+    --SmartThemeBlurStrength: 11px;
+    --SmartThemeBorderColor: rgba(180, 170, 255, 0.3);
+    --SmartThemeBodyColor: #e6e6fa;
+    --mainFontSize: 16px;
+    --sheldWidth: 62vw;
+    --topBarBlockSize: 44px;
+    --bottomFormBlockSize: 88px;
+  }
+  html, body { margin: 0; height: 100%; }
+  body { overflow: hidden; }
+  #bg_custom, #bg1 { position: absolute; inset: 0; }
+  #bg1 {
+    z-index: -3;
+    background-image:
+      radial-gradient(circle at 20% 30%, #3b2f5e, transparent 55%),
+      radial-gradient(circle at 78% 62%, #6d4b8a, transparent 60%),
+      radial-gradient(circle at 50% 95%, #241a38, transparent 70%),
+      linear-gradient(160deg, #1a1428, #2b2144 45%, #120d1c);
+  }
+  #bg_custom { z-index: -2; }
+  #top-bar {
+    position: absolute; top: 0; left: 0; right: 0; height: var(--topBarBlockSize);
+    z-index: 3005;
+  }
+  #top-settings-holder { display: flex; justify-content: center; gap: 4px; height: 100%; align-items: center; }
+  .drawer-icon { display: inline-block; width: 38px; height: 38px; }
+  #sheld {
+    position: absolute; z-index: 30;
+    top: var(--topBarBlockSize); left: 0; right: 0;
+    height: calc(100dvh - var(--topBarBlockSize));
+    display: flex; flex-direction: column;
+    width: var(--sheldWidth); margin: 0 auto;
+  }
+  #chat {
+    flex: 1; overflow-y: auto;
+    background-color: var(--SmartThemeChatTintColor);
+    backdrop-filter: blur(var(--SmartThemeBlurStrength));
+  }
+  #form_sheld { width: 100%; }
+  #nonQRFormItems { display: flex; align-items: center; gap: 6px; padding: 4px 8px; }
+  #send_textarea {
+    flex: 1; resize: none; height: 38px; border: 0; outline: none; background: transparent;
+    font-size: 15px; padding: 8px 6px;
+  }
+  #leftSendForm, #rightSendForm { display: flex; align-items: center; gap: 6px; }
+  .mes_buttons { display: none; }
+  .flex-container { display: flex; }
+  .justifySpaceBetween { justify-content: space-between; }
+  .alignitemscenter, .alignItemsBaseline { align-items: center; }
+  .flex1 { flex: 1; }
+  .ch_name small { margin-left: 8px; }
+  #demo-bar {
+    position: fixed; right: 14px; top: 56px; z-index: 5000;
+    display: flex; flex-direction: column; gap: 2px; padding: 6px;
+    border-radius: 12px; background: rgba(10, 10, 14, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-family: Inter, sans-serif; font-size: 12px;
+    backdrop-filter: blur(10px);
+  }
+  #demo-bar button {
+    border: 0; background: transparent; color: #e8e6f2; text-align: left;
+    padding: 6px 10px; border-radius: 7px; cursor: pointer; font-size: 12px;
+  }
+  #demo-bar button:hover { background: rgba(255, 255, 255, 0.08); }
+  #demo-bar button.active { background: rgba(255, 255, 255, 0.16); }
+</style>
+</head>
+<body class="no-blur">
+  <div id="bg_custom"></div>
+  <div id="bg1"></div>
+
+  <div id="top-bar">
+    <div id="top-settings-holder">
+      <div id="leftNavDrawerIcon" class="drawer-icon fa-solid fa-bars"></div>
+      <div id="sys-settings-button"><div class="drawer-icon fa-solid fa-cog"></div></div>
+      <div id="advanced-formatting-button"><div class="drawer-icon fa-solid fa-font"></div></div>
+      <div id="user-settings-button"><div class="drawer-icon fa-solid fa-user-cog"></div></div>
+      <div id="rightNavDrawerIcon" class="drawer-icon fa-solid fa-bars"></div>
+    </div>
+  </div>
+
+  <div id="demo-bar">
+    <button data-mode="corrupt" class="active">Corrupt</button>
+    <button data-mode="hideaway">Hideaway</button>
+    <button data-mode="killswitch">Kill Switch</button>
+    <button data-mode="nightfall">Nightfall</button>
+    <button data-mode="conclave">Conclave</button>
+    <button data-mode="punk57">Punk 57</button>
+    <button data-mode="off">Выключить</button>
+  </div>
+
+  <div id="sheld">
+    <div id="chat"></div>
+    <div id="form_sheld">
+      <div id="send_form">
+        <div id="nonQRFormItems">
+          <div id="leftSendForm"><div id="options_button" class="fa-solid fa-bars"></div></div>
+          <textarea id="send_textarea" placeholder="Type a message"></textarea>
+          <div id="rightSendForm">
+            <div id="extensionsMenuButton" class="fa-solid fa-plus"></div>
+            <div id="send_but" class="fa-solid fa-paper-plane"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const AV = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400">
+       <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+         <stop offset="0" stop-color="#4a3a6b"/><stop offset="1" stop-color="#8d6fae"/>
+       </linearGradient></defs>
+       <rect width="600" height="400" fill="url(#g)"/>
+       <circle cx="300" cy="150" r="90" fill="#c9b8e0" opacity="0.55"/>
+     </svg>`);
+
+  function makeMes({ name, text, user }) {
+    const m = document.createElement('div');
+    m.className = 'mes';
+    m.setAttribute('is_user', String(!!user));
+    m.setAttribute('is_system', 'false');
+    m.innerHTML = `
+      <div class="mesAvatarWrapper">
+        <div class="avatar"><img src="${AV}"></div>
+        <div class="mesIDDisplay">#12</div>
+        <div class="mes_timer">4.2s</div>
+        <div class="tokenCounterDisplay">1234 tok</div>
+      </div>
+      <div class="mes_block">
+        <div class="ch_name flex-container justifySpaceBetween">
+          <div class="flex-container flex1 alignitemscenter">
+            <div class="flex-container alignItemsBaseline">
+              <span class="name_text">${name}</span>
+              <small class="timestamp">13:37</small>
+            </div>
+          </div>
+        </div>
+        <div class="mes_text">${text}</div>
+      </div>`;
+    return m;
+  }
+
+  const chat = document.getElementById('chat');
+  chat.append(makeMes({
+    name: 'Эхо Песков',
+    text: `<p>Владыка Двора Ночи медленно обернулся к ней. В его сиреневых глазах звёзды вспыхнули ярче.</p>
+           <p><em>— Все помнят, Фейра, — прошептал он так тихо, что слова едва долетели.</em></p>
+           <p>Он снова взглянул на Селену. На её бледную кожу, на сияющий полумесяц, на слишком ясные, слишком старые для такого молодого лица глаза.</p>`
+  }));
+  chat.append(makeMes({
+    name: 'Ты',
+    user: true,
+    text: '<p>— Тогда скажи мне правду. Не ту, что удобна. Ту, из-за которой ты не спишь.</p>'
+  }));
+
+  document.querySelectorAll('#demo-bar button').forEach((b) => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#demo-bar button').forEach((x) => x.classList.remove('active'));
+      b.classList.add('active');
+      if (b.dataset.mode === 'off') document.body.removeAttribute('data-dn-mode');
+      else document.body.setAttribute('data-dn-mode', b.dataset.mode);
+    });
+  });
+  document.body.setAttribute('data-dn-mode', 'corrupt');
+</script>
+</body>
+</html>

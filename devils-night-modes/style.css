@@ -1,0 +1,870 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,500&family=Lora:ital,wght@0,600;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&family=Caveat:wght@500;600&display=swap');
+
+/* =====================================================================
+   DEVIL'S NIGHT MODES — один движок, шесть книг
+   body[data-dn-mode="corrupt|hideaway|killswitch|nightfall|conclave|punk57"]
+   Без атрибута тема выглядит как «Corrupt».
+   ===================================================================== */
+
+:root,
+body {
+    --dn-a:        #e0a15e;   /* акцент */
+    --dn-a-hot:    #ffc98a;   /* акцент яркий */
+    --dn-a2:       #a3182b;   /* второй цвет */
+    --dn-ink:      #f2e9df;   /* текст */
+    --dn-muted:    #9a8f92;   /* служебный текст */
+    --dn-p1:       rgba(23, 23, 33, 0.90);
+    --dn-p2:       rgba(9, 10, 15, 0.95);
+    --dn-line:     rgba(240, 226, 210, 0.09);
+    --dn-radius:   16px;
+    --dn-name-font: 'Playfair Display', serif;
+    --dn-name-size: 1.5em;
+    --dn-name-track: 0.05em;
+    --dn-name-transform: none;
+    --dn-body-font: 'Inter', sans-serif;
+    --dn-grain:    0.15;
+    --dn-motif:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 68 52'%3E%3Cpath d='M14 20 C8 8 4 4 2 2 C4 14 10 20 14 24 Z' fill='%23e0a15e'/%3E%3Cpath d='M54 20 C60 8 64 4 66 2 C64 14 58 20 54 24 Z' fill='%23e0a15e'/%3E%3Cpath d='M34 12 C22 12 16 22 16 30 C16 41 24 48 34 50 C44 48 52 41 52 30 C52 22 46 12 34 12 Z' fill='%23e0a15e'/%3E%3Cpath d='M25 27 C27 25 31 25 33 27 C31 30 27 30 25 27 Z' fill='%230a0b10'/%3E%3Cpath d='M35 27 C37 25 41 25 43 27 C41 30 37 30 35 27 Z' fill='%230a0b10'/%3E%3Cpath d='M30 40 L34 43 L38 40' stroke='%230a0b10' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");
+    --icon-size:   38px;
+}
+
+/* ====== ОБЩЕЕ ====== */
+body {
+    font-family: var(--dn-body-font) !important;
+    font-weight: 400 !important;
+    color: var(--dn-ink) !important;
+    background-color: #0a0b10 !important;
+}
+
+::selection { background: color-mix(in srgb, var(--dn-a2) 55%, transparent) !important; color: #fff !important; }
+
+body.bubblechat .mes, .mes {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 18px 12px;
+}
+
+#chat .mes_block {
+    position: relative !important;
+    background:
+        radial-gradient(120% 80% at 50% -10%, color-mix(in srgb, var(--dn-a) 14%, transparent), transparent 58%),
+        linear-gradient(180deg, var(--dn-p1), var(--dn-p2)) !important;
+    backdrop-filter: blur(10px) saturate(110%) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(110%) !important;
+    border: 1px solid var(--dn-line) !important;
+    border-left: 2px solid color-mix(in srgb, var(--dn-a) 62%, transparent) !important;
+    border-radius: 4px var(--dn-radius) var(--dn-radius) 4px !important;
+    box-shadow:
+        0 24px 48px -26px rgba(0, 0, 0, 1),
+        inset 0 1px 0 rgba(255, 245, 230, 0.05) !important;
+    padding: 22px !important;
+    width: 95% !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    transition: border-color 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+#chat .mes_block:hover {
+    border-color: color-mix(in srgb, var(--dn-a) 45%, transparent) !important;
+    box-shadow:
+        0 26px 55px -26px rgba(0, 0, 0, 1),
+        0 0 42px -16px color-mix(in srgb, var(--dn-a) 60%, transparent),
+        inset 0 1px 0 rgba(255, 245, 230, 0.07) !important;
+}
+
+#chat .mes_block::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0; left: 0; right: 0;
+    height: 1px !important;
+    background: linear-gradient(90deg,
+        color-mix(in srgb, var(--dn-a-hot) 80%, transparent),
+        color-mix(in srgb, var(--dn-a) 22%, transparent) 45%,
+        transparent 78%) !important;
+    pointer-events: none !important;
+}
+
+#chat .mes_block::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 9px; right: 9px;
+    width: 16px; height: 16px;
+    border-top: 1px solid color-mix(in srgb, var(--dn-a) 45%, transparent) !important;
+    border-right: 1px solid color-mix(in srgb, var(--dn-a) 45%, transparent) !important;
+    pointer-events: none !important;
+}
+
+/* ====== АВАТАРКИ ====== */
+.mes .mesAvatarWrapper::after, .mes .avatar::after { display: none !important; content: none !important; }
+.mes .avatar {
+    width: 250px !important; height: 250px !important;
+    position: relative !important; margin: 0 auto 15px auto !important;
+}
+.mes .avatar img {
+    width: 95% !important; height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 3px 18px 3px 18px !important;
+    border: 1px solid rgba(240, 226, 210, 0.12) !important;
+    filter: saturate(0.96) contrast(1.06) brightness(0.94) !important;
+    box-shadow:
+        0 32px 60px -28px rgba(0, 0, 0, 1),
+        0 0 45px -14px color-mix(in srgb, var(--dn-a) 45%, transparent) !important;
+    -webkit-mask-image: linear-gradient(to bottom, #000 84%, transparent 100%) !important;
+    mask-image: linear-gradient(to bottom, #000 84%, transparent 100%) !important;
+    transition: filter 0.5s ease, box-shadow 0.5s ease !important;
+}
+.mes .avatar:hover img {
+    filter: saturate(1.06) contrast(1.08) brightness(1.03) !important;
+    box-shadow:
+        0 34px 65px -28px rgba(0, 0, 0, 1),
+        0 0 75px -20px color-mix(in srgb, var(--dn-a-hot) 60%, transparent) !important;
+}
+@media screen and (min-width: 1024px) {
+    .mes .avatar { width: 850px !important; height: 350px !important; }
+    .mes .avatar img { border-radius: 4px 22px 4px 22px !important; }
+}
+
+/* ====== ИМЕНА ====== */
+.mes_block .ch_name {
+    display: flex !important; flex-direction: column !important;
+    align-items: center !important; justify-content: center !important;
+    padding: 10px !important; width: 100% !important; margin-bottom: 15px;
+}
+.mes_block .ch_name::before {
+    content: '' !important;
+    display: block !important;
+    width: 34px !important; height: 26px !important;
+    margin-bottom: 10px !important;
+    background: var(--dn-motif) center / contain no-repeat !important;
+    opacity: 0.8 !important;
+    filter: drop-shadow(0 0 9px color-mix(in srgb, var(--dn-a) 75%, transparent)) !important;
+    animation: dnmMotif 6s ease-in-out infinite !important;
+}
+@keyframes dnmMotif {
+    0%, 100% { opacity: 0.6; }
+    50%      { opacity: 1; }
+}
+.mes_block .ch_name::after {
+    content: '' !important;
+    display: block !important;
+    width: 84px !important; height: 1px !important;
+    margin: 10px auto 0 auto !important;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--dn-a) 85%, transparent), transparent) !important;
+    box-shadow: 0 0 12px color-mix(in srgb, var(--dn-a) 55%, transparent) !important;
+}
+.name_text {
+    font-family: var(--dn-name-font) !important;
+    font-weight: 600 !important;
+    font-size: var(--dn-name-size) !important;
+    color: var(--dn-ink) !important;
+    letter-spacing: var(--dn-name-track) !important;
+    text-transform: var(--dn-name-transform) !important;
+    text-shadow: 0 0 22px color-mix(in srgb, var(--dn-a) 40%, transparent), 0 2px 0 rgba(0, 0, 0, 0.8) !important;
+}
+.name_text::before, .name_text::after {
+    color: var(--dn-a) !important;
+    margin: 0 9px !important;
+    font-size: 0.9em !important;
+    text-shadow: 0 0 12px color-mix(in srgb, var(--dn-a) 70%, transparent) !important;
+}
+.name_text::before { content: '·' !important; }
+.name_text::after  { content: '·' !important; }
+.timestamp {
+    font-family: 'JetBrains Mono', monospace !important;
+    color: var(--dn-muted) !important;
+    font-size: 0.7em !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+}
+
+/* ====== СЧЕТЧИКИ ====== */
+.mesAvatarWrapper {
+    position: relative !important; display: flex !important; flex-wrap: wrap !important;
+    justify-content: center !important; min-height: 280px !important;
+    gap: 8px !important; padding-bottom: 10px !important; margin-bottom: -2px !important;
+}
+.mesAvatarWrapper > .avatar { flex-basis: 100% !important; display: flex !important; justify-content: center !important; margin-bottom: 10px !important; }
+.mesAvatarWrapper > .mesIDDisplay,
+.mesAvatarWrapper > .mes_timer,
+.mesAvatarWrapper > .tokenCounterDisplay {
+    display: inline-flex !important; align-items: center !important;
+    max-height: 20px !important; padding: 4px 12px !important; border-radius: 3px !important;
+    font-family: 'JetBrains Mono', monospace !important; font-size: 0.7em !important;
+    border: 1px solid var(--dn-line) !important;
+    color: var(--dn-muted) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* ====== ТЕКСТ ====== */
+.mes_text {
+    background: transparent !important;
+    padding: 16px 14px;
+    font-size: 1em !important; font-weight: 400 !important;
+    line-height: 1.8 !important;
+    color: var(--dn-ink) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75) !important;
+    width: 100% !important; border: none !important;
+}
+.mes_text em, .mes_text i {
+    font-style: italic !important;
+    color: color-mix(in srgb, var(--dn-a) 70%, var(--dn-ink)) !important;
+}
+.mes_text strong, .mes_text b {
+    color: #fff !important; font-weight: 600 !important;
+    text-shadow: 0 0 16px color-mix(in srgb, var(--dn-a) 45%, transparent) !important;
+}
+.mes_text q, .mes_text blockquote {
+    display: block !important; margin: 0.7em 0 !important; padding: 0.7em 1.1em !important;
+    border-left: 2px solid var(--dn-a) !important; border-radius: 0 8px 8px 0 !important;
+    background: color-mix(in srgb, var(--dn-a) 9%, transparent) !important;
+    font-style: italic !important;
+}
+.mes_text code, .mes_text pre {
+    font-family: 'JetBrains Mono', monospace !important;
+    background: rgba(0, 0, 0, 0.35) !important;
+    border: 1px solid color-mix(in srgb, var(--dn-a) 22%, transparent) !important;
+    border-radius: 5px !important;
+    color: var(--dn-a-hot) !important;
+}
+.mes_text pre { padding: 10px 12px !important; }
+.mes_text a { color: var(--dn-a-hot) !important; text-decoration: underline dotted !important; }
+.mes_text img { border-radius: 8px !important; }
+.mes_text hr {
+    border: none !important; height: 1px !important;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--dn-a) 60%, transparent), transparent) !important;
+    margin: 1.2em 0 !important;
+}
+
+/* ====== ПАНЕЛЬ ВВОДА ====== */
+#form_sheld, #nonQRFormItems, #send_textarea {
+    background: transparent !important; background-color: transparent !important;
+    background-image: none !important; border: none !important;
+    position: relative !important; z-index: 2 !important;
+}
+#send_form {
+    position: relative !important;
+    overflow: visible !important;
+    background:
+        radial-gradient(120% 100% at 50% 130%, color-mix(in srgb, var(--dn-a) 12%, transparent), transparent 62%),
+        linear-gradient(160deg, var(--dn-p1), var(--dn-p2)) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid var(--dn-line) !important;
+    border-top: 1px solid color-mix(in srgb, var(--dn-a) 45%, transparent) !important;
+    border-radius: 12px !important;
+    margin: 10px auto !important;
+    width: 95% !important;
+    padding: 8px !important;
+    box-shadow: 0 0 34px -18px color-mix(in srgb, var(--dn-a) 80%, transparent) !important;
+}
+#send_textarea {
+    font-family: var(--dn-body-font) !important;
+    font-size: 15px !important;
+    color: var(--dn-ink) !important;
+    caret-color: var(--dn-a-hot) !important;
+    -webkit-appearance: none !important; box-shadow: none !important; border-radius: 0 !important;
+}
+#nonQRFormItems:has(#send_textarea:placeholder-shown)::before {
+    content: var(--dn-hint, "Скажи это в темноте...  ✖") !important;
+    position: absolute !important; top: 50% !important; left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    font-family: var(--dn-name-font) !important; font-style: italic !important;
+    color: color-mix(in srgb, var(--dn-a) 70%, transparent) !important;
+    font-size: 15px !important;
+    pointer-events: none !important; z-index: 3 !important;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.9) !important;
+    white-space: nowrap !important;
+}
+#send_textarea::placeholder { color: transparent !important; }
+
+/* ====== КОНТРОЛЫ ====== */
+input[type="range"] {
+    -webkit-appearance: none !important;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.12), color-mix(in srgb, var(--dn-a) 65%, transparent)) !important;
+    height: 6px !important; border-radius: 3px !important;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    width: 20px !important; height: 20px !important; border-radius: 50% !important;
+    background: radial-gradient(circle, var(--dn-a-hot) 30%, color-mix(in srgb, var(--dn-a2) 80%, #000) 100%) !important;
+    border: none !important; cursor: pointer !important;
+    box-shadow: 0 0 16px color-mix(in srgb, var(--dn-a) 85%, transparent), 0 2px 6px rgba(0, 0, 0, 0.85) !important;
+}
+input[type="checkbox"] {
+    -webkit-appearance: none !important; appearance: none !important;
+    width: 20px !important; height: 20px !important;
+    border: 1.5px solid color-mix(in srgb, var(--dn-a) 45%, transparent) !important;
+    border-radius: 3px !important; background-color: transparent !important;
+    display: inline-block !important; position: relative !important;
+    cursor: pointer !important; vertical-align: middle !important; margin-right: 10px !important;
+    transition: all 0.2s ease !important;
+}
+input[type="checkbox"]:checked {
+    background-color: var(--dn-a2) !important;
+    border-color: var(--dn-a) !important;
+    box-shadow: 0 0 14px -2px color-mix(in srgb, var(--dn-a) 85%, transparent) !important;
+}
+input[type="checkbox"]:checked::after {
+    content: '✔' !important; position: absolute !important; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) !important;
+    color: var(--dn-ink) !important; font-size: 12px !important; font-weight: bold !important; line-height: 1 !important;
+}
+#chat .mes input[type="checkbox"], .mesAvatarWrapper input[type="checkbox"] { display: none !important; }
+
+::-webkit-scrollbar { width: 7px !important; height: 7px !important; }
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--dn-a) 70%, transparent), color-mix(in srgb, var(--dn-a2) 80%, #000)) !important;
+    border-radius: 2px !important;
+}
+::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.35) !important; }
+
+/* ====== КНОПКА ОТПРАВКИ ====== */
+#send_but {
+    background: transparent !important; background-image: none !important;
+    border: none !important;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dn-a) 30%, transparent) !important;
+    border-radius: 50% !important;
+    position: relative !important;
+    width: 45px !important; height: 45px !important;
+    padding: 0 !important; overflow: visible !important;
+}
+#send_but::before { display: none !important; content: none !important; background: none !important; }
+#send_but * { display: none !important; visibility: hidden !important; opacity: 0 !important; }
+#send_but::after {
+    content: '➤' !important;
+    display: block !important; position: absolute !important; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) !important;
+    font-size: 22px !important;
+    color: var(--dn-a-hot) !important;
+    text-shadow: 0 0 12px color-mix(in srgb, var(--dn-a) 95%, transparent) !important;
+    z-index: 9999 !important; pointer-events: none !important;
+    visibility: visible !important; opacity: 1 !important;
+    transition: transform 0.2s ease, color 0.2s ease !important;
+    animation: dnmBeacon 4.5s ease-in-out infinite !important;
+}
+#send_but:hover::after { transform: translate(-50%, -50%) scale(1.15) !important; color: #fff !important; }
+@keyframes dnmBeacon {
+    0%, 100% { opacity: 0.8; }
+    50%      { opacity: 1; }
+}
+body:has(#character_popup:not(.closed)) #send_but { display: none !important; }
+
+/* ====== НИЖНИЕ ИКОНКИ ====== */
+#extensionsMenuButton { background: none !important; border: none !important; position: relative !important; font-size: 0 !important; }
+#extensionsMenuButton::before, #extensionsMenuButton i, #extensionsMenuButton img { display: none !important; }
+#extensionsMenuButton::after {
+    content: '✚' !important;
+    position: absolute !important; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) !important;
+    font-size: 22px !important; color: var(--dn-muted) !important; z-index: 10 !important;
+    transition: color 0.2s ease !important;
+}
+#extensionsMenuButton:hover::after { color: var(--dn-a-hot) !important; }
+
+#options_button { background: transparent !important; border: none !important; position: relative !important; font-size: 0 !important; }
+#options_button::before, #options_button i { display: none !important; }
+#options_button::after {
+    content: '≡' !important;
+    position: absolute !important; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) !important;
+    font-size: 25px !important; color: var(--dn-muted) !important; z-index: 10 !important;
+    transition: color 0.2s ease !important;
+}
+#options_button:hover::after { color: var(--dn-a-hot) !important; }
+
+#qr_button { background: transparent !important; border: none !important; position: relative !important; font-size: 0 !important; }
+#qr_button::before, #qr_button i { display: none !important; }
+#qr_button::after {
+    content: '✦' !important;
+    position: absolute !important; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) !important;
+    font-size: 22px !important; color: var(--dn-muted) !important; z-index: 10 !important;
+    transition: color 0.2s ease !important;
+}
+#qr_button:hover::after { color: var(--dn-a-hot) !important; }
+
+.notification-badge, .badge, .fa-solid + .badge {
+    background-color: var(--dn-a2) !important;
+    color: var(--dn-ink) !important;
+    border: 1px solid color-mix(in srgb, var(--dn-a) 60%, transparent) !important;
+    font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* ====== ВЕРХНИЕ ИКОНКИ ====== */
+#leftNavDrawerIcon, #rightNavDrawerIcon,
+#sys-settings-button .drawer-icon,
+#advanced-formatting-button .drawer-icon,
+#WI-SP-button .drawer-icon,
+#user-settings-button .drawer-icon,
+#backgrounds-button .drawer-icon,
+#extensions-settings-button .drawer-icon,
+#persona-management-button .drawer-icon {
+    font-size: 0 !important; color: transparent !important;
+    width: var(--icon-size) !important; height: var(--icon-size) !important;
+    display: flex !important; align-items: center !important; justify-content: center !important;
+}
+#leftNavDrawerIcon::before,
+#rightNavDrawerIcon::before,
+#sys-settings-button .drawer-icon::before,
+#advanced-formatting-button .drawer-icon::before,
+#WI-SP-button .drawer-icon::before,
+#user-settings-button .drawer-icon::before,
+#backgrounds-button .drawer-icon::before,
+#extensions-settings-button .drawer-icon::before,
+#persona-management-button .drawer-icon::before {
+    content: '✦' !important;
+    background: transparent !important;
+    -webkit-mask-image: none !important; mask-image: none !important;
+    color: color-mix(in srgb, var(--dn-ink) 55%, transparent) !important;
+    font-size: 21px !important;
+    text-shadow: 0 0 12px color-mix(in srgb, var(--dn-a) 50%, transparent) !important;
+    width: var(--icon-size) !important; height: var(--icon-size) !important;
+    display: flex !important; align-items: center !important; justify-content: center !important;
+}
+#leftNavDrawerIcon:hover::before,
+#rightNavDrawerIcon:hover::before,
+#sys-settings-button:hover .drawer-icon::before,
+#advanced-formatting-button:hover .drawer-icon::before,
+#WI-SP-button:hover .drawer-icon::before,
+#user-settings-button:hover .drawer-icon::before,
+#backgrounds-button:hover .drawer-icon::before,
+#extensions-settings-button:hover .drawer-icon::before,
+#persona-management-button:hover .drawer-icon::before {
+    color: var(--dn-a-hot) !important;
+    text-shadow: 0 0 16px color-mix(in srgb, var(--dn-a) 95%, transparent) !important;
+}
+
+#top-bar {
+    background: rgba(10, 11, 16, 0.9) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--dn-a) 22%, transparent) !important;
+    box-shadow: 0 12px 30px -22px rgba(0, 0, 0, 1) !important;
+}
+#top-settings-holder { background: transparent !important; }
+
+/* ====== ФИКСЫ ====== */
+.mes[is_user="false"] + .mes[is_user="false"] .mesAvatarWrapper { display: none !important; }
+.mes[is_user="false"] + .mes[is_user="false"] .ch_name { display: none !important; }
+.mes[is_user="false"] + .mes[is_user="false"] .mes_block {
+    margin-top: -10px !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+.mes[is_system="true"]:not(:has(img)),
+.mes.toolCall:not(:has(img)) { display: none !important; }
+.swipes-counter, .mes_img_swipes { display: none !important; }
+
+.mes[is_user="true"] .mes_block {
+    border-left: 2px solid color-mix(in srgb, var(--dn-a2) 80%, transparent) !important;
+    background:
+        radial-gradient(120% 80% at 50% -10%, color-mix(in srgb, var(--dn-a2) 16%, transparent), transparent 58%),
+        linear-gradient(180deg, var(--dn-p1), var(--dn-p2)) !important;
+}
+
+#load-spinner { font-size: 0 !important; animation: none !important; }
+#load-spinner::before {
+    content: '' !important; display: block !important;
+    width: 46px !important; height: 46px !important; margin: 0 auto !important;
+    border: 2px solid rgba(255, 255, 255, 0.08) !important;
+    border-top-color: var(--dn-a-hot) !important;
+    border-right-color: color-mix(in srgb, var(--dn-a) 45%, transparent) !important;
+    border-radius: 50% !important;
+    animation: dnmSpin 1.2s linear infinite !important;
+    box-shadow: 0 0 22px -4px color-mix(in srgb, var(--dn-a) 80%, transparent) !important;
+}
+@keyframes dnmSpin { to { transform: rotate(360deg); } }
+
+/* =====================================================================
+   СЦЕНА И АТМОСФЕРА — общий слой, подставляется переменными
+   ===================================================================== */
+#bg_custom::before {
+    content: '';
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -2;
+    will-change: transform;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E"),
+        var(--dn-scene, none),
+        var(--dn-wash, linear-gradient(180deg, rgba(5, 6, 10, 0.96) 0%, rgba(9, 10, 16, 0.55) 34%, rgba(8, 8, 13, 0.62) 62%, rgba(3, 4, 8, 0.92) 100%));
+    background-repeat: repeat, no-repeat, no-repeat;
+    background-size: 180px 180px, 100% 100%, 100% 100%;
+    background-position: 0 0, 0 0, 0 0;
+    transform-origin: 50% 100%;
+    animation: dnmScene 95s ease-in-out infinite alternate;
+}
+@keyframes dnmScene {
+    0%   { transform: scale(1.02) translate3d(0, 0, 0); }
+    100% { transform: scale(1.05) translate3d(0, -0.5%, 0); }
+}
+
+/* вода / пыль / искры — свой набор у каждого режима */
+body::before {
+    content: '';
+    position: fixed; inset: -8%;
+    pointer-events: none; z-index: -1;
+    background-image: var(--dn-particles, none);
+    background-size: var(--dn-particles-size, 300px 300px);
+    animation: var(--dn-particles-anim, none);
+    will-change: background-position;
+}
+body::after {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: -1;
+    background: var(--dn-vignette, radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.75) 100%));
+}
+
+/* надпись на стене */
+#bg_custom::after {
+    content: var(--dn-title, "THUNDER BAY");
+    position: absolute;
+    right: 1.5vw; bottom: 13vh;
+    font-family: var(--dn-title-font, 'Playfair Display', serif);
+    font-weight: 600;
+    font-size: min(5.2vw, 72px);
+    line-height: 0.9;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1.4px color-mix(in srgb, var(--dn-a) 26%, transparent);
+    transform: rotate(var(--dn-title-rotate, -6deg));
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+#top-bar::before {
+    content: '';
+    position: absolute; top: 100%; left: 0; right: 0;
+    height: 1px; pointer-events: none;
+    background-image: linear-gradient(90deg, transparent, color-mix(in srgb, var(--dn-a-hot) 90%, transparent), transparent);
+    background-size: 26% 100%;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    animation: dnmSweep 10s linear infinite;
+}
+@keyframes dnmSweep {
+    0%   { background-position: -26% 0; }
+    100% { background-position: 126% 0; }
+}
+
+#chat .mes:last-child { animation: dnmIn 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+@keyframes dnmIn {
+    from { opacity: 0; transform: translate3d(0, 12px, 0); filter: blur(3px); }
+    to   { opacity: 1; transform: none; filter: none; }
+}
+
+/* панель ввода: общий слой + анимация режима */
+#send_form::before {
+    content: '';
+    position: absolute;
+    inset: 0 !important; width: auto !important; height: auto !important; margin: 0 !important;
+    border-radius: inherit;
+    background-image: var(--dn-bar, none);
+    background-size: var(--dn-bar-size, 100% 100%);
+    pointer-events: none; z-index: 0;
+    animation: var(--dn-bar-anim, none);
+}
+#send_form::after {
+    content: '';
+    position: absolute;
+    inset: 0 !important; width: auto !important; height: auto !important; margin: 0 !important;
+    border-radius: inherit;
+    background-image: var(--dn-bar2, none);
+    background-size: var(--dn-bar2-size, 100% 100%);
+    pointer-events: none; z-index: 0;
+    animation: var(--dn-bar2-anim, none);
+}
+#send_form { animation: dnmBreathe 6s ease-in-out infinite !important; }
+@keyframes dnmBreathe {
+    0%, 100% { box-shadow: 0 -2px 0 color-mix(in srgb, var(--dn-a) 35%, transparent), 0 0 30px -17px color-mix(in srgb, var(--dn-a) 75%, transparent) !important; }
+    50%      { box-shadow: 0 -2px 0 color-mix(in srgb, var(--dn-a) 60%, transparent), 0 0 38px -12px color-mix(in srgb, var(--dn-a) 95%, transparent) !important; }
+}
+
+body[data-generating="true"] #send_form::before { animation-duration: 2s !important; }
+body[data-generating="true"] #send_but::after { animation-duration: 1.2s !important; }
+
+/* =====================================================================
+   РЕЖИМ 1 — CORRUPT · Devil's Night
+   ===================================================================== */
+body[data-dn-mode="corrupt"],
+body:not([data-dn-mode]) {
+    --dn-a: #e0a15e; --dn-a-hot: #ffc98a; --dn-a2: #a3182b;
+    --dn-ink: #f2e9df; --dn-muted: #9a8f92;
+    --dn-p1: rgba(23, 23, 33, 0.90); --dn-p2: rgba(9, 10, 15, 0.95);
+    --dn-hint: "Скажи это в темноте...  ✖";
+    --dn-title: "THUNDER BAY";
+    --dn-title-rotate: -6deg;
+    --dn-vignette: radial-gradient(900px 620px at 50% 112%, rgba(163, 24, 43, 0.16), transparent 70%), radial-gradient(760px 460px at 50% -10%, rgba(224, 161, 94, 0.10), transparent 72%), radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.75) 100%);
+    --dn-particles: repeating-linear-gradient(106deg, rgba(200, 214, 240, 0.10) 0 1px, transparent 1px 22px), repeating-linear-gradient(112deg, rgba(220, 232, 255, 0.14) 0 1.5px, transparent 1.5px 15px);
+    --dn-particles-size: 300px 300px, 240px 240px;
+    --dn-particles-anim: dnmRain 7s linear infinite;
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='h' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23e0a15e' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23ffcf9e' stop-opacity='0.2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='380' width='1200' height='180' fill='url(%23h)'/%3E%3Cg fill='%230b0d13'%3E%3Cpath d='M40 360 L20 300 L0 340 L-10 560 L70 560 L70 330 Z'/%3E%3Cpath d='M74 560 L74 340 L96 250 L118 342 L118 560 Z'/%3E%3Cpath d='M126 560 L126 370 L146 300 L166 372 L166 560 Z'/%3E%3C/g%3E%3Cg fill='%230a0c12'%3E%3Crect x='236' y='468' width='128' height='46'/%3E%3Cpath d='M230 468 L300 424 L370 468 Z'/%3E%3Crect x='252' y='514' width='11' height='46'/%3E%3Crect x='337' y='514' width='11' height='46'/%3E%3C/g%3E%3Cg fill='%23080a10'%3E%3Crect x='880' y='452' width='86' height='104'/%3E%3Cpath d='M868 452 L923 322 L978 452 Z'/%3E%3Crect x='918' y='276' width='9' height='48'/%3E%3Crect x='906' y='300' width='33' height='7'/%3E%3Crect x='1000' y='486' width='70' height='70'/%3E%3Crect x='1082' y='502' width='52' height='54'/%3E%3Cg fill='%23ffcf9e' opacity='0.75'%3E%3Crect x='896' y='480' width='9' height='16'/%3E%3Crect x='932' y='480' width='9' height='16'/%3E%3Crect x='1014' y='504' width='9' height='16'/%3E%3Crect x='1096' y='518' width='9' height='16'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%2307090e'%3E%3Crect x='0' y='556' width='1200' height='244'/%3E%3C/g%3E%3Cg fill='%23130d0c'%3E%3Crect x='240' y='556' width='16' height='80'/%3E%3Crect x='430' y='556' width='16' height='86'/%3E%3Crect x='742' y='560' width='14' height='74'/%3E%3C/g%3E%3Cg fill='%23ffcf9e' opacity='0.16'%3E%3Crect x='276' y='636' width='16' height='90'/%3E%3Crect x='446' y='642' width='14' height='80'/%3E%3Crect x='916' y='640' width='18' height='96'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-bar: repeating-linear-gradient(102deg, rgba(216, 230, 255, 0.22) 0 1px, transparent 1px 26px), radial-gradient(90% 130% at 88% 116%, rgba(255, 201, 138, 0.24), transparent 62%);
+    --dn-bar-size: 150px 150px, 100% 100%;
+    --dn-bar-anim: dnmBarRain 1.6s linear infinite;
+    --dn-bar2: radial-gradient(circle, transparent 60%, rgba(226, 236, 255, 0.5) 61%, transparent 63%);
+    --dn-bar2-size: 22px 22px;
+    --dn-bar2-anim: dnmRippleCentered 4.6s ease-out infinite;
+}
+@keyframes dnmRain { 0% { background-position: 0 0, 0 0; } 100% { background-position: 0 -300px, 0 -240px; } }
+@keyframes dnmBarRain { 0% { background-position: 0 0, 0 0; } 100% { background-position: -58px 150px, 0 0; } }
+@keyframes dnmRippleCentered { 0% { opacity: 0; } 20% { opacity: 0.7; } 100% { opacity: 0; } }
+
+/* =====================================================================
+   РЕЖИМ 2 — HIDEAWAY · лес, озеро, тёплое окно
+   ===================================================================== */
+body[data-dn-mode="hideaway"] {
+    --dn-a: #8fb79a; --dn-a-hot: #d9f2dd; --dn-a2: #2f6b73;
+    --dn-ink: #e9f0e7; --dn-muted: #8fa295;
+    --dn-p1: rgba(18, 26, 22, 0.9); --dn-p2: rgba(8, 12, 10, 0.95);
+    --dn-hint: "Тут можно спрятаться...  ❋";
+    --dn-title: "HIDEAWAY";
+    --dn-title-rotate: 4deg;
+    --dn-name-font: 'Lora', serif;
+    --dn-wash: linear-gradient(180deg, rgba(4, 10, 8, 0.96) 0%, rgba(9, 17, 13, 0.58) 34%, rgba(5, 10, 8, 0.7) 64%, rgba(2, 5, 4, 0.94) 100%);
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='4' y='6' width='32' height='28' rx='2' fill='none' stroke='%238fb79a' stroke-width='2.4'/%3E%3Cpath d='M20 6 L20 34 M4 20 L36 20' stroke='%238fb79a' stroke-width='2'/%3E%3Crect x='7' y='9' width='10' height='8' fill='%23d9f2dd' opacity='0.55'/%3E%3C/svg%3E");
+    --dn-particles: radial-gradient(3px 60px at 18% 0%, rgba(214, 246, 255, 0.28) 15%, transparent 80%), radial-gradient(2.4px 44px at 52% 0%, rgba(190, 236, 255, 0.22) 15%, transparent 80%), radial-gradient(2.6px 52px at 84% 0%, rgba(214, 246, 255, 0.24) 15%, transparent 80%);
+    --dn-particles-size: 380px 520px;
+    --dn-particles-anim: dnmRain 12s linear infinite;
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='lake' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23142018' stop-opacity='0.9'/%3E%3Cstop offset='1' stop-color='%23050a08' stop-opacity='1'/%3E%3C/linearGradient%3E%3CradialGradient id='win'%3E%3Cstop offset='0' stop-color='%23ffd9a0' stop-opacity='0.9'/%3E%3Cstop offset='1' stop-color='%23ffd9a0' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cg fill='%230a1210'%3E%3Cpath d='M0 560 L0 300 L40 220 L80 320 L120 260 L160 560 Z'/%3E%3Cpath d='M140 560 L140 380 L180 300 L220 400 L260 330 L300 560 Z'/%3E%3Cpath d='M860 560 L860 360 L900 280 L940 390 L980 320 L1020 560 Z'/%3E%3Cpath d='M1000 560 L1000 300 L1040 210 L1080 320 L1120 260 L1160 380 L1200 300 L1200 560 Z'/%3E%3C/g%3E%3Cg fill='%230c1512'%3E%3Cpath d='M300 560 L300 420 L340 360 L380 440 L420 380 L460 560 Z'/%3E%3Cpath d='M740 560 L740 430 L780 350 L820 450 L860 400 L900 560 Z'/%3E%3C/g%3E%3Crect x='0' y='556' width='1200' height='244' fill='url(%23lake)'/%3E%3Ccircle cx='1030' cy='424' r='64' fill='url(%23win)'/%3E%3Cg fill='%23070c0a'%3E%3Crect x='1012' y='404' width='36' height='40'/%3E%3C/g%3E%3Crect x='1012' y='404' width='36' height='40' fill='%23ffd9a0' opacity='0.72'/%3E%3Cg fill='%23ffd9a0' opacity='0.14'%3E%3Crect x='1012' y='556' width='36' height='120'/%3E%3C/g%3E%3Cg fill='%23cfe9d8' opacity='0.06'%3E%3Crect x='0' y='600' width='1200' height='2'/%3E%3Crect x='0' y='650' width='1200' height='2'/%3E%3Crect x='0' y='710' width='1200' height='2'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-bar: radial-gradient(70% 130% at 20% 120%, rgba(143, 183, 154, 0.28), transparent 62%);
+    --dn-bar-size: 100% 100%;
+    --dn-bar-anim: dnmMist 9s ease-in-out infinite alternate;
+    --dn-bar2: radial-gradient(circle, transparent 58%, rgba(200, 236, 210, 0.35) 60%, transparent 63%);
+    --dn-bar2-size: 26px 26px;
+    --dn-bar2-anim: dnmRippleCentered 7s ease-out infinite;
+}
+@keyframes dnmMist {
+    0%   { background-position: 0 0; opacity: 0.5; }
+    100% { background-position: 4% 0; opacity: 1; }
+}
+
+/* =====================================================================
+   РЕЖИМ 3 — KILL SWITCH · церковь, свечи, витраж
+   ===================================================================== */
+body[data-dn-mode="killswitch"] {
+    --dn-a: #d9a441; --dn-a-hot: #ffd98a; --dn-a2: #4a2f6b;
+    --dn-ink: #f4ece0; --dn-muted: #a5968a;
+    --dn-p1: rgba(28, 22, 30, 0.92); --dn-p2: rgba(10, 8, 12, 0.96);
+    --dn-hint: "Исповедуйся...  ✞";
+    --dn-title: "KILL SWITCH";
+    --dn-title-rotate: -3deg;
+    --dn-name-font: 'Lora', serif;
+    --dn-name-track: 0.12em;
+    --dn-name-transform: uppercase;
+    --dn-wash: linear-gradient(180deg, rgba(8, 5, 11, 0.92) 0%, rgba(13, 8, 17, 0.42) 30%, rgba(8, 5, 11, 0.55) 62%, rgba(2, 1, 4, 0.95) 100%);
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 3 L35 11 L35 26 L20 37 L5 26 L5 11 Z' fill='none' stroke='%23d9a441' stroke-width='1.8'/%3E%3Cpath d='M20 8 L30 14 L30 24 L20 31 L10 24 L10 14 Z' fill='%23d9a441' opacity='0.22'/%3E%3Cpath d='M20 13 L20 26 M15 19 L25 19' stroke='%23ffd98a' stroke-width='1.8'/%3E%3C/svg%3E");
+    --dn-particles: radial-gradient(1.8px 1.8px at 24% 70%, rgba(255, 217, 138, 0.5) 50%, transparent 100%), radial-gradient(1.4px 1.4px at 58% 84%, rgba(255, 200, 120, 0.4) 50%, transparent 100%), radial-gradient(1.6px 1.6px at 80% 66%, rgba(255, 230, 190, 0.45) 50%, transparent 100%);
+    --dn-particles-size: 340px 340px;
+    --dn-particles-anim: dnmRise 22s linear infinite;
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3CradialGradient id='rose'%3E%3Cstop offset='0' stop-color='%23ffd98a' stop-opacity='0.85'/%3E%3Cstop offset='0.55' stop-color='%236b3f8f' stop-opacity='0.5'/%3E%3Cstop offset='1' stop-color='%236b3f8f' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cg fill='%23120d18'%3E%3Crect x='0' y='0' width='1200' height='800'/%3E%3C/g%3E%3Ccircle cx='600' cy='250' r='170' fill='url(%23rose)'/%3E%3Cg stroke='%23ffd98a' stroke-width='3' opacity='0.5' fill='none'%3E%3Ccircle cx='600' cy='250' r='96'/%3E%3Ccircle cx='600' cy='250' r='150'/%3E%3Cpath d='M600 100 L600 400 M450 250 L750 250 M494 144 L706 356 M706 144 L494 356'/%3E%3C/g%3E%3Cg fill='%230d0912'%3E%3Cpath d='M0 800 L0 420 C120 300 240 300 360 420 L360 800 Z'/%3E%3Cpath d='M840 800 L840 420 C960 300 1080 300 1200 420 L1200 800 Z'/%3E%3C/g%3E%3Cg fill='%230f0b15'%3E%3Crect x='0' y='640' width='1200' height='160'/%3E%3C/g%3E%3Cg fill='%23151019'%3E%3Crect x='120' y='660' width='960' height='16'/%3E%3Crect x='150' y='676' width='900' height='10'/%3E%3C/g%3E%3Cg fill='%23ffd98a' opacity='0.8'%3E%3Ccircle cx='300' cy='620' r='6'/%3E%3Ccircle cx='420' cy='616' r='5'/%3E%3Ccircle cx='780' cy='616' r='5'/%3E%3Ccircle cx='900' cy='620' r='6'/%3E%3C/g%3E%3Cg fill='%23ffd98a' opacity='0.12'%3E%3Crect x='292' y='600' width='16' height='120'/%3E%3Crect x='412' y='596' width='14' height='120'/%3E%3Crect x='772' y='596' width='14' height='120'/%3E%3Crect x='892' y='600' width='16' height='120'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-bar: radial-gradient(60% 120% at 50% 130%, rgba(255, 217, 138, 0.3), transparent 62%);
+    --dn-bar-size: 100% 100%;
+    --dn-bar-anim: dnmCandle 2.6s ease-in-out infinite alternate;
+    --dn-bar2: radial-gradient(1.6px 1.6px at 20% 70%, rgba(255, 217, 138, 0.85) 50%, transparent 100%), radial-gradient(1.4px 1.4px at 64% 84%, rgba(255, 200, 120, 0.7) 50%, transparent 100%);
+    --dn-bar2-size: 200px 120px;
+    --dn-bar2-anim: dnmRise 7s linear infinite;
+}
+@keyframes dnmCandle {
+    0%   { transform: scaleY(0.9) translateY(6%); opacity: 0.6; }
+    55%  { transform: scaleY(1.06) translateY(0); opacity: 0.95; }
+    100% { transform: scaleY(0.94) translateY(4%); opacity: 0.7; }
+    }
+@keyframes dnmRise { 0% { background-position: 0 0; } 100% { background-position: 0 -340px; } }
+
+/* =====================================================================
+   РЕЖИМ 4 — NIGHTFALL · хэллоуин в городке
+   ===================================================================== */
+body[data-dn-mode="nightfall"] {
+    --dn-a: #e07a3c; --dn-a-hot: #ffb173; --dn-a2: #3f5f96;
+    --dn-ink: #f0e6dc; --dn-muted: #9c8b80;
+    --dn-p1: rgba(28, 22, 20, 0.9); --dn-p2: rgba(10, 9, 14, 0.96);
+    --dn-hint: "Скажи это ночи...  ✦";
+    --dn-title: "NIGHTFALL";
+    --dn-title-rotate: -5deg;
+    --dn-wash: linear-gradient(180deg, rgba(9, 9, 16, 0.95) 0%, rgba(13, 11, 19, 0.55) 36%, rgba(11, 8, 13, 0.72) 68%, rgba(3, 3, 8, 0.94) 100%);
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 34'%3E%3Cellipse cx='20' cy='21' rx='15' ry='11' fill='%23e07a3c'/%3E%3Crect x='18' y='6' width='4' height='7' rx='1.5' fill='%234a3020'/%3E%3Cpath d='M13 19 l5 -4 l0 7 Z' fill='%23ffd0a0'/%3E%3Cpath d='M27 19 l-5 -4 l0 7 Z' fill='%23ffd0a0'/%3E%3Cpath d='M15 27 l5 -3 l5 3' stroke='%23ffd0a0' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");
+    --dn-particles: radial-gradient(2px 2px at 22% 70%, rgba(255, 177, 115, 0.55) 50%, transparent 100%), radial-gradient(1.6px 1.6px at 56% 86%, rgba(255, 200, 140, 0.45) 50%, transparent 100%), radial-gradient(1.8px 1.8px at 82% 62%, rgba(255, 177, 115, 0.5) 50%, transparent 100%);
+    --dn-particles-size: 360px 360px;
+    --dn-particles-anim: dnmRise 24s linear infinite;
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='fog' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23e07a3c' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23e07a3c' stop-opacity='0.16'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='380' width='1200' height='180' fill='url(%23fog)'/%3E%3Cg stroke='%231a1614' stroke-width='8' fill='none'%3E%3Cpath d='M120 560 L120 380 M104 430 L136 400 M136 430 L104 400 M104 484 L136 456 M136 484 L104 456'/%3E%3Cpath d='M1080 560 L1080 400 M1064 448 L1096 420 M1096 448 L1064 420'/%3E%3C/g%3E%3Cg fill='%230d0f16'%3E%3Crect x='200' y='470' width='180' height='90'/%3E%3Cpath d='M188 470 L290 404 L392 470 Z'/%3E%3Crect x='640' y='486' width='150' height='74'/%3E%3Cpath d='M628 486 L715 428 L802 486 Z'/%3E%3Crect x='860' y='502' width='110' height='58'/%3E%3Cg fill='%23ffb173' opacity='0.7'%3E%3Crect x='228' y='492' width='12' height='20'/%3E%3Crect x='336' y='492' width='12' height='20'/%3E%3Crect x='668' y='504' width='12' height='20'/%3E%3Crect x='744' y='504' width='12' height='20'/%3E%3Crect x='884' y='518' width='10' height='16'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%230a0c12'%3E%3Crect x='0' y='556' width='1200' height='244'/%3E%3C/g%3E%3Cg stroke='%23161212' stroke-width='3' fill='none'%3E%3Cpath d='M0 420 Q300 470 600 430 T1200 448'/%3E%3C/g%3E%3Cg fill='%23ffb173'%3E%3Ccircle cx='120' cy='432' r='4'/%3E%3Ccircle cx='260' cy='446' r='4'/%3E%3Ccircle cx='400' cy='450' r='4'/%3E%3Ccircle cx='540' cy='440' r='4'/%3E%3Ccircle cx='680' cy='436' r='4'/%3E%3Ccircle cx='820' cy='440' r='4'/%3E%3Ccircle cx='960' cy='446' r='4'/%3E%3Ccircle cx='1100' cy='448' r='4'/%3E%3C/g%3E%3Cg fill='%23e07a3c'%3E%3Cellipse cx='480' cy='552' rx='18' ry='14'/%3E%3Cellipse cx='560' cy='556' rx='14' ry='11'/%3E%3Cellipse cx='1000' cy='554' rx='16' ry='12'/%3E%3C/g%3E%3Cg fill='%231a120c'%3E%3Crect x='476' y='532' width='6' height='10'/%3E%3Crect x='556' y='542' width='5' height='8'/%3E%3Crect x='996' y='540' width='5' height='9'/%3E%3C/g%3E%3Cg fill='%23ffd0a0' opacity='0.9'%3E%3Cpath d='M472 550 l4 -5 l4 5 Z'/%3E%3Cpath d='M484 550 l4 -5 l4 5 Z'/%3E%3Cpath d='M556 554 l3 -4 l3 4 Z'/%3E%3Cpath d='M993 552 l3.5 -4 l3.5 4 Z'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-bar: radial-gradient(70% 130% at 30% 120%, rgba(224, 122, 60, 0.3), transparent 62%);
+    --dn-bar-size: 100% 100%;
+    --dn-bar-anim: dnmCandle 3.4s ease-in-out infinite alternate;
+    --dn-bar2: radial-gradient(2px 2px at 22% 80%, rgba(255, 177, 115, 0.7) 50%, transparent 100%), radial-gradient(1.6px 1.6px at 70% 90%, rgba(255, 200, 140, 0.6) 50%, transparent 100%);
+    --dn-bar2-size: 210px 130px;
+    --dn-bar2-anim: dnmRise 9s linear infinite;
+}
+
+/* =====================================================================
+   РЕЖИМ 5 — CONCLAVE · все четверо
+   ===================================================================== */
+body[data-dn-mode="conclave"] {
+    --dn-a: #d9b06a; --dn-a-hot: #ffe0a8; --dn-a2: #6a2a5a;
+    --dn-ink: #f1e8de; --dn-muted: #9a8d95;
+    --dn-p1: rgba(24, 20, 28, 0.92); --dn-p2: rgba(9, 8, 12, 0.96);
+    --dn-hint: "Четверо ждут...  ✧";
+    --dn-title: "CONCLAVE";
+    --dn-title-rotate: 3deg;
+    --dn-wash: linear-gradient(180deg, rgba(5, 5, 9, 0.96) 0%, rgba(9, 8, 13, 0.55) 36%, rgba(7, 6, 10, 0.72) 70%, rgba(2, 2, 5, 0.95) 100%);
+    --dn-particles: radial-gradient(2px 2px at 18% 74%, rgba(217, 176, 106, 0.5) 50%, transparent 100%), radial-gradient(1.8px 1.8px at 44% 88%, rgba(255, 45, 111, 0.4) 50%, transparent 100%), radial-gradient(1.8px 1.8px at 68% 80%, rgba(46, 230, 255, 0.4) 50%, transparent 100%), radial-gradient(2px 2px at 88% 90%, rgba(217, 176, 106, 0.45) 50%, transparent 100%);
+    --dn-particles-size: 380px 380px;
+    --dn-particles-anim: dnmRise 20s linear infinite;
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3CradialGradient id='fire'%3E%3Cstop offset='0' stop-color='%23ffb173' stop-opacity='0.8'/%3E%3Cstop offset='1' stop-color='%23ffb173' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M0 620 C260 520 420 560 600 540 C780 520 940 560 1200 620 L1200 800 L0 800 Z' fill='%230a0a10'/%3E%3Ccircle cx='600' cy='600' r='150' fill='url(%23fire)' opacity='0.55'/%3E%3Cg fill='%23080a0e'%3E%3Cg transform='translate(300 470)'%3E%3Ccircle cx='0' cy='-70' r='22'/%3E%3Cpath d='M-26 0 L-16 -56 L16 -56 L26 0 Z'/%3E%3Crect x='-14' y='0' width='10' height='80'/%3E%3Crect x='4' y='0' width='10' height='80'/%3E%3C/g%3E%3Cg transform='translate(500 490) scale(0.92)'%3E%3Ccircle cx='0' cy='-70' r='22'/%3E%3Cpath d='M-26 0 L-16 -56 L16 -56 L26 0 Z'/%3E%3Crect x='-14' y='0' width='10' height='70'/%3E%3Crect x='4' y='0' width='10' height='70'/%3E%3C/g%3E%3Cg transform='translate(700 488) scale(1.02)'%3E%3Ccircle cx='0' cy='-70' r='22'/%3E%3Cpath d='M-26 0 L-16 -56 L16 -56 L26 0 Z'/%3E%3Crect x='-14' y='0' width='10' height='74'/%3E%3Crect x='4' y='0' width='10' height='74'/%3E%3C/g%3E%3Cg transform='translate(900 472) scale(0.96)'%3E%3Ccircle cx='0' cy='-70' r='22'/%3E%3Cpath d='M-26 0 L-16 -56 L16 -56 L26 0 Z'/%3E%3Crect x='-14' y='0' width='10' height='78'/%3E%3Crect x='4' y='0' width='10' height='78'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23ffb173' opacity='0.85'%3E%3Ccircle cx='600' cy='606' r='10'/%3E%3C/g%3E%3Cg fill='%23ffb173' opacity='0.16'%3E%3Cpath d='M600 606 L520 480 L680 480 Z'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-bar: linear-gradient(90deg, transparent, rgba(46, 230, 255, 0.18), rgba(255, 45, 111, 0.18), rgba(217, 176, 106, 0.2), transparent);
+    --dn-bar-size: 70% 100%;
+    --dn-bar-anim: dnmScan 6s linear infinite;
+    --dn-bar2: radial-gradient(2px 2px at 20% 80%, rgba(217, 176, 106, 0.7) 50%, transparent 100%), radial-gradient(1.6px 1.6px at 76% 88%, rgba(255, 45, 111, 0.6) 50%, transparent 100%);
+    --dn-bar2-size: 220px 130px;
+    --dn-bar2-anim: dnmRise 8s linear infinite;
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 2 L24 16 L38 20 L24 24 L20 38 L16 24 L2 20 L16 16 Z' fill='%23d9b06a'/%3E%3C/svg%3E");
+}
+@keyframes dnmScan {
+    0%   { background-position: -70% 0; }
+    100% { background-position: 170% 0; }
+}
+
+/* =====================================================================
+   РЕЖИМ 6 — PUNK 57 · бумага, кассеты, письма (светлый)
+   ===================================================================== */
+body[data-dn-mode="punk57"] {
+    --dn-a: #b23a2f; --dn-a-hot: #d9564a; --dn-a2: #2b3a67;
+    --dn-ink: #241f1a; --dn-muted: #6d6156;
+    --dn-p1: rgba(244, 237, 222, 0.94); --dn-p2: rgba(232, 222, 203, 0.96);
+    --dn-line: rgba(36, 31, 26, 0.16);
+    --dn-hint: "Напиши ему...  ✉";
+    --dn-title: "PUNK 57";
+    --dn-title-rotate: -2deg;
+    --dn-name-font: 'Caveat', cursive;
+    --dn-name-size: 2em;
+    --dn-name-track: 0.01em;
+    --dn-body-font: 'Inter', sans-serif;
+    --dn-wash: linear-gradient(180deg, rgba(247, 240, 226, 0.97) 0%, rgba(240, 231, 214, 0.92) 40%, rgba(228, 216, 196, 0.96) 100%);
+    --dn-particles: repeating-linear-gradient(0deg, rgba(43, 58, 103, 0.10) 0 1px, transparent 1px 26px);
+    --dn-particles-size: 100% 100%;
+    --dn-particles-anim: none;
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%232b3a67' stroke-opacity='0.16' stroke-width='1.4'%3E%3Cpath d='M0 600 L1200 578'/%3E%3C/g%3E%3Cg transform='translate(880 520) rotate(-8)'%3E%3Crect x='0' y='0' width='230' height='145' rx='8' fill='%23e6dcc6' stroke='%23241f1a' stroke-opacity='0.35' stroke-width='3'/%3E%3Crect x='18' y='18' width='194' height='62' rx='4' fill='%23d9cdb2' stroke='%23241f1a' stroke-opacity='0.3' stroke-width='2'/%3E%3Ccircle cx='62' cy='49' r='11' fill='%23241f1a' opacity='0.45'/%3E%3Ccircle cx='168' cy='49' r='11' fill='%23241f1a' opacity='0.45'/%3E%3Crect x='18' y='96' width='194' height='30' rx='3' fill='%23cdbf9f'/%3E%3C/g%3E%3Cg transform='translate(140 470) rotate(6)'%3E%3Crect x='0' y='0' width='180' height='120' fill='%23f2ead6' stroke='%23241f1a' stroke-opacity='0.3' stroke-width='2'/%3E%3Cpath d='M0 0 L90 60 L180 0' fill='none' stroke='%23241f1a' stroke-opacity='0.35' stroke-width='2'/%3E%3C/g%3E%3Cg fill='%23241f1a' opacity='0.35'%3E%3Crect x='300' y='690' width='620' height='4' rx='2'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-bar: linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent 60%);
+    --dn-bar-size: 100% 100%;
+    --dn-bar-anim: none;
+    --dn-bar2: repeating-linear-gradient(0deg, rgba(43, 58, 103, 0.14) 0 1px, transparent 1px 22px);
+    --dn-bar2-size: 100% 100%;
+    --dn-bar2-anim: none;
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Crect x='1' y='1' width='58' height='38' rx='4' fill='%23b23a2f' opacity='0.85'/%3E%3Crect x='8' y='8' width='44' height='16' rx='2' fill='%23f2ead6' opacity='0.9'/%3E%3Ccircle cx='17' cy='28' r='4' fill='%23f2ead6' opacity='0.9'/%3E%3Ccircle cx='43' cy='28' r='4' fill='%23f2ead6' opacity='0.9'/%3E%3C/svg%3E");
+}
+body[data-dn-mode="punk57"] #chat .mes_block {
+    border-radius: 3px !important;
+    border-left: 3px solid rgba(178, 58, 47, 0.7) !important;
+    box-shadow: 0 14px 26px -20px rgba(60, 40, 20, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+body[data-dn-mode="punk57"] .mes_text { color: #2b241d !important; text-shadow: none !important; }
+body[data-dn-mode="punk57"] .mes_text em, body[data-dn-mode="punk57"] .mes_text i { color: #8a2f26 !important; }
+body[data-dn-mode="punk57"] .name_text { color: #241f1a !important; text-shadow: none !important; }
+body[data-dn-mode="punk57"] #bg_custom::after { -webkit-text-stroke: 2px rgba(178, 58, 47, 0.4) !important; }
+body[data-dn-mode="punk57"] #send_textarea { color: #241f1a !important; }
+body[data-dn-mode="punk57"] #top-bar { background: rgba(240, 232, 216, 0.94) !important; }
+body[data-dn-mode="punk57"] .timestamp { color: #7a6a58 !important; }
+
+/* =====================================================================
+   ПЕРЕКЛЮЧАТЕЛЬ РЕЖИМОВ (кнопка в углу)
+   ===================================================================== */
+#dnm-panel {
+    position: fixed;
+    right: 14px;
+    bottom: 92px;
+    z-index: 4000;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    user-select: none;
+}
+.dnm-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--dn-a) 45%, transparent);
+    background: rgba(12, 12, 16, 0.86);
+    backdrop-filter: blur(10px);
+    color: var(--dn-ink);
+    cursor: pointer;
+    box-shadow: 0 8px 24px -14px #000;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.dnm-head:hover { border-color: var(--dn-a-hot); box-shadow: 0 0 22px -8px var(--dn-a); }
+.dnm-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--dn-a-hot);
+    box-shadow: 0 0 10px var(--dn-a);
+}
+.dnm-caret { opacity: 0.6; font-size: 10px; }
+.dnm-list {
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 6px;
+    padding: 6px;
+    border-radius: 12px;
+    border: 1px solid color-mix(in srgb, var(--dn-a) 32%, transparent);
+    background: rgba(12, 12, 16, 0.94);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 14px 34px -18px #000;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+#dnm-panel.dnm-open .dnm-list { display: flex; }
+.dnm-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 7px 10px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--dn-ink);
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.dnm-btn b { font-weight: 600; font-size: 13px; letter-spacing: 0.02em; }
+.dnm-btn i { font-style: normal; font-size: 11px; opacity: 0.6; }
+.dnm-btn:hover { background: color-mix(in srgb, var(--dn-a) 16%, transparent); }
+.dnm-btn.dnm-active { background: color-mix(in srgb, var(--dn-a) 24%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dn-a) 45%, transparent); }
+.dnm-off b { opacity: 0.75; font-size: 12px; }
+
+@media (max-width: 720px) {
+    #dnm-panel { bottom: 84px; right: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #bg_custom::before, body::before, #top-bar::before, #send_form, #send_form::before, #send_form::after,
+    #send_but::after, #chat .mes:last-child, .mes_block .ch_name::before { animation: none !important; }
+}
+
+/* =====================================================================
+   ПРАВКИ СЦЕН: ключевые силуэты вынесены в боковые поля,
+   чтобы их не съедала карточка чата по центру.
+   ===================================================================== */
+
+/* KILL SWITCH — два витражных окна по краям, свечи внизу */
+body[data-dn-mode="killswitch"] {
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='gl1' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffd98a' stop-opacity='0.5'/%3E%3Cstop offset='1' stop-color='%234a2f6b' stop-opacity='0.35'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='%230b0810'%3E%3Crect x='0' y='0' width='1200' height='800'/%3E%3C/g%3E%3Cg%3E%3Cpath d='M30 560 L30 200 Q78 120 126 200 L126 560 Z' fill='url(%23gl1)' opacity='0.55'/%3E%3Cpath d='M150 560 L150 230 Q186 160 222 230 L222 560 Z' fill='url(%23gl1)' opacity='0.4'/%3E%3Cpath d='M978 560 L978 200 Q1026 120 1074 200 L1074 560 Z' fill='url(%23gl1)' opacity='0.55'/%3E%3Cpath d='M1098 560 L1098 230 Q1134 160 1170 230 L1170 560 Z' fill='url(%23gl1)' opacity='0.4'/%3E%3C/g%3E%3Cg stroke='%23120d18' stroke-width='6' fill='none'%3E%3Cpath d='M30 560 L30 200 Q78 120 126 200 L126 560'/%3E%3Cpath d='M978 560 L978 200 Q1026 120 1074 200 L1074 560'/%3E%3C/g%3E%3Cg fill='%230d0912'%3E%3Cpath d='M0 800 L0 470 C90 400 180 400 270 470 L270 800 Z' opacity='0.85'/%3E%3Cpath d='M930 800 L930 470 C1020 400 1110 400 1200 470 L1200 800 Z' opacity='0.85'/%3E%3C/g%3E%3Cg fill='%23120c18'%3E%3Crect x='0' y='620' width='1200' height='180'/%3E%3Crect x='80' y='650' width='1040' height='14'/%3E%3C/g%3E%3Cg fill='%23ffd98a'%3E%3Ccircle cx='196' cy='588' r='5'/%3E%3Ccircle cx='232' cy='592' r='4'/%3E%3Ccircle cx='968' cy='588' r='5'/%3E%3Ccircle cx='1004' cy='592' r='4'/%3E%3C/g%3E%3Cg fill='%23ffd98a' opacity='0.13'%3E%3Crect x='188' y='570' width='16' height='120'/%3E%3Crect x='224' y='574' width='14' height='116'/%3E%3Crect x='960' y='570' width='16' height='120'/%3E%3Crect x='996' y='574' width='14' height='116'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* NIGHTFALL — дома и тыквы по краям, туман по низу */
+body[data-dn-mode="nightfall"] {
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='fog' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23e07a3c' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23e07a3c' stop-opacity='0.14'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='360' width='1200' height='200' fill='url(%23fog)'/%3E%3Cg stroke='%231a1614' stroke-width='7' fill='none'%3E%3Cpath d='M60 560 L60 360 M44 410 L76 384 M76 410 L44 384 M44 470 L76 444 M76 470 L44 444'/%3E%3Cpath d='M1140 560 L1140 380 M1124 430 L1156 404 M1156 430 L1124 404'/%3E%3C/g%3E%3Cg fill='%230d0f16'%3E%3Crect x='100' y='476' width='170' height='84'/%3E%3Cpath d='M88 476 L185 412 L282 476 Z'/%3E%3Crect x='930' y='492' width='150' height='68'/%3E%3Cpath d='M918 492 L1005 434 L1092 492 Z'/%3E%3Cg fill='%23ffb173' opacity='0.72'%3E%3Crect x='126' y='498' width='12' height='20'/%3E%3Crect x='232' y='498' width='12' height='20'/%3E%3Crect x='956' y='512' width='12' height='20'/%3E%3Crect x='1032' y='512' width='12' height='20'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%230a0c12'%3E%3Crect x='0' y='556' width='1200' height='244'/%3E%3C/g%3E%3Cg fill='%23e07a3c'%3E%3Cellipse cx='330' cy='556' rx='20' ry='15'/%3E%3Cellipse cx='390' cy='560' rx='15' ry='11'/%3E%3Cellipse cx='860' cy='558' rx='18' ry='13'/%3E%3C/g%3E%3Cg fill='%231a120c'%3E%3Crect x='326' y='534' width='7' height='11'/%3E%3Crect x='386' y='549' width='5' height='9'/%3E%3Crect x='856' y='543' width='6' height='10'/%3E%3C/g%3E%3Cg fill='%23ffd0a0' opacity='0.95'%3E%3Cpath d='M321 554 l5 -6 l5 6 Z'/%3E%3Cpath d='M334 554 l5 -6 l5 6 Z'/%3E%3Cpath d='M385 558 l3.5 -5 l3.5 5 Z'/%3E%3Cpath d='M852 556 l4 -5 l4 5 Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* CONCLAVE — четверо по краям и костёр в центре */
+body[data-dn-mode="conclave"] {
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3CradialGradient id='fire'%3E%3Cstop offset='0' stop-color='%23ffb173' stop-opacity='0.75'/%3E%3Cstop offset='1' stop-color='%23ffb173' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M0 640 C260 560 420 590 600 574 C780 558 940 590 1200 640 L1200 800 L0 800 Z' fill='%23090a0f'/%3E%3Ccircle cx='600' cy='640' r='190' fill='url(%23fire)' opacity='0.5'/%3E%3Cg fill='%23070a0e'%3E%3Cg transform='translate(150 500)'%3E%3Ccircle cx='0' cy='-74' r='23'/%3E%3Cpath d='M-27 0 L-17 -58 L17 -58 L27 0 Z'/%3E%3Crect x='-15' y='0' width='11' height='86'/%3E%3Crect x='4' y='0' width='11' height='86'/%3E%3C/g%3E%3Cg transform='translate(280 514) scale(0.94)'%3E%3Ccircle cx='0' cy='-74' r='23'/%3E%3Cpath d='M-27 0 L-17 -58 L17 -58 L27 0 Z'/%3E%3Crect x='-15' y='0' width='11' height='78'/%3E%3Crect x='4' y='0' width='11' height='78'/%3E%3C/g%3E%3Cg transform='translate(920 510) scale(1.03)'%3E%3Ccircle cx='0' cy='-74' r='23'/%3E%3Cpath d='M-27 0 L-17 -58 L17 -58 L27 0 Z'/%3E%3Crect x='-15' y='0' width='11' height='82'/%3E%3Crect x='4' y='0' width='11' height='82'/%3E%3C/g%3E%3Cg transform='translate(1050 498) scale(0.97)'%3E%3Ccircle cx='0' cy='-74' r='23'/%3E%3Cpath d='M-27 0 L-17 -58 L17 -58 L27 0 Z'/%3E%3Crect x='-15' y='0' width='11' height='86'/%3E%3Crect x='4' y='0' width='11' height='86'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23ffb173' opacity='0.85'%3E%3Ccircle cx='600' cy='648' r='11'/%3E%3C/g%3E%3C/svg%3E");
+}
