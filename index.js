@@ -1,16 +1,18 @@
 /*
- * Devil's Night Modes — переключатель книжных режимов темы.
- * Ставит body[data-dn-mode="…"], запоминает выбор в настройках расширения.
- * Команды: /dn corrupt | hideaway | killswitch | nightfall | conclave | punk57 | off
+ * Devil's Night Modes — книжные режимы темы.
+ * Всё управление — в меню расширений SillyTavern.
+ * Команды: /dn corrupt | hideaway | killswitch | punk57 | conclave | nightfall | off
  */
 
+const VERSION = '1.1.0';
+
 const MODES = [
-    { id: 'corrupt',    label: 'Corrupt',     hint: "Devil's Night · кровь, маска, витраж, ливень" },
-    { id: 'hideaway',   label: 'Hideaway',    hint: 'лес, кладбище, туман' },
-    { id: 'killswitch', label: 'Kill Switch', hint: 'кованые ворота, свечи' },
-    { id: 'punk57',     label: 'Punk 57',     hint: 'граффити, спрей, письма' },
-    { id: 'conclave',   label: 'Conclave',    hint: 'палуба корабля в океане, гроза' },
-    { id: 'nightfall',  label: 'Nightfall',   hint: 'карусель в снегу, свечи' },
+    { id: 'corrupt',    label: 'Corrupt',     hint: "Devil's Night · кровь, маска, витраж" },
+    { id: 'hideaway',   label: 'Hideaway',    hint: 'отель «The Pope», лифт 12, ключ' },
+    { id: 'killswitch', label: 'Kill Switch', hint: 'лабиринт, фонтан, маска' },
+    { id: 'punk57',     label: 'Punk 57',     hint: 'коридор, шкафчики, пятна краски' },
+    { id: 'conclave',   label: 'Conclave',    hint: 'яхта, луна, шампанское' },
+    { id: 'nightfall',  label: 'Nightfall',   hint: 'маяк, шторм, карусель' },
 ];
 
 const NS = 'devils_night_modes';
@@ -19,46 +21,100 @@ const ATTR = 'data-dn-mode';
 function ctx() {
     return (typeof SillyTavern !== 'undefined' && SillyTavern.getContext) ? SillyTavern.getContext() : null;
 }
-
-function settings() {
+function store() {
+    const s = ctx()?.extensionSettings;
+    if (!s) return null;
+    if (!s[NS]) s[NS] = { mode: 'corrupt', enabled: true };
+    return s[NS];
+}
+function save() {
     const c = ctx();
-    if (!c) return null;
-    return c.extensionSettings ?? null;
+    if (c && typeof c.saveSettingsDebounced === 'function') c.saveSettingsDebounced();
 }
 
-function savedMode() {
-    const s = settings();
-    const v = s?.[NS]?.mode;
-    return typeof v === 'string' ? v : 'corrupt';
+function state() {
+    const s = store();
+    return { mode: s?.mode ?? 'corrupt', enabled: s?.enabled !== false };
 }
 
-function saveMode(mode) {
-    const s = settings();
-    if (!s) return;
-    s[NS] = s[NS] || {};
-    s[NS].mode = mode;
-    if (typeof ctx()?.saveSettingsDebounced === 'function') {
-        ctx().saveSettingsDebounced();
-    }
-}
-
-function applyMode(mode, persist = true) {
-    const body = document.body;
-    if (!mode || mode === 'off') {
-        body.removeAttribute(ATTR);
+function apply() {
+    const { mode, enabled } = state();
+    if (enabled && mode && mode !== 'off') {
+        document.body.setAttribute(ATTR, mode);
     } else {
-        body.setAttribute(ATTR, mode);
+        document.body.removeAttribute(ATTR);
     }
+    const pill = document.querySelector('.dnm-current');
+    const found = MODES.find((m) => m.id === mode);
+    if (pill) pill.textContent = enabled ? (found ? found.label : '—') : 'выкл';
     document.querySelectorAll('.dnm-btn').forEach((b) => {
         b.classList.toggle('dnm-active', b.dataset.mode === mode);
     });
-    const pill = document.querySelector('.dnm-current');
-    const found = MODES.find((m) => m.id === mode);
-    if (pill) pill.textContent = found ? found.label : '—';
-    if (persist) saveMode(mode);
+    const toggle = document.getElementById('dnm-enabled');
+    if (toggle) toggle.checked = enabled;
 }
 
-function buildPanel() {
+function setMode(mode) {
+    const s = store();
+    if (s) { s.mode = mode; s.enabled = mode !== 'off'; }
+    save();
+    apply();
+}
+
+function setEnabled(on) {
+    const s = store();
+    if (s) { s.enabled = !!on; }
+    save();
+    apply();
+}
+
+/* ---------- меню расширений ---------- */
+function renderSettings() {
+    const host = document.getElementById('extensions_settings');
+    if (!host || document.getElementById('dnm-settings')) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'dnm-settings';
+
+    const rows = MODES.map((m) => `
+        <label class="dnm-mode-row">
+            <input type="radio" name="dnm-mode" value="${m.id}">
+            <span><b>${m.label}</b><i>${m.hint}</i></span>
+        </label>`).join('');
+
+    wrap.innerHTML = `
+        <div class="inline-drawer">
+            <div class="inline-drawer-toggle inline-drawer-header">
+                <b>✦ DEVIL'S NIGHT MODES ✦</b>
+                <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+            </div>
+            <div class="inline-drawer-content">
+                <label class="checkbox_label dnm-toggle-row">
+                    <input id="dnm-enabled" type="checkbox">
+                    <span>Включить тему</span>
+                </label>
+                <div class="dnm-modes">${rows}</div>
+                <div class="dnm-footer">
+                    <small>v${VERSION}</small>
+                    <small>Сделано с любовью · ✦ Selena's Tavern ✦</small>
+                </div>
+            </div>
+        </div>`;
+
+    host.append(wrap);
+
+    wrap.querySelector('#dnm-enabled').addEventListener('change', (e) => setEnabled(e.target.checked));
+    wrap.querySelectorAll('input[name="dnm-mode"]').forEach((r) => {
+        r.addEventListener('change', () => { if (r.checked) setMode(r.value); });
+    });
+
+    const { mode } = state();
+    const checked = wrap.querySelector(`input[name="dnm-mode"][value="${mode}"]`);
+    if (checked) checked.checked = true;
+}
+
+/* ---------- плавающая кнопка (быстрый доступ) ---------- */
+function buildPill() {
     if (document.getElementById('dnm-panel')) return;
 
     const wrap = document.createElement('div');
@@ -78,7 +134,7 @@ function buildPanel() {
         b.className = 'dnm-btn';
         b.dataset.mode = m.id;
         b.innerHTML = `<b>${m.label}</b><i>${m.hint}</i>`;
-        b.addEventListener('click', () => applyMode(m.id));
+        b.addEventListener('click', () => setMode(m.id));
         list.append(b);
     }
 
@@ -87,11 +143,10 @@ function buildPanel() {
     off.className = 'dnm-btn dnm-off';
     off.dataset.mode = 'off';
     off.innerHTML = '<b>Выключить</b><i>вернуть базовое оформление</i>';
-    off.addEventListener('click', () => applyMode('off'));
+    off.addEventListener('click', () => setMode('off'));
     list.append(off);
 
     head.addEventListener('click', () => wrap.classList.toggle('dnm-open'));
-
     wrap.append(head, list);
     document.body.append(wrap);
 }
@@ -101,7 +156,6 @@ function registerCommand() {
     const parser = c?.SlashCommandParser;
     const command = c?.SlashCommand;
     const arg = c?.SlashCommandArgument;
-    const named = c?.SlashCommandNamedArgument;
     const types = c?.ARGUMENT_TYPE;
     if (!parser || !command || !types) return;
 
@@ -110,16 +164,11 @@ function registerCommand() {
             name: 'dn',
             helpString: "Переключить книжный режим темы Devil's Night.",
             returns: 'mode name',
-            namedArgumentList: [
-                named.fromProps({ name: 'mode', description: 'corrupt|hideaway|killswitch|nightfall|conclave|punk57|off', typeList: [types.STRING], isRequired: false }),
-            ],
-            unnamedArgumentList: [
-                arg.fromProps({ description: 'Режим', typeList: [types.STRING], isRequired: false }),
-            ],
+            unnamedArgumentList: [arg.fromProps({ description: 'corrupt|hideaway|killswitch|punk57|conclave|nightfall|off', typeList: [types.STRING], isRequired: false })],
             callback: (_named, value) => {
-                const mode = String(value || _named?.mode || '').trim().toLowerCase();
+                const mode = String(value || '').trim().toLowerCase();
                 if (!mode) return 'Доступно: ' + MODES.map((m) => m.id).join(', ');
-                applyMode(mode);
+                setMode(mode);
                 return `Режим: ${mode}`;
             },
         }));
@@ -129,21 +178,25 @@ function registerCommand() {
 }
 
 function boot() {
-    buildPanel();
-    applyMode(savedMode(), false);
+    store();
+    buildPill();
+    renderSettings();
+    apply();
     registerCommand();
 }
 
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => setTimeout(boot, 1200));
+    document.addEventListener('DOMContentLoaded', () => setTimeout(boot, 1000));
 } else {
-    setTimeout(boot, 1200);
+    setTimeout(boot, 1000);
 }
 
-// на случай перерисовки настроек
 try {
     const c = ctx();
     if (c?.eventSource && c?.event_types?.APP_READY) {
-        c.eventSource.on(c.event_types.APP_READY, () => setTimeout(boot, 300));
+        c.eventSource.on(c.event_types.APP_READY, () => setTimeout(boot, 400));
+    }
+    if (c?.eventSource && c?.event_types?.EXTENSIONS_FIRST_LOAD) {
+        c.eventSource.on(c.event_types.EXTENSIONS_FIRST_LOAD, () => setTimeout(boot, 400));
     }
 } catch { /* ignore */ }
