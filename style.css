@@ -1318,3 +1318,155 @@ body[data-dn-mode="nightfall"] {
 
 /* плавающая кнопка не нужна, когда тема выключена */
 body:not([data-dn-mode]) #dnm-panel { display: none; }
+
+/* =====================================================================
+   ПРАВКИ: рябь не выходит за плашку, новые иконки
+   ===================================================================== */
+
+/* рябь обрезается по скруглению панели */
+#send_form {
+    overflow: hidden !important;
+}
+#send_form::after {
+    animation-name: dnmRingIn !important;
+}
+@keyframes dnmRingIn {
+    0%   { transform: scale(0.3); opacity: 0; }
+    16%  { opacity: 0.55; }
+    100% { transform: scale(2.8); opacity: 0; }
+}
+
+/* CORRUPT: простые ромбы вместо маски */
+body[data-dn-mode="corrupt"],
+body:not([data-dn-mode]) {
+    --dn-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3 L21 12 L12 21 L3 12 Z' fill='none' stroke='%23d8cfc2' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cpath d='M12 8 L16 12 L12 16 L8 12 Z' fill='%23c2563c' opacity='0.85'/%3E%3C/svg%3E");
+}
+
+/* KILL SWITCH: готический крест в кольце */
+body[data-dn-mode="killswitch"] {
+    --dn-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9.2' fill='none' stroke='%23e8f2ec' stroke-width='1.5' opacity='0.55'/%3E%3Cpath d='M12 3.4 L12 20.6 M5.6 9.2 L18.4 9.2' stroke='%23e8f2ec' stroke-width='2.2' stroke-linecap='square'/%3E%3Cpath d='M12 5.6 L14.2 9.2 L12 12.8 L9.8 9.2 Z' fill='%23e8f2ec' opacity='0.9'/%3E%3C/svg%3E");
+}
+
+/* NIGHTFALL: силуэт ели */
+body[data-dn-mode="nightfall"] {
+    --dn-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.6 L15.4 8.4 L13.4 8.4 L17.6 14.6 L14.6 14.6 L19.2 21 L4.8 21 L9.4 14.6 L6.4 14.6 L10.6 8.4 L8.6 8.4 Z' fill='%23dbe6f0' opacity='0.92'/%3E%3Crect x='11.2' y='20.4' width='1.6' height='2.2' fill='%23dbe6f0' opacity='0.8'/%3E%3C/svg%3E");
+}
+
+/* =====================================================================
+   ФИНАЛ: без ряби, плавный градиент, цитаты в подсказках ввода
+   ===================================================================== */
+
+/* рябь убрана совсем */
+#send_form::after { display: none !important; }
+#send_form::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: -20% !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    border-radius: inherit;
+    background-image:
+        linear-gradient(112deg,
+            transparent 18%,
+            color-mix(in srgb, var(--dn-a) 20%, transparent) 42%,
+            color-mix(in srgb, var(--dn-a-hot) 26%, transparent) 52%,
+            transparent 82%),
+        radial-gradient(120% 150% at 50% 132%,
+            color-mix(in srgb, var(--dn-a) 20%, transparent),
+            transparent 72%);
+    background-size: 220% 220%, 100% 100%;
+    background-repeat: no-repeat, no-repeat;
+    opacity: 0.85;
+    pointer-events: none;
+    z-index: 0;
+    animation: dnmDrift 16s ease-in-out infinite alternate !important;
+}
+@keyframes dnmDrift {
+    0%   { background-position: 0% 50%, 0 0; }
+    100% { background-position: 100% 50%, 0 0; }
+}
+
+/* подсказка: длинные цитаты переносятся и не липнут к краям */
+#nonQRFormItems:has(#send_textarea:placeholder-shown)::before {
+    white-space: normal !important;
+    width: 82% !important;
+    text-align: center !important;
+    line-height: 1.35 !important;
+    font-size: clamp(12px, 1.02vw, 15px) !important;
+}
+
+/* ---------- цитаты из книг ---------- */
+body[data-dn-mode="corrupt"],
+body:not([data-dn-mode]) {
+    --dn-hint: "It’s just you, Little Monster.";
+}
+body[data-dn-mode="hideaway"] {
+    --dn-hint: "Be Lilith, never Eve.";
+}
+body[data-dn-mode="killswitch"] {
+    --dn-hint: "Pain in the body quiets the pain in the head.";
+}
+body[data-dn-mode="punk57"] {
+    --dn-hint: "You’re my favorite secret.";
+}
+body[data-dn-mode="conclave"] {
+    --dn-hint: "L’appel du vide. The call of the void. That’s what binds us.";
+}
+body[data-dn-mode="nightfall"] {
+    --dn-hint: "Real monsters don’t wear masks, William Grayson III.";
+}
+
+/* =====================================================================
+   ФОТО-ФОН ПОВЕРХ СЦЕНЫ
+   Сцена рисует силуэты, фото даёт «место». Фото лежит выше сцены,
+   но полупрозрачно — силуэты просвечивают.
+   ===================================================================== */
+html::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: var(--dn-photo, none);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.74;
+}
+html::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* PUNK 57: фото на ::before, пятна краски на ::after (все шесть) */
+body[data-dn-mode="punk57"] html::before {
+    background-image: var(--dn-photo, none) !important;
+    opacity: 0.84 !important;
+    animation: none !important;
+}
+body[data-dn-mode="punk57"] html::after {
+    background:
+        radial-gradient(26% 30% at 16% 68%, rgba(255, 47, 142, 0.42), transparent 62%),
+        radial-gradient(20% 22% at 42% 26%, rgba(78, 168, 255, 0.38), transparent 62%),
+        radial-gradient(16% 18% at 74% 78%, rgba(182, 255, 60, 0.28), transparent 62%),
+        radial-gradient(22% 26% at 82% 22%, rgba(78, 168, 255, 0.36), transparent 62%),
+        radial-gradient(18% 20% at 60% 56%, rgba(255, 140, 40, 0.22), transparent 62%),
+        radial-gradient(24% 26% at 24% 30%, rgba(255, 47, 142, 0.3), transparent 62%);
+    animation: dnmBlobA 18s ease-in-out infinite !important;
+    opacity: 0;
+}
+
+/* у фото нет «своего» кадра — сцену приглушаем, чтобы не спорила */
+#bg_custom::before { opacity: 0.85 !important; }
+/* ---------- фоны: переменные проброшены на html ---------- */
+html:has(body[data-dn-mode="corrupt"])      { --dn-photo: url("backgrounds/corrupt.jpg"); }
+html:has(body[data-dn-mode="hideaway"])     { --dn-photo: url("backgrounds/hideaway.jpg"); }
+html:has(body[data-dn-mode="killswitch"])   { --dn-photo: url("backgrounds/killswitch.jpg"); }
+html:has(body[data-dn-mode="punk57"])       { --dn-photo: url("backgrounds/punk57.jpg"); }
+html:has(body[data-dn-mode="conclave"])     { --dn-photo: url("backgrounds/conclave.jpg"); }
+html:has(body[data-dn-mode="nightfall"])    { --dn-photo: url("backgrounds/nightfall.jpg"); }
+html:has(body:not([data-dn-mode]))          { --dn-photo: url("backgrounds/corrupt.jpg"); }
