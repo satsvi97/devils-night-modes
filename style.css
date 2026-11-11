@@ -1744,3 +1744,50 @@ body[data-dn-mode],
 body:not([data-dn-mode]) {
     --dn-vignette: radial-gradient(ellipse at center, transparent 46%, rgba(0, 0, 0, 0.72) 100%) !important;
 }
+
+/* =====================================================================
+   ПЫЛЬ: отдельные пылинки (создаются в index.js), каждая летит сама
+   ===================================================================== */
+#dnm-dust {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    contain: strict;
+}
+#dnm-dust i {
+    position: absolute;
+    left: var(--x, 50vw);
+    bottom: -4vh;
+    width: var(--sz, 2px);
+    height: var(--sz, 2px);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--dn-a-hot) 65%, #ffffff);
+    opacity: var(--o, 0.35);
+    box-shadow: 0 0 6px color-mix(in srgb, var(--dn-a) 55%, transparent);
+    will-change: transform, opacity;
+    animation: dnmMote var(--d, 24s) linear var(--dl, 0s) infinite;
+}
+@keyframes dnmMote {
+    0%   { transform: translate3d(0, 0, 0) scale(0.85); opacity: 0; }
+    9%   { opacity: var(--o, 0.35); }
+    35%  { transform: translate3d(var(--sw, 20px), -34vh, 0) scale(1.05); }
+    62%  { transform: translate3d(calc(var(--sw, 20px) * -0.55), -62vh, 0) scale(0.95); }
+    88%  { opacity: var(--o, 0.35); }
+    100% { transform: translate3d(calc(var(--sw, 20px) * 0.8), -104vh, 0) scale(0.8); opacity: 0; }
+}
+
+/* тайловая пыль больше не нужна — оставляем только виньетку */
+body::after {
+    background-image: var(--dn-vignette, radial-gradient(ellipse at center, transparent 46%, rgba(0, 0, 0, 0.72) 100%)) !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;
+    background-position: 0 0 !important;
+    animation: none !important;
+}
+
+/* на мобилке чуть меньше пылинок, чтобы не грузить */
+@media (max-width: 700px) {
+    #dnm-dust i:nth-child(n+19) { display: none; }
+}
