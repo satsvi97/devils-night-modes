@@ -1957,3 +1957,31 @@ body:has(#character_popup:not(.closed)) #send_but {
 
 /* самолётик не показывается, когда идёт генерация */
 body[data-generating="true"] #send_but { display: none !important; }
+
+/* =====================================================================
+   1.2.7 — самолётик виден только когда не идёт генерация
+   ST показывает стоп через инлайновый style="display: flex",
+   а прячет самолётик через body[data-generating]. Ловим оба варианта.
+   ===================================================================== */
+
+/* пока стоп на экране — самолётика нет */
+#rightSendForm:has(#mes_stop[style*="display: flex"]) #send_but,
+#rightSendForm:has(#mes_stop[style*="display:flex"]) #send_but,
+#send_form:has(#mes_stop[style*="display: flex"]) #send_but,
+#send_form:has(#mes_stop[style*="display:flex"]) #send_but {
+    display: none !important;
+}
+
+/* и на всякий случай — по атрибуту генерации */
+body[data-generating="true"] #send_but,
+body[data-generating="true"] #mes_continue,
+body[data-generating="true"] #mes_impersonate {
+    display: none !important;
+}
+
+/* стоп в обычном режиме не занимает место */
+#mes_stop[style*="display: none"],
+#mes_stop[style*="display:none"],
+#mes_stop.displayNone {
+    display: none !important;
+}
