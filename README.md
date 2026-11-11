@@ -30,8 +30,10 @@
 
 ## Установка
 
-1. Скачать папку [`devils-night-modes`](devils-night-modes) целиком.
-2. Положить в `SillyTavern/data/default-user/extensions/`.
+1. В SillyTavern: **Extensions → Install extension** → вставить
+   `https://github.com/satsvi97/devils-night-modes`
+2. Либо вручную: скачать репозиторий и положить папку целиком в
+   `SillyTavern/data/default-user/extensions/devils-night-modes`.
 3. Обновить страницу (Ctrl+F5).
 
 Появится кнопка в правом нижнем углу со списком режимов. Или командами в чате:
@@ -60,9 +62,9 @@
 ## Структура
 
 ```
-devils-night-modes/     расширение (manifest.json, index.js, style.css)
-demo/index.html         автономное превью без SillyTavern
-previews/               скриншоты режимов
+manifest.json, index.js, style.css   расширение (в корне — ставится из ST по URL)
+demo/index.html                      автономное превью без SillyTavern
+previews/                            скриншоты режимов
 ```
 
 ## Заметки
