@@ -1791,3 +1791,45 @@ body::after {
 @media (max-width: 700px) {
     #dnm-dust i:nth-child(n+19) { display: none; }
 }
+
+/* =====================================================================
+   1.2.4 — кнопка отправки снова видна, фон на телефоне через #bg1
+   ===================================================================== */
+
+/* панель больше не обрезает кнопки (это осталось от удалённой ряби) */
+#send_form {
+    overflow: visible !important;
+}
+#send_but, #mes_stop, #rightSendForm {
+    overflow: visible !important;
+    visibility: visible !important;
+}
+
+/* фон рисуем на #bg1 — так же, как это делает сама таверна.
+   Этот элемент гарантированно виден и на мобильном. */
+body[data-dn-mode] #bg1 {
+    background-image: var(--dn-photo, none) !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+    opacity: 1 !important;
+}
+
+/* и убираем фото из body::before, чтобы не рисовалось дважды */
+body::before {
+    background-image: var(--dn-wash, none) !important;
+    background-size: 100% 100% !important;
+    background-position: 0 0 !important;
+    background-repeat: no-repeat !important;
+    background-color: #05060a !important;
+}
+
+/* на мобильном фон тоже fixed — иначе он уезжает за экран */
+@media (max-width: 1000px) {
+    body[data-dn-mode] #bg1 {
+        background-attachment: scroll !important;
+        background-size: cover !important;
+    }
+    html::before { opacity: 1 !important; }
+}
