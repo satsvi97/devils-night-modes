@@ -589,191 +589,241 @@ body::after {
 
 body[data-generating="true"] #send_form::before { animation-duration: 2s !important; }
 body[data-generating="true"] #send_but::after { animation-duration: 1.2s !important; }
-
 /* =====================================================================
-   РЕЖИМ 1 — CORRUPT · Devil's Night
+   РЕЖИМЫ. Сцена у каждого самодостаточна: своё небо, свой горизонт,
+   силуэты — поэтому читается даже на чёрных обоях.
    ===================================================================== */
+
+@keyframes dnmFall   { from { transform: translate3d(0, -14%, 0); } to { transform: translate3d(0, 14%, 0); } }
+@keyframes dnmFallX  { from { transform: translate3d(-6%, -14%, 0); } to { transform: translate3d(6%, 14%, 0); } }
+@keyframes dnmRiseUp { from { transform: translate3d(0, 12%, 0); } to { transform: translate3d(0, -12%, 0); } }
+@keyframes dnmFog    { from { transform: translate3d(-3%, 0, 0) scale(1.04); } to { transform: translate3d(3%, -1%, 0) scale(1.1); } }
+@keyframes dnmBarRain { 0% { background-position: 0 0, 0 0; } 100% { background-position: -58px 150px, 0 0; } }
+@keyframes dnmRippleCentered { 0% { opacity: 0; } 18% { opacity: 0.6; } 100% { opacity: 0; } }
+@keyframes dnmScan { 0% { background-position: -70% 0; } 100% { background-position: 170% 0; } }
+@keyframes dnmCandle {
+    0%   { transform: scaleY(0.9) translateY(6%); opacity: 0.55; }
+    55%  { transform: scaleY(1.05) translateY(0); opacity: 0.95; }
+    100% { transform: scaleY(0.94) translateY(4%); opacity: 0.7; }
+}
+@keyframes dnmSparkle { 0%, 100% { opacity: 0.75; } 50% { opacity: 1; } }
+
+/* ---------------------------------------------------------------- 1. CORRUPT */
 body[data-dn-mode="corrupt"],
 body:not([data-dn-mode]) {
-    --dn-a: #e0a15e; --dn-a-hot: #ffc98a; --dn-a2: #a3182b;
-    --dn-ink: #f2e9df; --dn-muted: #9a8f92;
-    --dn-p1: rgba(23, 23, 33, 0.90); --dn-p2: rgba(9, 10, 15, 0.95);
+    --dn-a: #b8543f; --dn-a-hot: #e88b6d; --dn-a2: #5c1a1a;
+    --dn-ink: #ece7e1; --dn-muted: #8d8880;
+    --dn-p1: rgba(20, 19, 22, 0.92); --dn-p2: rgba(8, 8, 10, 0.96);
+    --dn-name-font: 'Playfair Display', serif;
+    --dn-name-size: 1.5em; --dn-name-track: 0.05em; --dn-name-transform: none;
     --dn-hint: "Скажи это в темноте...  ✖";
-    --dn-title: "THUNDER BAY";
-    --dn-title-rotate: -6deg;
-    --dn-vignette: radial-gradient(900px 620px at 50% 112%, rgba(163, 24, 43, 0.16), transparent 70%), radial-gradient(760px 460px at 50% -10%, rgba(224, 161, 94, 0.10), transparent 72%), radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.75) 100%);
-    --dn-particles: repeating-linear-gradient(106deg, rgba(200, 214, 240, 0.10) 0 1px, transparent 1px 22px), repeating-linear-gradient(112deg, rgba(220, 232, 255, 0.14) 0 1.5px, transparent 1.5px 15px);
-    --dn-particles-size: 300px 300px, 240px 240px;
-    --dn-particles-anim: dnmRain 7s linear infinite;
-    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='h' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23e0a15e' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23ffcf9e' stop-opacity='0.2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='380' width='1200' height='180' fill='url(%23h)'/%3E%3Cg fill='%230b0d13'%3E%3Cpath d='M40 360 L20 300 L0 340 L-10 560 L70 560 L70 330 Z'/%3E%3Cpath d='M74 560 L74 340 L96 250 L118 342 L118 560 Z'/%3E%3Cpath d='M126 560 L126 370 L146 300 L166 372 L166 560 Z'/%3E%3C/g%3E%3Cg fill='%230a0c12'%3E%3Crect x='236' y='468' width='128' height='46'/%3E%3Cpath d='M230 468 L300 424 L370 468 Z'/%3E%3Crect x='252' y='514' width='11' height='46'/%3E%3Crect x='337' y='514' width='11' height='46'/%3E%3C/g%3E%3Cg fill='%23080a10'%3E%3Crect x='880' y='452' width='86' height='104'/%3E%3Cpath d='M868 452 L923 322 L978 452 Z'/%3E%3Crect x='918' y='276' width='9' height='48'/%3E%3Crect x='906' y='300' width='33' height='7'/%3E%3Crect x='1000' y='486' width='70' height='70'/%3E%3Crect x='1082' y='502' width='52' height='54'/%3E%3Cg fill='%23ffcf9e' opacity='0.75'%3E%3Crect x='896' y='480' width='9' height='16'/%3E%3Crect x='932' y='480' width='9' height='16'/%3E%3Crect x='1014' y='504' width='9' height='16'/%3E%3Crect x='1096' y='518' width='9' height='16'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%2307090e'%3E%3Crect x='0' y='556' width='1200' height='244'/%3E%3C/g%3E%3Cg fill='%23130d0c'%3E%3Crect x='240' y='556' width='16' height='80'/%3E%3Crect x='430' y='556' width='16' height='86'/%3E%3Crect x='742' y='560' width='14' height='74'/%3E%3C/g%3E%3Cg fill='%23ffcf9e' opacity='0.16'%3E%3Crect x='276' y='636' width='16' height='90'/%3E%3Crect x='446' y='642' width='14' height='80'/%3E%3Crect x='916' y='640' width='18' height='96'/%3E%3C/g%3E%3C/svg%3E");
-    --dn-bar: repeating-linear-gradient(102deg, rgba(216, 230, 255, 0.22) 0 1px, transparent 1px 26px), radial-gradient(90% 130% at 88% 116%, rgba(255, 201, 138, 0.24), transparent 62%);
-    --dn-bar-size: 150px 150px, 100% 100%;
-    --dn-bar-anim: dnmBarRain 1.6s linear infinite;
-    --dn-bar2: radial-gradient(circle, transparent 60%, rgba(226, 236, 255, 0.5) 61%, transparent 63%);
-    --dn-bar2-size: 22px 22px;
+    --dn-title: "CORRUPT"; --dn-title-rotate: -6deg;
+    --dn-wash: linear-gradient(180deg, rgba(6, 6, 9, 0.97) 0%, rgba(10, 9, 13, 0.6) 34%, rgba(8, 7, 10, 0.68) 64%, rgba(4, 4, 6, 0.96) 100%);
+    --dn-vignette: radial-gradient(760px 520px at 50% 108%, rgba(146, 44, 32, 0.18), transparent 72%), radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Crect width='1200' height='800' fill='%230b0b0f'/%3E%3Cg%3E%3Cpath d='M40 800 L40 250 Q145 96 250 250 L250 800 Z' fill='%23252f3a'/%3E%3Cpath d='M40 800 L40 250 Q145 96 250 250 L250 800 Z' fill='none' stroke='%235a7d9b' stroke-width='3' opacity='0.5'/%3E%3Cg stroke='%230b0b0f' stroke-width='7'%3E%3Cpath d='M145 800 L145 190'/%3E%3Cpath d='M40 330 L250 330'/%3E%3Cpath d='M40 460 L250 460'/%3E%3Cpath d='M40 590 L250 590'/%3E%3C/g%3E%3Ccircle cx='145' cy='215' r='26' fill='none' stroke='%235a7d9b' stroke-width='5' opacity='0.45'/%3E%3C/g%3E%3Cg%3E%3Cpath d='M950 800 L950 250 Q1055 96 1160 250 L1160 800 Z' fill='%23252f3a'/%3E%3Cpath d='M950 800 L950 250 Q1055 96 1160 250 L1160 800 Z' fill='none' stroke='%235a7d9b' stroke-width='3' opacity='0.5'/%3E%3Cg stroke='%230b0b0f' stroke-width='7'%3E%3Cpath d='M1055 800 L1055 190'/%3E%3Cpath d='M950 330 L1160 330'/%3E%3Cpath d='M950 460 L1160 460'/%3E%3Cpath d='M950 590 L1160 590'/%3E%3C/g%3E%3Ccircle cx='1055' cy='215' r='26' fill='none' stroke='%235a7d9b' stroke-width='5' opacity='0.45'/%3E%3C/g%3E%3Cg fill='%23c8c1b3'%3E%3Cellipse cx='330' cy='690' rx='44' ry='37'/%3E%3Crect x='306' y='722' width='48' height='24' rx='8'/%3E%3Cellipse cx='410' cy='716' rx='38' ry='32'/%3E%3Crect x='392' y='740' width='36' height='18' rx='6'/%3E%3Cellipse cx='880' cy='700' rx='41' ry='35'/%3E%3Crect x='858' y='730' width='44' height='22' rx='7'/%3E%3C/g%3E%3Cg fill='%230b0b0f'%3E%3Cellipse cx='312' cy='682' rx='15' ry='17'/%3E%3Cellipse cx='350' cy='682' rx='15' ry='17'/%3E%3Cpath d='M326 706 l5 12 l5 -12 Z'/%3E%3Cellipse cx='398' cy='710' rx='11' ry='13'/%3E%3Cellipse cx='424' cy='710' rx='11' ry='13'/%3E%3Cellipse cx='866' cy='694' rx='13' ry='15'/%3E%3Cellipse cx='896' cy='694' rx='13' ry='15'/%3E%3C/g%3E%3Cg fill='%23c8c1b3' opacity='0.75'%3E%3Crect x='470' y='742' width='86' height='9' rx='4'/%3E%3Crect x='690' y='752' width='64' height='8' rx='4'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-particles: repeating-linear-gradient(14deg, rgba(198, 214, 236, 0.13) 0 1px, transparent 1px 26px);
+    --dn-particles-size: 260px 260px;
+    --dn-particles-anim: dnmFall 1.6s linear infinite;
+    --dn-bar: repeating-linear-gradient(14deg, rgba(206, 222, 245, 0.16) 0 1px, transparent 1px 30px), radial-gradient(90% 140% at 86% 116%, rgba(184, 84, 63, 0.28), transparent 62%);
+    --dn-bar-size: 160px 160px, 100% 100%;
+    --dn-bar-anim: dnmBarRain 2s linear infinite;
+    --dn-bar2: radial-gradient(circle, transparent 60%, rgba(226, 236, 255, 0.42) 61%, transparent 64%);
+    --dn-bar2-size: 24px 24px;
     --dn-bar2-anim: dnmRippleCentered 4.6s ease-out infinite;
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 36'%3E%3Cellipse cx='20' cy='16' rx='13' ry='12' fill='%23b8543f'/%3E%3Crect x='14' y='26' width='12' height='7' rx='2' fill='%23b8543f'/%3E%3Cellipse cx='15' cy='15' rx='4' ry='4.5' fill='%230b0b0f'/%3E%3Cellipse cx='25' cy='15' rx='4' ry='4.5' fill='%230b0b0f'/%3E%3Cpath d='M20 21 l2.5 4 l-5 0 Z' fill='%230b0b0f'/%3E%3C/svg%3E");
+    --dn-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cellipse cx='12' cy='10' rx='8' ry='7.5' fill='%23cfc7b8'/%3E%3Crect x='8' y='16' width='8' height='5' rx='1.5' fill='%23cfc7b8'/%3E%3Cellipse cx='9' cy='9.5' rx='2.6' ry='3' fill='%23110d10'/%3E%3Cellipse cx='15' cy='9.5' rx='2.6' ry='3' fill='%23110d10'/%3E%3Cpath d='M12 13 l1.7 2.6 l-3.4 0 Z' fill='%23110d10'/%3E%3C/svg%3E");
 }
-@keyframes dnmRain { 0% { background-position: 0 0, 0 0; } 100% { background-position: 0 -300px, 0 -240px; } }
-@keyframes dnmBarRain { 0% { background-position: 0 0, 0 0; } 100% { background-position: -58px 150px, 0 0; } }
-@keyframes dnmRippleCentered { 0% { opacity: 0; } 20% { opacity: 0.7; } 100% { opacity: 0; } }
 
-/* =====================================================================
-   РЕЖИМ 2 — HIDEAWAY · лес, озеро, тёплое окно
-   ===================================================================== */
+/* --------------------------------------------------------------- 2. HIDEAWAY */
 body[data-dn-mode="hideaway"] {
-    --dn-a: #8fb79a; --dn-a-hot: #d9f2dd; --dn-a2: #2f6b73;
-    --dn-ink: #e9f0e7; --dn-muted: #8fa295;
-    --dn-p1: rgba(18, 26, 22, 0.9); --dn-p2: rgba(8, 12, 10, 0.95);
-    --dn-hint: "Тут можно спрятаться...  ❋";
-    --dn-title: "HIDEAWAY";
-    --dn-title-rotate: 4deg;
+    --dn-a: #8fa39a; --dn-a-hot: #d5e6dc; --dn-a2: #2c4642;
+    --dn-ink: #e6ece8; --dn-muted: #8b9a93;
+    --dn-p1: rgba(20, 26, 24, 0.92); --dn-p2: rgba(8, 11, 10, 0.96);
     --dn-name-font: 'Lora', serif;
-    --dn-wash: linear-gradient(180deg, rgba(4, 10, 8, 0.96) 0%, rgba(9, 17, 13, 0.58) 34%, rgba(5, 10, 8, 0.7) 64%, rgba(2, 5, 4, 0.94) 100%);
-    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='4' y='6' width='32' height='28' rx='2' fill='none' stroke='%238fb79a' stroke-width='2.4'/%3E%3Cpath d='M20 6 L20 34 M4 20 L36 20' stroke='%238fb79a' stroke-width='2'/%3E%3Crect x='7' y='9' width='10' height='8' fill='%23d9f2dd' opacity='0.55'/%3E%3C/svg%3E");
-    --dn-particles: radial-gradient(3px 60px at 18% 0%, rgba(214, 246, 255, 0.28) 15%, transparent 80%), radial-gradient(2.4px 44px at 52% 0%, rgba(190, 236, 255, 0.22) 15%, transparent 80%), radial-gradient(2.6px 52px at 84% 0%, rgba(214, 246, 255, 0.24) 15%, transparent 80%);
-    --dn-particles-size: 380px 520px;
-    --dn-particles-anim: dnmRain 12s linear infinite;
-    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='lake' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23142018' stop-opacity='0.9'/%3E%3Cstop offset='1' stop-color='%23050a08' stop-opacity='1'/%3E%3C/linearGradient%3E%3CradialGradient id='win'%3E%3Cstop offset='0' stop-color='%23ffd9a0' stop-opacity='0.9'/%3E%3Cstop offset='1' stop-color='%23ffd9a0' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cg fill='%230a1210'%3E%3Cpath d='M0 560 L0 300 L40 220 L80 320 L120 260 L160 560 Z'/%3E%3Cpath d='M140 560 L140 380 L180 300 L220 400 L260 330 L300 560 Z'/%3E%3Cpath d='M860 560 L860 360 L900 280 L940 390 L980 320 L1020 560 Z'/%3E%3Cpath d='M1000 560 L1000 300 L1040 210 L1080 320 L1120 260 L1160 380 L1200 300 L1200 560 Z'/%3E%3C/g%3E%3Cg fill='%230c1512'%3E%3Cpath d='M300 560 L300 420 L340 360 L380 440 L420 380 L460 560 Z'/%3E%3Cpath d='M740 560 L740 430 L780 350 L820 450 L860 400 L900 560 Z'/%3E%3C/g%3E%3Crect x='0' y='556' width='1200' height='244' fill='url(%23lake)'/%3E%3Ccircle cx='1030' cy='424' r='64' fill='url(%23win)'/%3E%3Cg fill='%23070c0a'%3E%3Crect x='1012' y='404' width='36' height='40'/%3E%3C/g%3E%3Crect x='1012' y='404' width='36' height='40' fill='%23ffd9a0' opacity='0.72'/%3E%3Cg fill='%23ffd9a0' opacity='0.14'%3E%3Crect x='1012' y='556' width='36' height='120'/%3E%3C/g%3E%3Cg fill='%23cfe9d8' opacity='0.06'%3E%3Crect x='0' y='600' width='1200' height='2'/%3E%3Crect x='0' y='650' width='1200' height='2'/%3E%3Crect x='0' y='710' width='1200' height='2'/%3E%3C/g%3E%3C/svg%3E");
-    --dn-bar: radial-gradient(70% 130% at 20% 120%, rgba(143, 183, 154, 0.28), transparent 62%);
+    --dn-name-size: 1.42em; --dn-name-track: 0.08em; --dn-name-transform: none;
+    --dn-hint: "Тут можно спрятаться...  ❋";
+    --dn-title: "HIDEAWAY"; --dn-title-rotate: 4deg;
+    --dn-wash: linear-gradient(180deg, rgba(6, 10, 9, 0.97) 0%, rgba(11, 17, 15, 0.62) 34%, rgba(8, 12, 11, 0.7) 64%, rgba(3, 5, 5, 0.96) 100%);
+    --dn-vignette: radial-gradient(700px 520px at 78% 76%, rgba(206, 196, 170, 0.12), transparent 72%), radial-gradient(ellipse at center, transparent 38%, rgba(0, 5, 4, 0.82) 100%);
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Crect width='1200' height='800' fill='%230c1211'/%3E%3Cg fill='%23080d0c'%3E%3Cpath d='M-20 800 L-20 420 L30 320 L80 430 L120 360 L170 800 Z'/%3E%3Cpath d='M120 800 L120 500 L170 400 L210 520 L260 450 L300 800 Z'/%3E%3Cpath d='M900 800 L900 470 L950 380 L1000 500 L1040 430 L1090 800 Z'/%3E%3Cpath d='M1060 800 L1060 400 L1110 300 L1160 420 L1200 350 L1240 800 Z'/%3E%3C/g%3E%3Cg stroke='%23161d1c' stroke-width='6' fill='none'%3E%3Cpath d='M80 800 L80 560 M50 630 L110 630 M50 680 L110 680'/%3E%3Cpath d='M1010 800 L1010 540 M978 616 L1042 616 M978 668 L1042 668'/%3E%3C/g%3E%3Cg stroke='%236d7a72' stroke-width='7' fill='none'%3E%3Cpath d='M250 800 L250 470'/%3E%3Cpath d='M212 540 L288 540'/%3E%3Cpath d='M226 610 L274 610'/%3E%3Ccircle cx='250' cy='470' r='26'/%3E%3C/g%3E%3Cg stroke='%237a877f' stroke-width='9' fill='none' opacity='0.9'%3E%3Cpath d='M900 800 L900 430'/%3E%3Cpath d='M852 512 L948 512'/%3E%3Cpath d='M866 596 L934 596'/%3E%3Ccircle cx='900' cy='430' r='34'/%3E%3C/g%3E%3Cg fill='%230a100f'%3E%3Crect x='214' y='800' width='72' height='-40' rx='4'/%3E%3Crect x='862' y='800' width='78' height='-44' rx='4'/%3E%3C/g%3E%3Cg fill='%23cbbfa4' opacity='0.55'%3E%3Crect x='228' y='782' width='44' height='4'/%3E%3Crect x='874' y='778' width='54' height='4'/%3E%3C/g%3E%3Crect x='0' y='560' width='1200' height='240' fill='%231a2422' opacity='0.75'/%3E%3Crect x='0' y='470' width='1200' height='110' fill='%23b9c4bd' opacity='0.07'/%3E%3C/svg%3E");
+    --dn-particles: radial-gradient(420px 180px at 30% 80%, rgba(180, 196, 188, 0.16), transparent 70%), radial-gradient(460px 200px at 76% 88%, rgba(160, 180, 172, 0.14), transparent 72%);
+    --dn-particles-size: 100% 100%, 100% 100%;
+    --dn-particles-anim: dnmFog 32s ease-in-out infinite alternate;
+    --dn-bar: radial-gradient(70% 130% at 24% 120%, rgba(143, 163, 154, 0.3), transparent 64%);
     --dn-bar-size: 100% 100%;
-    --dn-bar-anim: dnmMist 9s ease-in-out infinite alternate;
-    --dn-bar2: radial-gradient(circle, transparent 58%, rgba(200, 236, 210, 0.35) 60%, transparent 63%);
+    --dn-bar-anim: dnmFog 11s ease-in-out infinite alternate;
+    --dn-bar2: radial-gradient(circle, transparent 58%, rgba(200, 226, 214, 0.3) 60%, transparent 63%);
     --dn-bar2-size: 26px 26px;
     --dn-bar2-anim: dnmRippleCentered 7s ease-out infinite;
-}
-@keyframes dnmMist {
-    0%   { background-position: 0 0; opacity: 0.5; }
-    100% { background-position: 4% 0; opacity: 1; }
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg stroke='%238fa39a' stroke-width='2.6' fill='none'%3E%3Cpath d='M20 4 L20 36'/%3E%3Cpath d='M9 15 L31 15'/%3E%3Ccircle cx='20' cy='15' r='6'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg stroke='%23cfd8d2' stroke-width='1.9' fill='none'%3E%3Cpath d='M12 2 L12 22'/%3E%3Cpath d='M6 8 L18 8'/%3E%3Ccircle cx='12' cy='8' r='3.4'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* =====================================================================
-   РЕЖИМ 3 — KILL SWITCH · церковь, свечи, витраж
-   ===================================================================== */
+/* ------------------------------------------------------------ 3. KILL SWITCH */
 body[data-dn-mode="killswitch"] {
-    --dn-a: #d9a441; --dn-a-hot: #ffd98a; --dn-a2: #4a2f6b;
-    --dn-ink: #f4ece0; --dn-muted: #a5968a;
-    --dn-p1: rgba(28, 22, 30, 0.92); --dn-p2: rgba(10, 8, 12, 0.96);
-    --dn-hint: "Исповедуйся...  ✞";
-    --dn-title: "KILL SWITCH";
-    --dn-title-rotate: -3deg;
+    --dn-a: #b3a08a; --dn-a-hot: #e6d3b6; --dn-a2: #4a3a2c;
+    --dn-ink: #efe9e1; --dn-muted: #93897d;
+    --dn-p1: rgba(24, 21, 20, 0.93); --dn-p2: rgba(9, 8, 7, 0.96);
     --dn-name-font: 'Lora', serif;
-    --dn-name-track: 0.12em;
-    --dn-name-transform: uppercase;
-    --dn-wash: linear-gradient(180deg, rgba(8, 5, 11, 0.92) 0%, rgba(13, 8, 17, 0.42) 30%, rgba(8, 5, 11, 0.55) 62%, rgba(2, 1, 4, 0.95) 100%);
-    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 3 L35 11 L35 26 L20 37 L5 26 L5 11 Z' fill='none' stroke='%23d9a441' stroke-width='1.8'/%3E%3Cpath d='M20 8 L30 14 L30 24 L20 31 L10 24 L10 14 Z' fill='%23d9a441' opacity='0.22'/%3E%3Cpath d='M20 13 L20 26 M15 19 L25 19' stroke='%23ffd98a' stroke-width='1.8'/%3E%3C/svg%3E");
-    --dn-particles: radial-gradient(1.8px 1.8px at 24% 70%, rgba(255, 217, 138, 0.5) 50%, transparent 100%), radial-gradient(1.4px 1.4px at 58% 84%, rgba(255, 200, 120, 0.4) 50%, transparent 100%), radial-gradient(1.6px 1.6px at 80% 66%, rgba(255, 230, 190, 0.45) 50%, transparent 100%);
-    --dn-particles-size: 340px 340px;
-    --dn-particles-anim: dnmRise 22s linear infinite;
-    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3CradialGradient id='rose'%3E%3Cstop offset='0' stop-color='%23ffd98a' stop-opacity='0.85'/%3E%3Cstop offset='0.55' stop-color='%236b3f8f' stop-opacity='0.5'/%3E%3Cstop offset='1' stop-color='%236b3f8f' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cg fill='%23120d18'%3E%3Crect x='0' y='0' width='1200' height='800'/%3E%3C/g%3E%3Ccircle cx='600' cy='250' r='170' fill='url(%23rose)'/%3E%3Cg stroke='%23ffd98a' stroke-width='3' opacity='0.5' fill='none'%3E%3Ccircle cx='600' cy='250' r='96'/%3E%3Ccircle cx='600' cy='250' r='150'/%3E%3Cpath d='M600 100 L600 400 M450 250 L750 250 M494 144 L706 356 M706 144 L494 356'/%3E%3C/g%3E%3Cg fill='%230d0912'%3E%3Cpath d='M0 800 L0 420 C120 300 240 300 360 420 L360 800 Z'/%3E%3Cpath d='M840 800 L840 420 C960 300 1080 300 1200 420 L1200 800 Z'/%3E%3C/g%3E%3Cg fill='%230f0b15'%3E%3Crect x='0' y='640' width='1200' height='160'/%3E%3C/g%3E%3Cg fill='%23151019'%3E%3Crect x='120' y='660' width='960' height='16'/%3E%3Crect x='150' y='676' width='900' height='10'/%3E%3C/g%3E%3Cg fill='%23ffd98a' opacity='0.8'%3E%3Ccircle cx='300' cy='620' r='6'/%3E%3Ccircle cx='420' cy='616' r='5'/%3E%3Ccircle cx='780' cy='616' r='5'/%3E%3Ccircle cx='900' cy='620' r='6'/%3E%3C/g%3E%3Cg fill='%23ffd98a' opacity='0.12'%3E%3Crect x='292' y='600' width='16' height='120'/%3E%3Crect x='412' y='596' width='14' height='120'/%3E%3Crect x='772' y='596' width='14' height='120'/%3E%3Crect x='892' y='600' width='16' height='120'/%3E%3C/g%3E%3C/svg%3E");
-    --dn-bar: radial-gradient(60% 120% at 50% 130%, rgba(255, 217, 138, 0.3), transparent 62%);
+    --dn-name-size: 1.38em; --dn-name-track: 0.14em; --dn-name-transform: uppercase;
+    --dn-hint: "Исповедуйся...  ✞";
+    --dn-title: "KILL SWITCH"; --dn-title-rotate: -3deg;
+    --dn-wash: linear-gradient(180deg, rgba(7, 6, 6, 0.97) 0%, rgba(13, 11, 10, 0.6) 34%, rgba(10, 9, 8, 0.68) 64%, rgba(4, 4, 3, 0.96) 100%);
+    --dn-vignette: radial-gradient(620px 480px at 50% 104%, rgba(224, 176, 112, 0.14), transparent 72%), radial-gradient(ellipse at center, transparent 38%, rgba(0, 0, 0, 0.84) 100%);
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Crect width='1200' height='800' fill='%230d0c0b'/%3E%3Cg fill='%231a1715'%3E%3Crect x='0' y='0' width='1200' height='800'/%3E%3C/g%3E%3Cg fill='%23292320'%3E%3Crect x='20' y='180' width='120' height='620'/%3E%3Crect x='1060' y='180' width='120' height='620'/%3E%3Cpath d='M14 180 L146 180 L146 152 L14 152 Z'/%3E%3Cpath d='M1054 180 L1186 180 L1186 152 L1054 152 Z'/%3E%3C/g%3E%3Cg stroke='%235a4d40' stroke-width='9' fill='none'%3E%3Cpath d='M170 800 L170 300 L250 220 L330 300 L330 800'/%3E%3Cpath d='M870 800 L870 300 L950 220 L1030 300 L1030 800'/%3E%3C/g%3E%3Cg stroke='%235a4d40' stroke-width='7' fill='none'%3E%3Cpath d='M200 800 L200 330'/%3E%3Cpath d='M240 800 L240 330'/%3E%3Cpath d='M280 800 L280 330'/%3E%3Cpath d='M900 800 L900 330'/%3E%3Cpath d='M940 800 L940 330'/%3E%3Cpath d='M980 800 L980 330'/%3E%3C/g%3E%3Cg stroke='%235a4d40' stroke-width='6' fill='none'%3E%3Ccircle cx='220' cy='420' r='26'/%3E%3Ccircle cx='260' cy='420' r='26'/%3E%3Ccircle cx='240' cy='560' r='30'/%3E%3Ccircle cx='920' cy='420' r='26'/%3E%3Ccircle cx='960' cy='420' r='26'/%3E%3Ccircle cx='940' cy='560' r='30'/%3E%3C/g%3E%3Cg fill='%235a4d40'%3E%3Cpath d='M212 330 l8 -22 l8 22 Z'/%3E%3Cpath d='M232 330 l8 -22 l8 22 Z'/%3E%3Cpath d='M252 330 l8 -22 l8 22 Z'/%3E%3Cpath d='M912 330 l8 -22 l8 22 Z'/%3E%3Cpath d='M932 330 l8 -22 l8 22 Z'/%3E%3Cpath d='M952 330 l8 -22 l8 22 Z'/%3E%3C/g%3E%3Cg fill='%23e6d3b6' opacity='0.9'%3E%3Ccircle cx='420' cy='722' r='6'/%3E%3Ccircle cx='470' cy='716' r='5'/%3E%3Ccircle cx='730' cy='716' r='5'/%3E%3Ccircle cx='780' cy='722' r='6'/%3E%3C/g%3E%3Cg fill='%23e6d3b6' opacity='0.1'%3E%3Crect x='412' y='700' width='18' height='140'/%3E%3Crect x='462' y='694' width='16' height='140'/%3E%3Crect x='722' y='694' width='16' height='140'/%3E%3Crect x='772' y='700' width='18' height='140'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-particles: radial-gradient(2px 2px at 26% 74%, rgba(255, 222, 170, 0.5) 50%, transparent 100%), radial-gradient(1.6px 1.6px at 58% 86%, rgba(255, 206, 150, 0.42) 50%, transparent 100%), radial-gradient(1.8px 1.8px at 82% 70%, rgba(255, 232, 190, 0.46) 50%, transparent 100%);
+    --dn-particles-size: 360px 360px;
+    --dn-particles-anim: dnmRiseUp 24s linear infinite;
+    --dn-bar: radial-gradient(60% 130% at 50% 130%, rgba(230, 211, 182, 0.26), transparent 62%);
     --dn-bar-size: 100% 100%;
     --dn-bar-anim: dnmCandle 2.6s ease-in-out infinite alternate;
-    --dn-bar2: radial-gradient(1.6px 1.6px at 20% 70%, rgba(255, 217, 138, 0.85) 50%, transparent 100%), radial-gradient(1.4px 1.4px at 64% 84%, rgba(255, 200, 120, 0.7) 50%, transparent 100%);
-    --dn-bar2-size: 200px 120px;
-    --dn-bar2-anim: dnmRise 7s linear infinite;
-}
-@keyframes dnmCandle {
-    0%   { transform: scaleY(0.9) translateY(6%); opacity: 0.6; }
-    55%  { transform: scaleY(1.06) translateY(0); opacity: 0.95; }
-    100% { transform: scaleY(0.94) translateY(4%); opacity: 0.7; }
-    }
-@keyframes dnmRise { 0% { background-position: 0 0; } 100% { background-position: 0 -340px; } }
-
-/* =====================================================================
-   РЕЖИМ 4 — NIGHTFALL · хэллоуин в городке
-   ===================================================================== */
-body[data-dn-mode="nightfall"] {
-    --dn-a: #e07a3c; --dn-a-hot: #ffb173; --dn-a2: #3f5f96;
-    --dn-ink: #f0e6dc; --dn-muted: #9c8b80;
-    --dn-p1: rgba(28, 22, 20, 0.9); --dn-p2: rgba(10, 9, 14, 0.96);
-    --dn-hint: "Скажи это ночи...  ✦";
-    --dn-title: "NIGHTFALL";
-    --dn-title-rotate: -5deg;
-    --dn-wash: linear-gradient(180deg, rgba(9, 9, 16, 0.95) 0%, rgba(13, 11, 19, 0.55) 36%, rgba(11, 8, 13, 0.72) 68%, rgba(3, 3, 8, 0.94) 100%);
-    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 34'%3E%3Cellipse cx='20' cy='21' rx='15' ry='11' fill='%23e07a3c'/%3E%3Crect x='18' y='6' width='4' height='7' rx='1.5' fill='%234a3020'/%3E%3Cpath d='M13 19 l5 -4 l0 7 Z' fill='%23ffd0a0'/%3E%3Cpath d='M27 19 l-5 -4 l0 7 Z' fill='%23ffd0a0'/%3E%3Cpath d='M15 27 l5 -3 l5 3' stroke='%23ffd0a0' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");
-    --dn-particles: radial-gradient(2px 2px at 22% 70%, rgba(255, 177, 115, 0.55) 50%, transparent 100%), radial-gradient(1.6px 1.6px at 56% 86%, rgba(255, 200, 140, 0.45) 50%, transparent 100%), radial-gradient(1.8px 1.8px at 82% 62%, rgba(255, 177, 115, 0.5) 50%, transparent 100%);
-    --dn-particles-size: 360px 360px;
-    --dn-particles-anim: dnmRise 24s linear infinite;
-    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='fog' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23e07a3c' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23e07a3c' stop-opacity='0.16'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='380' width='1200' height='180' fill='url(%23fog)'/%3E%3Cg stroke='%231a1614' stroke-width='8' fill='none'%3E%3Cpath d='M120 560 L120 380 M104 430 L136 400 M136 430 L104 400 M104 484 L136 456 M136 484 L104 456'/%3E%3Cpath d='M1080 560 L1080 400 M1064 448 L1096 420 M1096 448 L1064 420'/%3E%3C/g%3E%3Cg fill='%230d0f16'%3E%3Crect x='200' y='470' width='180' height='90'/%3E%3Cpath d='M188 470 L290 404 L392 470 Z'/%3E%3Crect x='640' y='486' width='150' height='74'/%3E%3Cpath d='M628 486 L715 428 L802 486 Z'/%3E%3Crect x='860' y='502' width='110' height='58'/%3E%3Cg fill='%23ffb173' opacity='0.7'%3E%3Crect x='228' y='492' width='12' height='20'/%3E%3Crect x='336' y='492' width='12' height='20'/%3E%3Crect x='668' y='504' width='12' height='20'/%3E%3Crect x='744' y='504' width='12' height='20'/%3E%3Crect x='884' y='518' width='10' height='16'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%230a0c12'%3E%3Crect x='0' y='556' width='1200' height='244'/%3E%3C/g%3E%3Cg stroke='%23161212' stroke-width='3' fill='none'%3E%3Cpath d='M0 420 Q300 470 600 430 T1200 448'/%3E%3C/g%3E%3Cg fill='%23ffb173'%3E%3Ccircle cx='120' cy='432' r='4'/%3E%3Ccircle cx='260' cy='446' r='4'/%3E%3Ccircle cx='400' cy='450' r='4'/%3E%3Ccircle cx='540' cy='440' r='4'/%3E%3Ccircle cx='680' cy='436' r='4'/%3E%3Ccircle cx='820' cy='440' r='4'/%3E%3Ccircle cx='960' cy='446' r='4'/%3E%3Ccircle cx='1100' cy='448' r='4'/%3E%3C/g%3E%3Cg fill='%23e07a3c'%3E%3Cellipse cx='480' cy='552' rx='18' ry='14'/%3E%3Cellipse cx='560' cy='556' rx='14' ry='11'/%3E%3Cellipse cx='1000' cy='554' rx='16' ry='12'/%3E%3C/g%3E%3Cg fill='%231a120c'%3E%3Crect x='476' y='532' width='6' height='10'/%3E%3Crect x='556' y='542' width='5' height='8'/%3E%3Crect x='996' y='540' width='5' height='9'/%3E%3C/g%3E%3Cg fill='%23ffd0a0' opacity='0.9'%3E%3Cpath d='M472 550 l4 -5 l4 5 Z'/%3E%3Cpath d='M484 550 l4 -5 l4 5 Z'/%3E%3Cpath d='M556 554 l3 -4 l3 4 Z'/%3E%3Cpath d='M993 552 l3.5 -4 l3.5 4 Z'/%3E%3C/g%3E%3C/svg%3E");
-    --dn-bar: radial-gradient(70% 130% at 30% 120%, rgba(224, 122, 60, 0.3), transparent 62%);
-    --dn-bar-size: 100% 100%;
-    --dn-bar-anim: dnmCandle 3.4s ease-in-out infinite alternate;
-    --dn-bar2: radial-gradient(2px 2px at 22% 80%, rgba(255, 177, 115, 0.7) 50%, transparent 100%), radial-gradient(1.6px 1.6px at 70% 90%, rgba(255, 200, 140, 0.6) 50%, transparent 100%);
+    --dn-bar2: radial-gradient(1.6px 1.6px at 20% 70%, rgba(255, 222, 170, 0.8) 50%, transparent 100%), radial-gradient(1.4px 1.4px at 64% 84%, rgba(255, 206, 150, 0.65) 50%, transparent 100%);
     --dn-bar2-size: 210px 130px;
-    --dn-bar2-anim: dnmRise 9s linear infinite;
+    --dn-bar2-anim: dnmRiseUp 8s linear infinite;
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg stroke='%23b3a08a' stroke-width='2.4' fill='none'%3E%3Cpath d='M14 2 L26 2 L26 14 L38 26 L26 38 L14 26 L2 26 L2 14 Z'/%3E%3C/g%3E%3Cpath d='M20 13 L20 27 M14 20 L26 20' stroke='%23e6d3b6' stroke-width='2.2'/%3E%3C/svg%3E");
+    --dn-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg stroke='%23d8c9b2' stroke-width='1.8' fill='none'%3E%3Cpath d='M4 22 L4 9 M9 22 L9 9 M15 22 L15 9 M20 22 L20 9'/%3E%3Cpath d='M2 9 L11 3 L13 3 L22 9'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* =====================================================================
-   РЕЖИМ 5 — CONCLAVE · все четверо
-   ===================================================================== */
-body[data-dn-mode="conclave"] {
-    --dn-a: #d9b06a; --dn-a-hot: #ffe0a8; --dn-a2: #6a2a5a;
-    --dn-ink: #f1e8de; --dn-muted: #9a8d95;
-    --dn-p1: rgba(24, 20, 28, 0.92); --dn-p2: rgba(9, 8, 12, 0.96);
-    --dn-hint: "Четверо ждут...  ✧";
-    --dn-title: "CONCLAVE";
-    --dn-title-rotate: 3deg;
-    --dn-wash: linear-gradient(180deg, rgba(5, 5, 9, 0.96) 0%, rgba(9, 8, 13, 0.55) 36%, rgba(7, 6, 10, 0.72) 70%, rgba(2, 2, 5, 0.95) 100%);
-    --dn-particles: radial-gradient(2px 2px at 18% 74%, rgba(217, 176, 106, 0.5) 50%, transparent 100%), radial-gradient(1.8px 1.8px at 44% 88%, rgba(255, 45, 111, 0.4) 50%, transparent 100%), radial-gradient(1.8px 1.8px at 68% 80%, rgba(46, 230, 255, 0.4) 50%, transparent 100%), radial-gradient(2px 2px at 88% 90%, rgba(217, 176, 106, 0.45) 50%, transparent 100%);
-    --dn-particles-size: 380px 380px;
-    --dn-particles-anim: dnmRise 20s linear infinite;
-    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3CradialGradient id='fire'%3E%3Cstop offset='0' stop-color='%23ffb173' stop-opacity='0.8'/%3E%3Cstop offset='1' stop-color='%23ffb173' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M0 620 C260 520 420 560 600 540 C780 520 940 560 1200 620 L1200 800 L0 800 Z' fill='%230a0a10'/%3E%3Ccircle cx='600' cy='600' r='150' fill='url(%23fire)' opacity='0.55'/%3E%3Cg fill='%23080a0e'%3E%3Cg transform='translate(300 470)'%3E%3Ccircle cx='0' cy='-70' r='22'/%3E%3Cpath d='M-26 0 L-16 -56 L16 -56 L26 0 Z'/%3E%3Crect x='-14' y='0' width='10' height='80'/%3E%3Crect x='4' y='0' width='10' height='80'/%3E%3C/g%3E%3Cg transform='translate(500 490) scale(0.92)'%3E%3Ccircle cx='0' cy='-70' r='22'/%3E%3Cpath d='M-26 0 L-16 -56 L16 -56 L26 0 Z'/%3E%3Crect x='-14' y='0' width='10' height='70'/%3E%3Crect x='4' y='0' width='10' height='70'/%3E%3C/g%3E%3Cg transform='translate(700 488) scale(1.02)'%3E%3Ccircle cx='0' cy='-70' r='22'/%3E%3Cpath d='M-26 0 L-16 -56 L16 -56 L26 0 Z'/%3E%3Crect x='-14' y='0' width='10' height='74'/%3E%3Crect x='4' y='0' width='10' height='74'/%3E%3C/g%3E%3Cg transform='translate(900 472) scale(0.96)'%3E%3Ccircle cx='0' cy='-70' r='22'/%3E%3Cpath d='M-26 0 L-16 -56 L16 -56 L26 0 Z'/%3E%3Crect x='-14' y='0' width='10' height='78'/%3E%3Crect x='4' y='0' width='10' height='78'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23ffb173' opacity='0.85'%3E%3Ccircle cx='600' cy='606' r='10'/%3E%3C/g%3E%3Cg fill='%23ffb173' opacity='0.16'%3E%3Cpath d='M600 606 L520 480 L680 480 Z'/%3E%3C/g%3E%3C/svg%3E");
-    --dn-bar: linear-gradient(90deg, transparent, rgba(46, 230, 255, 0.18), rgba(255, 45, 111, 0.18), rgba(217, 176, 106, 0.2), transparent);
-    --dn-bar-size: 70% 100%;
-    --dn-bar-anim: dnmScan 6s linear infinite;
-    --dn-bar2: radial-gradient(2px 2px at 20% 80%, rgba(217, 176, 106, 0.7) 50%, transparent 100%), radial-gradient(1.6px 1.6px at 76% 88%, rgba(255, 45, 111, 0.6) 50%, transparent 100%);
-    --dn-bar2-size: 220px 130px;
-    --dn-bar2-anim: dnmRise 8s linear infinite;
-    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 2 L24 16 L38 20 L24 24 L20 38 L16 24 L2 20 L16 16 Z' fill='%23d9b06a'/%3E%3C/svg%3E");
-}
-@keyframes dnmScan {
-    0%   { background-position: -70% 0; }
-    100% { background-position: 170% 0; }
-}
-
-/* =====================================================================
-   РЕЖИМ 6 — PUNK 57 · бумага, кассеты, письма (светлый)
-   ===================================================================== */
+/* ---------------------------------------------------------------- 4. PUNK 57 */
 body[data-dn-mode="punk57"] {
-    --dn-a: #b23a2f; --dn-a-hot: #d9564a; --dn-a2: #2b3a67;
-    --dn-ink: #241f1a; --dn-muted: #6d6156;
-    --dn-p1: rgba(244, 237, 222, 0.94); --dn-p2: rgba(232, 222, 203, 0.96);
-    --dn-line: rgba(36, 31, 26, 0.16);
+    --dn-a: #ff2f8e; --dn-a-hot: #ff7ab8; --dn-a2: #1a1030;
+    --dn-ink: #f2eef7; --dn-muted: #9a91a8;
+    --dn-p1: rgba(20, 14, 28, 0.92); --dn-p2: rgba(8, 6, 12, 0.96);
+    --dn-name-font: 'Inter', sans-serif;
+    --dn-name-size: 1.45em; --dn-name-track: 0.16em; --dn-name-transform: uppercase;
     --dn-hint: "Напиши ему...  ✉";
-    --dn-title: "PUNK 57";
-    --dn-title-rotate: -2deg;
-    --dn-name-font: 'Caveat', cursive;
-    --dn-name-size: 2em;
-    --dn-name-track: 0.01em;
-    --dn-body-font: 'Inter', sans-serif;
-    --dn-wash: linear-gradient(180deg, rgba(247, 240, 226, 0.97) 0%, rgba(240, 231, 214, 0.92) 40%, rgba(228, 216, 196, 0.96) 100%);
-    --dn-particles: repeating-linear-gradient(0deg, rgba(43, 58, 103, 0.10) 0 1px, transparent 1px 26px);
-    --dn-particles-size: 100% 100%;
-    --dn-particles-anim: none;
-    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%232b3a67' stroke-opacity='0.16' stroke-width='1.4'%3E%3Cpath d='M0 600 L1200 578'/%3E%3C/g%3E%3Cg transform='translate(880 520) rotate(-8)'%3E%3Crect x='0' y='0' width='230' height='145' rx='8' fill='%23e6dcc6' stroke='%23241f1a' stroke-opacity='0.35' stroke-width='3'/%3E%3Crect x='18' y='18' width='194' height='62' rx='4' fill='%23d9cdb2' stroke='%23241f1a' stroke-opacity='0.3' stroke-width='2'/%3E%3Ccircle cx='62' cy='49' r='11' fill='%23241f1a' opacity='0.45'/%3E%3Ccircle cx='168' cy='49' r='11' fill='%23241f1a' opacity='0.45'/%3E%3Crect x='18' y='96' width='194' height='30' rx='3' fill='%23cdbf9f'/%3E%3C/g%3E%3Cg transform='translate(140 470) rotate(6)'%3E%3Crect x='0' y='0' width='180' height='120' fill='%23f2ead6' stroke='%23241f1a' stroke-opacity='0.3' stroke-width='2'/%3E%3Cpath d='M0 0 L90 60 L180 0' fill='none' stroke='%23241f1a' stroke-opacity='0.35' stroke-width='2'/%3E%3C/g%3E%3Cg fill='%23241f1a' opacity='0.35'%3E%3Crect x='300' y='690' width='620' height='4' rx='2'/%3E%3C/g%3E%3C/svg%3E");
-    --dn-bar: linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent 60%);
+    --dn-title: "PUNK 57"; --dn-title-rotate: -4deg;
+    --dn-title-font: 'Inter', sans-serif;
+    --dn-wash: linear-gradient(180deg, rgba(8, 6, 12, 0.97) 0%, rgba(14, 8, 22, 0.6) 34%, rgba(10, 6, 16, 0.7) 66%, rgba(4, 3, 7, 0.96) 100%);
+    --dn-vignette: radial-gradient(680px 500px at 82% 22%, rgba(255, 47, 142, 0.16), transparent 70%), radial-gradient(620px 460px at 14% 78%, rgba(64, 200, 255, 0.1), transparent 72%), radial-gradient(ellipse at center, transparent 36%, rgba(0, 0, 0, 0.86) 100%);
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Crect width='1200' height='800' fill='%230b0810'/%3E%3Cg stroke='%231a1424' stroke-width='2' fill='none' opacity='0.8'%3E%3Cpath d='M0 120 L1200 120 M0 200 L1200 200 M0 280 L1200 280 M0 360 L1200 360 M0 440 L1200 440 M0 520 L1200 520 M0 600 L1200 600 M0 680 L1200 680'/%3E%3C/g%3E%3Cg fill='%23ff2f8e' opacity='0.18'%3E%3Cpath d='M60 700 C40 640 60 600 100 590 C150 578 190 620 180 670 C172 712 120 730 88 716 Z'/%3E%3C/g%3E%3Cg fill='%2340c8ff' opacity='0.14'%3E%3Cpath d='M1100 520 C1080 470 1104 430 1140 424 C1180 418 1210 452 1204 496 C1198 534 1150 548 1122 536 Z'/%3E%3Cg fill='%23b6ff3c' opacity='0.12'%3E%3Ccircle cx='1150' cy='700' r='26'/%3E%3C/g%3E%3Cg fill='%23ff8a1f' opacity='0.12'%3E%3Ccircle cx='90' cy='380' r='20'/%3E%3C/g%3E%3Cg stroke='%23ff2f8e' stroke-width='7' fill='none' opacity='0.55' stroke-linecap='round'%3E%3Cpath d='M96 250 C160 200 200 292 270 240 C320 202 356 268 420 236'/%3E%3Cpath d='M104 300 C168 262 206 340 276 296'/%3E%3C/g%3E%3Cg fill='%2316111e'%3E%3Crect x='980' y='600' width='46' height='120' rx='8'/%3E%3Crect x='992' y='580' width='22' height='26' rx='4'/%3E%3C/g%3E%3Cg fill='%2316111e'%3E%3Crect x='150' y='560' width='26' height='14' rx='3'/%3E%3Crect x='166' y='566' width='18' height='8' rx='3'/%3E%3C/g%3E%3Cg transform='translate(360 640) rotate(-6)'%3E%3Crect width='190' height='120' fill='%23231b2f' stroke='%23ff2f8e' stroke-opacity='0.35' stroke-width='2'/%3E%3Cg stroke='%23cfc7dd' stroke-opacity='0.35' stroke-width='2'%3E%3Cpath d='M22 34 L168 34 M22 56 L150 56 M22 78 L160 78'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    --dn-particles: radial-gradient(2px 2px at 24% 76%, rgba(255, 47, 142, 0.45) 50%, transparent 100%), radial-gradient(1.6px 1.6px at 62% 88%, rgba(64, 200, 255, 0.4) 50%, transparent 100%), radial-gradient(1.8px 1.8px at 84% 64%, rgba(182, 255, 60, 0.32) 50%, transparent 100%);
+    --dn-particles-size: 380px 380px;
+    --dn-particles-anim: dnmRiseUp 26s linear infinite;
+    --dn-bar: radial-gradient(70% 130% at 18% 120%, rgba(255, 47, 142, 0.26), transparent 64%);
     --dn-bar-size: 100% 100%;
-    --dn-bar-anim: none;
-    --dn-bar2: repeating-linear-gradient(0deg, rgba(43, 58, 103, 0.14) 0 1px, transparent 1px 22px);
-    --dn-bar2-size: 100% 100%;
-    --dn-bar2-anim: none;
-    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Crect x='1' y='1' width='58' height='38' rx='4' fill='%23b23a2f' opacity='0.85'/%3E%3Crect x='8' y='8' width='44' height='16' rx='2' fill='%23f2ead6' opacity='0.9'/%3E%3Ccircle cx='17' cy='28' r='4' fill='%23f2ead6' opacity='0.9'/%3E%3Ccircle cx='43' cy='28' r='4' fill='%23f2ead6' opacity='0.9'/%3E%3C/svg%3E");
+    --dn-bar-anim: dnmFog 9s ease-in-out infinite alternate;
+    --dn-bar2: radial-gradient(1.6px 1.6px at 30% 80%, rgba(255, 122, 184, 0.6) 50%, transparent 100%);
+    --dn-bar2-size: 200px 130px;
+    --dn-bar2-anim: dnmRiseUp 10s linear infinite;
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 32'%3E%3Cg stroke='%23ff2f8e' stroke-width='2.2' fill='none' stroke-linejoin='round'%3E%3Cpath d='M4 6 L36 6 L36 26 L4 26 Z'/%3E%3Cpath d='M4 6 L20 18 L36 6'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='%23f2eef7'%3E%3Crect x='9' y='3' width='6' height='4' rx='1'/%3E%3Crect x='8' y='7' width='8' height='11' rx='1.5'/%3E%3Crect x='10' y='18' width='4' height='3' rx='0.5'/%3E%3C/g%3E%3Cpath d='M19 6 l2 2 l-6 6 l-2 -2 Z' fill='%23ff2f8e'/%3E%3C/svg%3E");
 }
-body[data-dn-mode="punk57"] #chat .mes_block {
-    border-radius: 3px !important;
-    border-left: 3px solid rgba(178, 58, 47, 0.7) !important;
-    box-shadow: 0 14px 26px -20px rgba(60, 40, 20, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+
+/* --------------------------------------------------------------- 5. CONCLAVE */
+body[data-dn-mode="conclave"] {
+    --dn-a: #8ea8c4; --dn-a-hot: #d6e6f7; --dn-a2: #8c1f28;
+    --dn-ink: #eef2f7; --dn-muted: #8f9aa6;
+    --dn-p1: rgba(18, 22, 30, 0.93); --dn-p2: rgba(7, 9, 13, 0.97);
+    --dn-name-font: 'Playfair Display', serif;
+    --dn-name-size: 1.46em; --dn-name-track: 0.1em; --dn-name-transform: none;
+    --dn-hint: "Океан слушает...  ≋";
+    --dn-title: "CONCLAVE"; --dn-title-rotate: 3deg;
+    --dn-wash: linear-gradient(180deg, rgba(5, 7, 10, 0.97) 0%, rgba(10, 13, 19, 0.6) 34%, rgba(7, 9, 13, 0.68) 66%, rgba(3, 4, 6, 0.96) 100%);
+    --dn-vignette: radial-gradient(700px 480px at 50% 100%, rgba(140, 31, 40, 0.14), transparent 72%), radial-gradient(ellipse at center, transparent 38%, rgba(0, 0, 0, 0.82) 100%);
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Crect width='1200' height='800' fill='%230a0d13'/%3E%3Cg stroke='%23d6e6f7' stroke-width='3' fill='none' opacity='0.55'%3E%3Cpath d='M300 60 L360 180 L330 180 L390 300'/%3E%3Cpath d='M880 40 L930 150 L905 150 L960 260'/%3E%3C/g%3E%3Cg fill='%23131a24'%3E%3Crect x='0' y='380' width='1200' height='240'/%3E%3C/g%3E%3Cg stroke='%23c9d8ea' stroke-width='3' fill='none' opacity='0.35'%3E%3Cpath d='M0 420 Q150 404 300 420 T600 420 T900 420 T1200 420'/%3E%3Cpath d='M0 470 Q180 452 360 470 T720 470 T1200 470' opacity='0.7'/%3E%3Cpath d='M0 530 Q200 512 400 530 T800 530 T1200 530' opacity='0.5'/%3E%3C/g%3E%3Cg fill='%2318202b'%3E%3Crect x='0' y='600' width='1200' height='200'/%3E%3C/g%3E%3Cg stroke='%2326303d' stroke-width='3' fill='none'%3E%3Cpath d='M0 640 L1200 616'/%3E%3Cpath d='M0 700 L1200 672'/%3E%3Cpath d='M0 760 L1200 728'/%3E%3Cpath d='M300 600 L180 800'/%3E%3Cpath d='M600 600 L600 800'/%3E%3Cpath d='M900 600 L1020 800'/%3E%3C/g%3E%3Cg stroke='%23323d4b' stroke-width='7' fill='none'%3E%3Cpath d='M60 800 L60 600 M60 600 L260 592'/%3E%3Cpath d='M1140 800 L1140 600 M1140 600 L940 592'/%3E%3C/g%3E%3Cg stroke='%23323d4b' stroke-width='5' fill='none'%3E%3Cpath d='M150 800 L150 598 M240 800 L240 594'/%3E%3Cpath d='M1050 800 L1050 598 M960 800 L960 594'/%3E%3C/g%3E%3Cg stroke='%233e4a59' stroke-width='5' fill='none'%3E%3Ccircle cx='1020' cy='716' r='52'/%3E%3Cpath d='M1020 664 L1020 768 M976 690 L1064 742 M976 742 L1064 690'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-particles: repeating-linear-gradient(14deg, rgba(198, 214, 236, 0.11) 0 1px, transparent 1px 28px);
+    --dn-particles-size: 280px 280px;
+    --dn-particles-anim: dnmFallX 2.4s linear infinite;
+    --dn-bar: linear-gradient(90deg, transparent, rgba(142, 168, 196, 0.22) 45%, rgba(214, 230, 247, 0.3) 50%, rgba(142, 168, 196, 0.22) 55%, transparent);
+    --dn-bar-size: 70% 100%;
+    --dn-bar-anim: dnmScan 7s linear infinite;
+    --dn-bar2: repeating-linear-gradient(14deg, rgba(198, 214, 236, 0.1) 0 1px, transparent 1px 26px);
+    --dn-bar2-size: 180px 180px;
+    --dn-bar2-anim: dnmFallX 3s linear infinite;
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 40'%3E%3Cg stroke='%238ea8c4' stroke-width='2.4' fill='none'%3E%3Ccircle cx='18' cy='9' r='4'/%3E%3Cpath d='M18 13 L18 34'/%3E%3Cpath d='M8 22 Q18 30 28 22'/%3E%3Cpath d='M12 34 L24 34'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg stroke='%23d6e6f7' stroke-width='1.8' fill='none'%3E%3Ccircle cx='12' cy='5.5' r='2.6'/%3E%3Cpath d='M12 8 L12 19'/%3E%3Cpath d='M5 13 Q12 18 19 13'/%3E%3Cpath d='M8 19 L16 19'/%3E%3C/g%3E%3C/svg%3E");
 }
-body[data-dn-mode="punk57"] .mes_text { color: #2b241d !important; text-shadow: none !important; }
-body[data-dn-mode="punk57"] .mes_text em, body[data-dn-mode="punk57"] .mes_text i { color: #8a2f26 !important; }
-body[data-dn-mode="punk57"] .name_text { color: #241f1a !important; text-shadow: none !important; }
-body[data-dn-mode="punk57"] #bg_custom::after { -webkit-text-stroke: 2px rgba(178, 58, 47, 0.4) !important; }
-body[data-dn-mode="punk57"] #send_textarea { color: #241f1a !important; }
-body[data-dn-mode="punk57"] #top-bar { background: rgba(240, 232, 216, 0.94) !important; }
-body[data-dn-mode="punk57"] .timestamp { color: #7a6a58 !important; }
+
+/* -------------------------------------------------------------- 6. NIGHTFALL */
+body[data-dn-mode="nightfall"] {
+    --dn-a: #b9c7d6; --dn-a-hot: #f2f8ff; --dn-a2: #2b3a52;
+    --dn-ink: #eef2f6; --dn-muted: #94a0ad;
+    --dn-p1: rgba(20, 23, 29, 0.92); --dn-p2: rgba(8, 9, 12, 0.96);
+    --dn-name-font: 'Playfair Display', serif;
+    --dn-name-size: 1.44em; --dn-name-track: 0.1em; --dn-name-transform: none;
+    --dn-hint: "Скажи это снегу...  ❄";
+    --dn-title: "NIGHTFALL"; --dn-title-rotate: -5deg;
+    --dn-wash: linear-gradient(180deg, rgba(6, 8, 11, 0.97) 0%, rgba(11, 14, 19, 0.6) 34%, rgba(9, 11, 15, 0.66) 66%, rgba(4, 5, 7, 0.96) 100%);
+    --dn-vignette: radial-gradient(720px 480px at 50% 104%, rgba(214, 226, 238, 0.14), transparent 72%), radial-gradient(ellipse at center, transparent 38%, rgba(0, 0, 0, 0.82) 100%);
+    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Crect width='1200' height='800' fill='%230d1116'/%3E%3Cg fill='%23090c10'%3E%3Cpath d='M0 620 L1200 600 L1200 800 L0 800 Z'/%3E%3C/g%3E%3Cg fill='%23c8d4e0' opacity='0.5'%3E%3Cpath d='M0 640 Q300 616 600 632 T1200 620 L1200 660 Q900 640 600 656 T0 676 Z'/%3E%3C/g%3E%3Cg stroke='%23131a22' stroke-width='6' fill='none'%3E%3Cpath d='M120 640 L120 380 M92 470 L148 440 M148 470 L92 440 M92 540 L148 512 M148 540 L92 512'/%3E%3Cpath d='M1080 640 L1080 400 M1052 490 L1108 460 M1108 490 L1052 460'/%3E%3C/g%3E%3Cg%3E%3Crect x='196' y='300' width='300' height='26' rx='4' fill='%23202a35'/%3E%3Cpath d='M186 300 Q236 258 286 300 Q336 258 386 300 Q436 258 486 300 L486 300 L186 300 Z' fill='%23202a35'/%3E%3Crect x='206' y='326' width='14' height='180' fill='%23202a35'/%3E%3Crect x='472' y='326' width='14' height='180' fill='%23202a35'/%3E%3Crect x='330' y='326' width='10' height='180' fill='%23202a35'/%3E%3Crect x='380' y='326' width='10' height='180' fill='%23202a35'/%3E%3C/g%3E%3Cg fill='%232a3542'%3E%3Cellipse cx='270' cy='436' rx='34' ry='20'/%3E%3Crect x='252' y='452' width='8' height='34'/%3E%3Crect x='284' y='452' width='8' height='34'/%3E%3Cpath d='M236 430 L244 402 L256 428 Z'/%3E%3C/g%3E%3Cg fill='%232a3542'%3E%3Cellipse cx='410' cy='446' rx='30' ry='18'/%3E%3Crect x='394' y='460' width='7' height='30'/%3E%3Crect x='422' y='460' width='7' height='30'/%3E%3C/g%3E%3Cg fill='%23dbe6f0' opacity='0.65'%3E%3Cpath d='M186 300 Q236 258 286 300 Q336 258 386 300 Q436 258 486 300 L486 306 Q436 272 386 308 Q336 272 286 308 Q236 272 186 306 Z'/%3E%3Crect x='196' y='296' width='300' height='6' rx='3'/%3E%3C/g%3E%3Crect x='0' y='506' width='1200' height='200' fill='%23101620' opacity='0.55'/%3E%3C/svg%3E");
+    --dn-particles: radial-gradient(2.4px 2.4px at 18% 40%, rgba(255, 255, 255, 0.7) 50%, transparent 100%), radial-gradient(2px 2px at 42% 62%, rgba(232, 242, 252, 0.6) 50%, transparent 100%), radial-gradient(2.6px 2.6px at 66% 26%, rgba(255, 255, 255, 0.65) 50%, transparent 100%), radial-gradient(1.8px 1.8px at 84% 54%, rgba(232, 242, 252, 0.55) 50%, transparent 100%), radial-gradient(2.2px 2.2px at 8% 74%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
+    --dn-particles-size: 420px 420px;
+    --dn-particles-anim: dnmFall 22s linear infinite;
+    --dn-bar: radial-gradient(90% 140% at 46% 116%, rgba(185, 199, 214, 0.26), transparent 62%);
+    --dn-bar-size: 100% 100%;
+    --dn-bar-anim: dnmSparkle 6s ease-in-out infinite;
+    --dn-bar2: radial-gradient(2px 2px at 26% 76%, rgba(255, 255, 255, 0.7) 50%, transparent 100%), radial-gradient(1.6px 1.6px at 70% 88%, rgba(232, 242, 252, 0.6) 50%, transparent 100%);
+    --dn-bar2-size: 230px 150px;
+    --dn-bar2-anim: dnmFall 14s linear infinite;
+    --dn-motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 6 Q26 14 20 22 Q14 14 20 6 Z' fill='%23b9c7d6' opacity='0.9'/%3E%3Cpath d='M20 34 L20 22 M12 28 L28 28' stroke='%23b9c7d6' stroke-width='2.2'/%3E%3Ccircle cx='20' cy='20' r='15' fill='none' stroke='%23131a22' stroke-width='0'/%3E%3C/svg%3E");
+    --dn-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg stroke='%23dde8f4' stroke-width='1.7' fill='none'%3E%3Cpath d='M3 17 Q7 13 12 17 Q17 21 21 17'/%3E%3Cpath d='M12 17 L12 7'/%3E%3Ccircle cx='12' cy='5' r='2.4'/%3E%3Cpath d='M3 17 L3 21 M21 17 L21 21'/%3E%3C/g%3E%3C/svg%3E");
+}
 
 /* =====================================================================
-   ПЕРЕКЛЮЧАТЕЛЬ РЕЖИМОВ (кнопка в углу)
+   ИКОНКИ: свой набор у каждого режима.
+   Селекторы усилены через body[data-dn-mode], чтобы перебивать
+   пользовательский Custom CSS, который грузится после расширения.
+   ===================================================================== */
+body[data-dn-mode] #leftNavDrawerIcon,
+body[data-dn-mode] #rightNavDrawerIcon,
+body[data-dn-mode] #sys-settings-button .drawer-icon,
+body[data-dn-mode] #advanced-formatting-button .drawer-icon,
+body[data-dn-mode] #WI-SP-button .drawer-icon,
+body[data-dn-mode] #user-settings-button .drawer-icon,
+body[data-dn-mode] #backgrounds-button .drawer-icon,
+body[data-dn-mode] #extensions-settings-button .drawer-icon,
+body[data-dn-mode] #persona-management-button .drawer-icon {
+    font-size: 0 !important;
+    color: transparent !important;
+    width: var(--icon-size) !important;
+    height: var(--icon-size) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+body[data-dn-mode] #leftNavDrawerIcon::before,
+body[data-dn-mode] #rightNavDrawerIcon::before,
+body[data-dn-mode] #sys-settings-button .drawer-icon::before,
+body[data-dn-mode] #advanced-formatting-button .drawer-icon::before,
+body[data-dn-mode] #WI-SP-button .drawer-icon::before,
+body[data-dn-mode] #user-settings-button .drawer-icon::before,
+body[data-dn-mode] #backgrounds-button .drawer-icon::before,
+body[data-dn-mode] #extensions-settings-button .drawer-icon::before,
+body[data-dn-mode] #persona-management-button .drawer-icon::before {
+    content: '' !important;
+    display: block !important;
+    width: var(--icon-size) !important;
+    height: var(--icon-size) !important;
+    background-image: var(--dn-glyph) !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 19px 19px !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    opacity: 0.62 !important;
+    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--dn-a) 55%, transparent)) !important;
+    transition: opacity 0.2s ease, filter 0.2s ease !important;
+}
+body[data-dn-mode] #leftNavDrawerIcon:hover::before,
+body[data-dn-mode] #rightNavDrawerIcon:hover::before,
+body[data-dn-mode] #sys-settings-button:hover .drawer-icon::before,
+body[data-dn-mode] #advanced-formatting-button:hover .drawer-icon::before,
+body[data-dn-mode] #WI-SP-button:hover .drawer-icon::before,
+body[data-dn-mode] #user-settings-button:hover .drawer-icon::before,
+body[data-dn-mode] #backgrounds-button:hover .drawer-icon::before,
+body[data-dn-mode] #extensions-settings-button:hover .drawer-icon::before,
+body[data-dn-mode] #persona-management-button:hover .drawer-icon::before {
+    opacity: 1 !important;
+    filter: brightness(1.5) drop-shadow(0 0 10px color-mix(in srgb, var(--dn-a) 90%, transparent)) !important;
+}
+
+/* опасность: декоративный слой сцены не должен ловить клики */
+#bg_custom::before, #bg_custom::after { pointer-events: none !important; }
+
+
+/* =====================================================================
+   ПЕРЕКЛЮЧАТЕЛЬ РЕЖИМОВ
    ===================================================================== */
 #dnm-panel {
     position: fixed;
@@ -816,7 +866,7 @@ body[data-dn-mode="punk57"] .timestamp { color: #7a6a58 !important; }
     background: rgba(12, 12, 16, 0.94);
     backdrop-filter: blur(12px);
     box-shadow: 0 14px 34px -18px #000;
-    max-height: 60vh;
+    max-height: 62vh;
     overflow-y: auto;
 }
 #dnm-panel.dnm-open .dnm-list { display: flex; }
@@ -835,7 +885,7 @@ body[data-dn-mode="punk57"] .timestamp { color: #7a6a58 !important; }
     transition: background 0.15s ease;
 }
 .dnm-btn b { font-weight: 600; font-size: 13px; letter-spacing: 0.02em; }
-.dnm-btn i { font-style: normal; font-size: 11px; opacity: 0.6; }
+.dnm-btn i { font-style: normal; font-size: 11px; opacity: 0.62; }
 .dnm-btn:hover { background: color-mix(in srgb, var(--dn-a) 16%, transparent); }
 .dnm-btn.dnm-active { background: color-mix(in srgb, var(--dn-a) 24%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dn-a) 45%, transparent); }
 .dnm-off b { opacity: 0.75; font-size: 12px; }
@@ -850,21 +900,53 @@ body[data-dn-mode="punk57"] .timestamp { color: #7a6a58 !important; }
 }
 
 /* =====================================================================
-   ПРАВКИ СЦЕН: ключевые силуэты вынесены в боковые поля,
-   чтобы их не съедала карточка чата по центру.
+   ОРНАМЕНТИКА КОЛЛЕКЦИОННОГО ИЗДАНИЯ
+   Красная вязь по углам карточки, двойная рамка, «клеймо» на полях.
    ===================================================================== */
 
-/* KILL SWITCH — два витражных окна по краям, свечи внизу */
-body[data-dn-mode="killswitch"] {
-    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='gl1' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffd98a' stop-opacity='0.5'/%3E%3Cstop offset='1' stop-color='%234a2f6b' stop-opacity='0.35'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='%230b0810'%3E%3Crect x='0' y='0' width='1200' height='800'/%3E%3C/g%3E%3Cg%3E%3Cpath d='M30 560 L30 200 Q78 120 126 200 L126 560 Z' fill='url(%23gl1)' opacity='0.55'/%3E%3Cpath d='M150 560 L150 230 Q186 160 222 230 L222 560 Z' fill='url(%23gl1)' opacity='0.4'/%3E%3Cpath d='M978 560 L978 200 Q1026 120 1074 200 L1074 560 Z' fill='url(%23gl1)' opacity='0.55'/%3E%3Cpath d='M1098 560 L1098 230 Q1134 160 1170 230 L1170 560 Z' fill='url(%23gl1)' opacity='0.4'/%3E%3C/g%3E%3Cg stroke='%23120d18' stroke-width='6' fill='none'%3E%3Cpath d='M30 560 L30 200 Q78 120 126 200 L126 560'/%3E%3Cpath d='M978 560 L978 200 Q1026 120 1074 200 L1074 560'/%3E%3C/g%3E%3Cg fill='%230d0912'%3E%3Cpath d='M0 800 L0 470 C90 400 180 400 270 470 L270 800 Z' opacity='0.85'/%3E%3Cpath d='M930 800 L930 470 C1020 400 1110 400 1200 470 L1200 800 Z' opacity='0.85'/%3E%3C/g%3E%3Cg fill='%23120c18'%3E%3Crect x='0' y='620' width='1200' height='180'/%3E%3Crect x='80' y='650' width='1040' height='14'/%3E%3C/g%3E%3Cg fill='%23ffd98a'%3E%3Ccircle cx='196' cy='588' r='5'/%3E%3Ccircle cx='232' cy='592' r='4'/%3E%3Ccircle cx='968' cy='588' r='5'/%3E%3Ccircle cx='1004' cy='592' r='4'/%3E%3C/g%3E%3Cg fill='%23ffd98a' opacity='0.13'%3E%3Crect x='188' y='570' width='16' height='120'/%3E%3Crect x='224' y='574' width='14' height='116'/%3E%3Crect x='960' y='570' width='16' height='120'/%3E%3Crect x='996' y='574' width='14' height='116'/%3E%3C/g%3E%3C/svg%3E");
+.mes { position: relative !important; }
+
+#chat .mes::before,
+#chat .mes::after {
+    content: '' !important;
+    position: absolute !important;
+    width: 46px !important;
+    height: 46px !important;
+    background-image: var(--dn-flourish, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23b8543f' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M4 44 C4 24 24 4 44 4'/%3E%3Cpath d='M10 44 C10 28 28 10 44 10' opacity='0.5'/%3E%3Cpath d='M44 4 C30 6 24 14 26 22 C28 30 38 30 40 22 C41 17 36 14 32 17'/%3E%3Cpath d='M4 44 C6 30 14 24 22 26 C30 28 30 38 22 40 C17 41 14 36 17 32'/%3E%3C/g%3E%3C/svg%3E")) !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    opacity: 0.42 !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
+}
+#chat .mes::before {
+    top: 22px !important;
+    right: calc(2.5% + 14px) !important;
+}
+#chat .mes::after {
+    bottom: 22px !important;
+    left: calc(2.5% + 14px) !important;
+    transform: rotate(180deg) !important;
 }
 
-/* NIGHTFALL — дома и тыквы по краям, туман по низу */
+/* двойная рамка внутри карточки */
+#chat .mes_block {
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--dn-a) 10%, transparent),
+        0 24px 48px -26px rgba(0, 0, 0, 1) !important;
+}
+
+/* печать-виньетка на полях сцены */
+#bg_custom {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dn-a) 8%, transparent);
+}
+
+/* Punk 57: вместо вязи — брызги */
+body[data-dn-mode="punk57"] {
+    --dn-flourish: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cg fill='%23ff2f8e'%3E%3Cellipse cx='18' cy='18' rx='9' ry='7' opacity='0.85'/%3E%3Ccircle cx='30' cy='12' r='4' opacity='0.7'/%3E%3Ccircle cx='33' cy='24' r='2.6' opacity='0.6'/%3E%3Ccircle cx='12' cy='28' r='2' opacity='0.5'/%3E%3Ccircle cx='24' cy='32' r='3.4' opacity='0.55'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Сумрак: снежинка вместо вязи */
 body[data-dn-mode="nightfall"] {
-    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='fog' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23e07a3c' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23e07a3c' stop-opacity='0.14'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='360' width='1200' height='200' fill='url(%23fog)'/%3E%3Cg stroke='%231a1614' stroke-width='7' fill='none'%3E%3Cpath d='M60 560 L60 360 M44 410 L76 384 M76 410 L44 384 M44 470 L76 444 M76 470 L44 444'/%3E%3Cpath d='M1140 560 L1140 380 M1124 430 L1156 404 M1156 430 L1124 404'/%3E%3C/g%3E%3Cg fill='%230d0f16'%3E%3Crect x='100' y='476' width='170' height='84'/%3E%3Cpath d='M88 476 L185 412 L282 476 Z'/%3E%3Crect x='930' y='492' width='150' height='68'/%3E%3Cpath d='M918 492 L1005 434 L1092 492 Z'/%3E%3Cg fill='%23ffb173' opacity='0.72'%3E%3Crect x='126' y='498' width='12' height='20'/%3E%3Crect x='232' y='498' width='12' height='20'/%3E%3Crect x='956' y='512' width='12' height='20'/%3E%3Crect x='1032' y='512' width='12' height='20'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%230a0c12'%3E%3Crect x='0' y='556' width='1200' height='244'/%3E%3C/g%3E%3Cg fill='%23e07a3c'%3E%3Cellipse cx='330' cy='556' rx='20' ry='15'/%3E%3Cellipse cx='390' cy='560' rx='15' ry='11'/%3E%3Cellipse cx='860' cy='558' rx='18' ry='13'/%3E%3C/g%3E%3Cg fill='%231a120c'%3E%3Crect x='326' y='534' width='7' height='11'/%3E%3Crect x='386' y='549' width='5' height='9'/%3E%3Crect x='856' y='543' width='6' height='10'/%3E%3C/g%3E%3Cg fill='%23ffd0a0' opacity='0.95'%3E%3Cpath d='M321 554 l5 -6 l5 6 Z'/%3E%3Cpath d='M334 554 l5 -6 l5 6 Z'/%3E%3Cpath d='M385 558 l3.5 -5 l3.5 5 Z'/%3E%3Cpath d='M852 556 l4 -5 l4 5 Z'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-/* CONCLAVE — четверо по краям и костёр в центре */
-body[data-dn-mode="conclave"] {
-    --dn-scene: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800' preserveAspectRatio='none'%3E%3Cdefs%3E%3CradialGradient id='fire'%3E%3Cstop offset='0' stop-color='%23ffb173' stop-opacity='0.75'/%3E%3Cstop offset='1' stop-color='%23ffb173' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M0 640 C260 560 420 590 600 574 C780 558 940 590 1200 640 L1200 800 L0 800 Z' fill='%23090a0f'/%3E%3Ccircle cx='600' cy='640' r='190' fill='url(%23fire)' opacity='0.5'/%3E%3Cg fill='%23070a0e'%3E%3Cg transform='translate(150 500)'%3E%3Ccircle cx='0' cy='-74' r='23'/%3E%3Cpath d='M-27 0 L-17 -58 L17 -58 L27 0 Z'/%3E%3Crect x='-15' y='0' width='11' height='86'/%3E%3Crect x='4' y='0' width='11' height='86'/%3E%3C/g%3E%3Cg transform='translate(280 514) scale(0.94)'%3E%3Ccircle cx='0' cy='-74' r='23'/%3E%3Cpath d='M-27 0 L-17 -58 L17 -58 L27 0 Z'/%3E%3Crect x='-15' y='0' width='11' height='78'/%3E%3Crect x='4' y='0' width='11' height='78'/%3E%3C/g%3E%3Cg transform='translate(920 510) scale(1.03)'%3E%3Ccircle cx='0' cy='-74' r='23'/%3E%3Cpath d='M-27 0 L-17 -58 L17 -58 L27 0 Z'/%3E%3Crect x='-15' y='0' width='11' height='82'/%3E%3Crect x='4' y='0' width='11' height='82'/%3E%3C/g%3E%3Cg transform='translate(1050 498) scale(0.97)'%3E%3Ccircle cx='0' cy='-74' r='23'/%3E%3Cpath d='M-27 0 L-17 -58 L17 -58 L27 0 Z'/%3E%3Crect x='-15' y='0' width='11' height='86'/%3E%3Crect x='4' y='0' width='11' height='86'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23ffb173' opacity='0.85'%3E%3Ccircle cx='600' cy='648' r='11'/%3E%3C/g%3E%3C/svg%3E");
+    --dn-flourish: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cg stroke='%23dbe6f0' stroke-width='1.6' fill='none' stroke-linecap='round'%3E%3Cpath d='M24 6 L24 42 M11 14 L37 34 M37 14 L11 34'/%3E%3Cpath d='M24 14 L19 9 M24 14 L29 9 M24 34 L19 39 M24 34 L29 39'/%3E%3C/g%3E%3C/svg%3E");
 }

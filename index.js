@@ -5,12 +5,12 @@
  */
 
 const MODES = [
-    { id: 'corrupt',    label: 'Corrupt',    hint: "Devil's Night · дождь, маска, багровый" },
-    { id: 'hideaway',   label: 'Hideaway',   hint: 'лес, озеро, тёплое окно' },
-    { id: 'killswitch', label: 'Kill Switch', hint: 'церковь, свечи, витраж' },
-    { id: 'nightfall',  label: 'Nightfall',  hint: 'хэллоуин, фонари, туман' },
-    { id: 'conclave',   label: 'Conclave',   hint: 'все четверо, финал' },
-    { id: 'punk57',     label: 'Punk 57',    hint: 'бумага, кассеты, письма' },
+    { id: 'corrupt',    label: 'Corrupt',     hint: "Devil's Night · кровь, маска, витраж, ливень" },
+    { id: 'hideaway',   label: 'Hideaway',    hint: 'лес, кладбище, туман' },
+    { id: 'killswitch', label: 'Kill Switch', hint: 'кованые ворота, свечи' },
+    { id: 'punk57',     label: 'Punk 57',     hint: 'граффити, спрей, письма' },
+    { id: 'conclave',   label: 'Conclave',    hint: 'палуба корабля в океане, гроза' },
+    { id: 'nightfall',  label: 'Nightfall',   hint: 'карусель в снегу, свечи' },
 ];
 
 const NS = 'devils_night_modes';
