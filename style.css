@@ -1674,3 +1674,73 @@ body[data-dn-mode] {
 #bg_custom::after {
     display: none !important;
 }
+
+/* =====================================================================
+   1.2.1 — фон без «швов» и заметная пыль
+   ===================================================================== */
+
+/* фон таверны не рисуем, пока включён режим: он и давал швы по краям */
+body[data-dn-mode] #bg1,
+body[data-dn-mode] #bg_custom {
+    background-image: none !important;
+}
+
+/* фото: строго по размеру экрана, без повторов и без attachment-хаков */
+body::before {
+    background-image:
+        var(--dn-photo, none),
+        var(--dn-wash, none) !important;
+    background-size: cover, 100% 100% !important;
+    background-position: center, 0 0 !important;
+    background-repeat: no-repeat, no-repeat !important;
+    background-attachment: scroll, scroll !important;
+    background-color: #05060a;
+}
+
+/* пыль: крупнее, ярче и быстрее — видно, что летит */
+body::after {
+    background-image:
+        var(--dn-particles, none),
+        var(--dn-vignette, radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.75) 100%)) !important;
+    background-size: 340px 340px, 100% 100% !important;
+    background-repeat: repeat, no-repeat !important;
+    background-position: 0 0, 0 0 !important;
+    animation: dnmDustPos 16s linear infinite !important;
+}
+@keyframes dnmDustPos {
+    0%   { background-position: 0 0, 0 0; }
+    100% { background-position: 0 -340px, 0 0; }
+}
+
+/* частицы: чуть крупнее и плотнее, чем было */
+body[data-dn-mode] {
+    --dn-particles:
+        radial-gradient(3px 3px at 12% 74%, color-mix(in srgb, var(--dn-a-hot) 85%, transparent) 50%, transparent 100%),
+        radial-gradient(2.4px 2.4px at 31% 88%, color-mix(in srgb, var(--dn-a) 75%, transparent) 50%, transparent 100%),
+        radial-gradient(3.4px 3.4px at 52% 68%, color-mix(in srgb, var(--dn-a-hot) 70%, transparent) 50%, transparent 100%),
+        radial-gradient(2.2px 2.2px at 68% 92%, color-mix(in srgb, var(--dn-a) 65%, transparent) 50%, transparent 100%),
+        radial-gradient(3px 3px at 86% 78%, color-mix(in srgb, var(--dn-a-hot) 75%, transparent) 50%, transparent 100%),
+        radial-gradient(2.2px 2.2px at 44% 40%, color-mix(in srgb, var(--dn-a) 55%, transparent) 50%, transparent 100%),
+        radial-gradient(2.6px 2.6px at 74% 26%, color-mix(in srgb, var(--dn-a-hot) 45%, transparent) 50%, transparent 100%);
+}
+
+/* если включён режим без фото (файла нет) — тёмная подложка вместо белого */
+body:not([data-dn-mode])::before {
+    background-color: #0a0b10;
+}
+
+/* ---------- пыль одним тайлом (без рассинхрона слоёв) ---------- */
+body::after {
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22340%22 height%3D%22340%22%3E%3Cg fill%3D%22%23ffffff%22%3E%3Ccircle cx%3D%2218%22 cy%3D%2242%22 r%3D%222%22 opacity%3D%220.55%22%2F%3E%3Ccircle cx%3D%2274%22 cy%3D%22118%22 r%3D%221.5%22 opacity%3D%220.4%22%2F%3E%3Ccircle cx%3D%22132%22 cy%3D%2226%22 r%3D%222.2%22 opacity%3D%220.5%22%2F%3E%3Ccircle cx%3D%22196%22 cy%3D%2296%22 r%3D%221.4%22 opacity%3D%220.35%22%2F%3E%3Ccircle cx%3D%22258%22 cy%3D%2258%22 r%3D%222%22 opacity%3D%220.45%22%2F%3E%3Ccircle cx%3D%22308%22 cy%3D%22132%22 r%3D%221.6%22 opacity%3D%220.4%22%2F%3E%3Ccircle cx%3D%2244%22 cy%3D%22196%22 r%3D%222.2%22 opacity%3D%220.5%22%2F%3E%3Ccircle cx%3D%22108%22 cy%3D%22242%22 r%3D%221.5%22 opacity%3D%220.35%22%2F%3E%3Ccircle cx%3D%22168%22 cy%3D%22188%22 r%3D%222%22 opacity%3D%220.45%22%2F%3E%3Ccircle cx%3D%22226%22 cy%3D%22268%22 r%3D%221.6%22 opacity%3D%220.4%22%2F%3E%3Ccircle cx%3D%22288%22 cy%3D%22212%22 r%3D%222.2%22 opacity%3D%220.5%22%2F%3E%3Ccircle cx%3D%2262%22 cy%3D%22306%22 r%3D%221.4%22 opacity%3D%220.35%22%2F%3E%3Ccircle cx%3D%22152%22 cy%3D%22322%22 r%3D%222%22 opacity%3D%220.45%22%2F%3E%3Ccircle cx%3D%22244%22 cy%3D%22330%22 r%3D%221.5%22 opacity%3D%220.3%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"),
+        var(--dn-vignette, radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.75) 100%)) !important;
+    background-size: 340px 340px, 100% 100% !important;
+    background-repeat: repeat, no-repeat !important;
+    background-position: 0 0, 0 0 !important;
+    animation: dnmDustPos 16s linear infinite !important;
+}
+/* виньетка одним слоем */
+body[data-dn-mode],
+body:not([data-dn-mode]) {
+    --dn-vignette: radial-gradient(ellipse at center, transparent 46%, rgba(0, 0, 0, 0.72) 100%) !important;
+}
