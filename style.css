@@ -2060,3 +2060,17 @@ body[data-generating="true"] #mes_impersonate {
         left: 44% !important;
     }
 }
+/* язык в настройках */
+.dnm-lang-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    margin-bottom: 10px !important;
+    padding: 4px 7px !important;
+}
+.dnm-lang-row select {
+    min-width: 130px !important;
+    padding: 3px 6px !important;
+    border-radius: 6px !important;
+}
