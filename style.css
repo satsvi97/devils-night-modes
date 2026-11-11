@@ -1985,3 +1985,31 @@ body[data-generating="true"] #mes_impersonate {
 #mes_stop.displayNone {
     display: none !important;
 }
+
+/* =====================================================================
+   1.2.8 — стоп скрыт до генерации, фон чата прозрачный
+   ===================================================================== */
+
+/* по умолчанию стоп не показываем (ST сам ставит inline display:flex) */
+#send_form #mes_stop,
+#rightSendForm #mes_stop {
+    display: none !important;
+}
+#send_form #mes_stop[style*="display: flex"],
+#send_form #mes_stop[style*="display:flex"],
+#rightSendForm #mes_stop[style*="display: flex"],
+#rightSendForm #mes_stop[style*="display:flex"] {
+    display: flex !important;
+}
+
+/* фон чата — прозрачный, чтобы был виден фон книги */
+#chat {
+    background-color: transparent !important;
+}
+#chat::before { background-color: transparent !important; }
+
+/* на мобилке оставляем лёгкую подложку только для читаемости текста */
+@media (max-width: 1000px) {
+    #chat { background-color: transparent !important; }
+    #sheld { background-color: transparent !important; }
+}
