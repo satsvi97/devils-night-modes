@@ -1833,3 +1833,50 @@ body::before {
     }
     html::before { opacity: 1 !important; }
 }
+
+/* =====================================================================
+   1.2.5 — кнопка отправки: убираем «умное» скрытие
+   ===================================================================== */
+
+/* это правило прятало кнопку, если попап персонажей без класса .closed.
+   В новых сборках ST он его не получает — кнопка исчезала навсегда. */
+body:has(#character_popup:not(.closed)) #send_but {
+    display: block !important;
+}
+
+/* кнопка всегда на своём месте, если ST сам её не скрыл классом displayNone */
+#send_but {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 45px !important;
+    min-width: 45px !important;
+    min-height: 45px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+#send_but.displayNone { display: none !important; }
+
+/* иконка рисуется псевдоэлементом — гарантируем, что он виден */
+#send_but::after {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* панель ввода ничего не обрезает */
+#send_form, #form_sheld, #rightSendForm, #nonQRFormItems {
+    overflow: visible !important;
+    clip-path: none !important;
+}
+
+/* кнопка «стоп» во время генерации тоже должна быть видна */
+#mes_stop {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+#mes_stop.displayNone { display: none !important; }
