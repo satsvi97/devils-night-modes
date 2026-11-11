@@ -1055,8 +1055,8 @@ body[data-dn-mode="conclave"] {
     background-image:
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E"),
         var(--dn-scene, none),
-        var(--dn-wash, none),
-        var(--dn-photo, none) !important;
+        var(--dn-photo, none),
+        var(--dn-wash, none) !important;
     background-size: 180px 180px, 100% 100%, 100% 100%, cover !important;
     background-repeat: repeat, no-repeat, no-repeat, no-repeat !important;
     background-position: 0 0, 50% 100%, 0 0, 50% 50% !important;
@@ -1461,7 +1461,7 @@ body[data-dn-mode="punk57"] html::after {
 }
 
 /* у фото нет «своего» кадра — сцену приглушаем, чтобы не спорила */
-#bg_custom::before { opacity: 0.42 !important; }
+#bg_custom::before { opacity: 0.25 !important; }
 /* ---------- фоны: переменные проброшены на html ---------- */
 html:has(body[data-dn-mode="corrupt"])      { --dn-photo: url("backgrounds/corrupt.jpg"); }
 html:has(body[data-dn-mode="hideaway"])     { --dn-photo: url("backgrounds/hideaway.jpg"); }
@@ -1604,4 +1604,53 @@ body[data-dn-mode] { --dn-wash-strength: 0.9; }
 /* сама тема больше не рисует «кольцо со свечением» на #load-spinner */
 body[data-dn-mode] #load-spinner::before {
     box-shadow: none !important;
+}
+
+/* =====================================================================
+   ФОН И СЦЕНА НА body::before — проверенный слой.
+   Порядок: силуэты сцены -> тонировка -> фото книги.
+   Пыль и виньетка уезжают на body::after.
+   ===================================================================== */
+#bg_custom { background-image: none !important; }
+#bg_custom::before {
+    background-image: none !important;
+    animation: none !important;
+}
+
+body::before {
+    content: '' !important;
+    position: fixed !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+    background-image:
+        var(--dn-scene, none),
+        var(--dn-photo, none),
+        var(--dn-wash, none) !important;
+    background-size: 100% 100%, 100% 100%, cover !important;
+    background-position: 0 0, 0 0, center !important;
+    background-repeat: no-repeat, no-repeat, no-repeat !important;
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+/* пыль + виньетка, двигается только слой пыли */
+body::after {
+    content: '' !important;
+    position: fixed !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+    background-image:
+        var(--dn-particles, none),
+        var(--dn-vignette, radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.75) 100%)) !important;
+    background-size: 430px 430px, 100% 100% !important;
+    background-repeat: repeat, no-repeat !important;
+    background-position: 0 0, 0 0 !important;
+    animation: dnmDustPos 44s linear infinite !important;
+}
+@keyframes dnmDustPos {
+    0%   { background-position: 0 0, 0 0; }
+    100% { background-position: 0 -430px, 0 0; }
 }
