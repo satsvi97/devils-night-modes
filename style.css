@@ -1470,3 +1470,35 @@ html:has(body[data-dn-mode="punk57"])       { --dn-photo: url("backgrounds/punk5
 html:has(body[data-dn-mode="conclave"])     { --dn-photo: url("backgrounds/conclave.jpg"); }
 html:has(body[data-dn-mode="nightfall"])    { --dn-photo: url("backgrounds/nightfall.jpg"); }
 html:has(body:not([data-dn-mode]))          { --dn-photo: url("backgrounds/corrupt.jpg"); }
+
+/* =====================================================================
+   ФИНАЛ 2: без завитков, единая мелкая пыль во всех режимах
+   ===================================================================== */
+
+/* завитки по углам карточек убраны */
+#chat .mes::before,
+#chat .mes::after { display: none !important; }
+
+/* одинаковая мелкая взвесь — цвет берётся из акцента режима */
+body[data-dn-mode] {
+    --dn-particles:
+        radial-gradient(2px 2px at 12% 74%, color-mix(in srgb, var(--dn-a-hot) 58%, transparent) 50%, transparent 100%),
+        radial-gradient(1.6px 1.6px at 31% 88%, color-mix(in srgb, var(--dn-a) 52%, transparent) 50%, transparent 100%),
+        radial-gradient(2.2px 2.2px at 52% 68%, color-mix(in srgb, var(--dn-a-hot) 46%, transparent) 50%, transparent 100%),
+        radial-gradient(1.4px 1.4px at 68% 92%, color-mix(in srgb, var(--dn-a) 44%, transparent) 50%, transparent 100%),
+        radial-gradient(2px 2px at 86% 78%, color-mix(in srgb, var(--dn-a-hot) 50%, transparent) 50%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 44% 40%, color-mix(in srgb, var(--dn-a) 34%, transparent) 50%, transparent 100%);
+    --dn-particles-size: 430px 430px;
+    --dn-particles-anim: dnmRiseUp 40s linear infinite;
+}
+
+/* у Панка пыль поверх краски, а не вместо неё */
+body[data-dn-mode="punk57"] {
+    --dn-particles:
+        radial-gradient(2px 2px at 12% 70%, rgba(255, 255, 255, 0.30) 50%, transparent 100%),
+        radial-gradient(1.6px 1.6px at 33% 86%, rgba(168, 216, 255, 0.32) 50%, transparent 100%),
+        radial-gradient(2.2px 2.2px at 54% 66%, rgba(255, 255, 255, 0.26) 50%, transparent 100%),
+        radial-gradient(1.4px 1.4px at 76% 90%, rgba(255, 122, 184, 0.3) 50%, transparent 100%);
+    --dn-particles-size: 430px 430px;
+    --dn-particles-anim: dnmRiseUp 40s linear infinite;
+}

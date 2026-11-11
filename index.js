@@ -1,10 +1,10 @@
-/*
+﻿/*
  * Devil's Night Modes — книжные режимы темы.
  * Всё управление — в меню расширений SillyTavern.
  * Команды: /dn corrupt | hideaway | killswitch | punk57 | conclave | nightfall | off
  */
 
-const VERSION = '1.1.0';
+const VERSION = '1.2.0';
 
 const MODES = [
     { id: 'corrupt',    label: 'Corrupt',     hint: "Devil's Night · кровь, маска, витраж" },

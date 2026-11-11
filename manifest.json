@@ -1,4 +1,4 @@
-{
+﻿{
     "display_name": "✦ DEVIL'S NIGHT MODES ✦",
     "loading_order": 20,
     "requires": [],
@@ -6,6 +6,6 @@
     "js": "index.js",
     "css": "style.css",
     "author": "Selena's Tavern",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "homePage": "https://github.com/satsvi97/devils-night-modes"
 }
