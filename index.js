@@ -4,7 +4,7 @@
  * Команды: /dn corrupt | hideaway | killswitch | punk57 | conclave | nightfall | off
  */
 
-const VERSION = '1.3.2';
+const VERSION = '1.3.3';
 
 const I18N = {
     ru: {
@@ -275,9 +275,28 @@ function registerCommand() {
     }
 }
 
+/* ---------- пылинки ---------- */
+function buildDust() {
+    if (document.getElementById('dnm-dust')) return;
+    const wrap = document.createElement('div');
+    wrap.id = 'dnm-dust';
+    for (let i = 0; i < 26; i++) {
+        const m = document.createElement('i');
+        m.style.setProperty('--x', (Math.random() * 100).toFixed(2) + 'vw');
+        m.style.setProperty('--d', (16 + Math.random() * 26).toFixed(1) + 's');
+        m.style.setProperty('--dl', (-Math.random() * 40).toFixed(1) + 's');
+        m.style.setProperty('--sz', (1.3 + Math.random() * 2.1).toFixed(2) + 'px');
+        m.style.setProperty('--sw', (Math.random() < 0.5 ? -1 : 1) * (8 + Math.random() * 46).toFixed(1) + 'px');
+        m.style.setProperty('--o', (0.16 + Math.random() * 0.45).toFixed(2));
+        wrap.append(m);
+    }
+    document.body.append(wrap);
+}
+
 function boot() {
     store();
     buildPill();
+    buildDust();
     renderSettings();
     apply();
     registerCommand();
