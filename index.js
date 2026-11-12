@@ -4,7 +4,7 @@
  * Команды: /dn corrupt | hideaway | killswitch | punk57 | conclave | nightfall | off
  */
 
-const VERSION = '1.3.0';
+const VERSION = '1.3.1';
 
 const I18N = {
     ru: {
@@ -55,10 +55,25 @@ const I18N = {
             nightfall: 'маяк, шторм, карусель',
         },
     },
+    sv: {
+        title: "✦ DEVIL'S NIGHT MODES ✦",
+        enable: 'Aktivera temat',
+        language: 'Språk',
+        off: 'Stäng av',
+        offHint: 'återställ standardutseende',
+        made: "Gjord med kärlek · ✦ Selena's Tavern ✦",
+        hint: {
+            corrupt: "Devil's Night · blod, mask, glasmålning",
+            hideaway: 'hotellet The Pope, våning 12, nyckel',
+            killswitch: 'häcklabyrint, fontän, mask',
+            punk57: 'korridor, skåp, färgstänk',
+            conclave: 'yacht, måne, champagne',
+            nightfall: 'fyr, storm, karusell',
+        },
+    },
 };
 
-const MODES = [
-    { id: 'corrupt',    label: 'Corrupt' },
+const MODES = [    { id: 'corrupt',    label: 'Corrupt' },
     { id: 'hideaway',   label: 'Hideaway' },
     { id: 'killswitch', label: 'Kill Switch' },
     { id: 'punk57',     label: 'Punk 57' },
@@ -209,6 +224,7 @@ function renderSettings(force = false) {
                         <option value="ru" ${lang === 'ru' ? 'selected' : ''}>Русский</option>
                         <option value="en" ${lang === 'en' ? 'selected' : ''}>English</option>
                         <option value="uk" ${lang === 'uk' ? 'selected' : ''}>Українська</option>
+                        <option value="sv" ${lang === 'sv' ? 'selected' : ''}>Svenska</option>
                     </select>
                 </label>
                 <div class="dnm-modes">${rows}</div>
