@@ -4,7 +4,7 @@
  * Команды: /dn corrupt | hideaway | killswitch | punk57 | conclave | nightfall | off
  */
 
-const VERSION = '1.3.1';
+const VERSION = '1.3.2';
 
 const I18N = {
     ru: {
@@ -15,7 +15,7 @@ const I18N = {
         offHint: 'вернуть базовое оформление',
         made: "Сделано с любовью · ✦ Selena's Tavern ✦",
         hint: {
-            corrupt: "Devil's Night · кровь, маска, витраж",
+            corrupt: "школьный спортзал, красная маска, кровь",
             hideaway: 'отель «Понтифик», лифт 12, ключ',
             killswitch: 'лабиринт, фонтан, маска',
             punk57: 'коридор, шкафчики, пятна краски',
@@ -31,7 +31,7 @@ const I18N = {
         offHint: 'restore default look',
         made: "Made with love · ✦ Selena's Tavern ✦",
         hint: {
-            corrupt: "Devil's Night · blood, mask, stained glass",
+            corrupt: 'school gym, red mask, blood',
             hideaway: 'the Pope Hotel, floor 12, a key',
             killswitch: 'hedge maze, fountain, mask',
             punk57: 'hallway, lockers, paint splats',
@@ -47,7 +47,7 @@ const I18N = {
         offHint: 'повернути базове оформлення',
         made: "Зроблено з любов'ю · ✦ Selena's Tavern ✦",
         hint: {
-            corrupt: "Devil's Night · кров, маска, вітраж",
+            corrupt: 'шкільний спортзал, червона маска, кров',
             hideaway: 'готель «Понтифік», ліфт 12, ключ',
             killswitch: 'лабіринт, фонтан, маска',
             punk57: 'коридор, шафки, плями фарби',
@@ -63,7 +63,7 @@ const I18N = {
         offHint: 'återställ standardutseende',
         made: "Gjord med kärlek · ✦ Selena's Tavern ✦",
         hint: {
-            corrupt: "Devil's Night · blod, mask, glasmålning",
+            corrupt: 'skolans gymnastiksal, röd mask, blod',
             hideaway: 'hotellet The Pope, våning 12, nyckel',
             killswitch: 'häcklabyrint, fontän, mask',
             punk57: 'korridor, skåp, färgstänk',

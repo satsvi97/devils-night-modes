@@ -9,6 +9,7 @@
 [![License](https://img.shields.io/badge/license-MIT-8b8b8b?style=flat-square)](LICENSE)
 [![SillyTavern](https://img.shields.io/badge/SillyTavern-1.12%2B-4b6a88?style=flat-square)](https://github.com/SillyTavern/SillyTavern)
 [![Languages](https://img.shields.io/badge/языки-RU%20%7C%20EN%20%7C%20UK%20%7C%20SV-e0a15e?style=flat-square)](#языки)
+[![Telegram](https://img.shields.io/badge/Telegram-канал-26A5E4?style=flat-square&logo=telegram&logoColor=white)](https://t.me/+vJVPtuqeHu85ZjU6)
 
 [Режимы](#режимы) · [Установка](#установка) · [Свои фоны](#свои-фоны) · [Языки](#языки) · [FAQ](#если-что-то-не-так)
 <br>
@@ -33,7 +34,7 @@
 
 | | Режим | Палитра | Якоря |
 |---|---|---|---|
-| 🩸 | **Corrupt** | кровь, пепел, сталь | собор, витражные окна, черепа, кинжал, маска |
+| 🩸 | **Corrupt** | кровь, сталь, красный | школьный спортзал, баскетбольный мяч, красная маска |
 | 🌲 | **Hideaway** | хвоя, туман, тёплое окно | отель «Понтифик», стена леса, лифт «12», ключ |
 | ⛪ | **Kill Switch** | воск, камень, витраж | лабиринт, фонтан, черепная маска, крест |
 | 🎸 | **Punk 57** | электрик-синий, неон | коридор со шкафчиками, граффити, пятна краски |
@@ -167,6 +168,8 @@ demo/              автономное превью без SillyTavern
 
 <div align="center">
 <sub>Сделано с любовью · ✦ Selena's Tavern ✦</sub>
+<br>
+<a href="https://t.me/+vJVPtuqeHu85ZjU6">Telegram-канал →</a>
 </div>
 
 ---
